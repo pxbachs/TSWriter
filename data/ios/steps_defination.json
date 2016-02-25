@@ -1,0 +1,320 @@
+[
+  {
+    "id": "touch",
+    "name": "Touch",
+    "steps": [
+      {
+        "id": "touch-0",
+        "syntax": "Then /^I (?:press|touch) on screen (\\d+) from the left and (\\d+) from the top$/ do |x, y|"
+      },
+      {
+        "id": "touch-1",
+        "syntax": "Then /^I (?:press|touch) \"([^\\\"]*)\"$/ do |name|"
+      },
+      {
+        "id": "touch-2",
+        "syntax": "Then /^I (?:press|touch) (\\d+)% right and (\\d+)% down from \"([^\\\"]*)\"$/ do |x, y, name|"
+      },
+      {
+        "id": "touch-3",
+        "syntax": "Then /^I (?:press|touch) button number (\\d+)$/ do |index|"
+      },
+      {
+        "id": "touch-4",
+        "syntax": "Then /^I (?:press|touch) the \"([^\\\"]*)\" button$/ do |name|"
+      },
+      {
+        "id": "touch-5",
+        "syntax": "Then /^I (?:press|touch) (?:input|text) field number (\\d+)$/ do |index|"
+      },
+      {
+        "id": "touch-6",
+        "syntax": "Then /^I (?:press|touch) the \"([^\\\"]*)\" (?:input|text) field$/ do |name|"
+      },
+      {
+        "id": "touch-7",
+        "syntax": "Then /^I (?:press|touch) list item number (\\d+)$/ do |index|"
+      },
+      {
+        "id": "touch-8",
+        "syntax": "Then /^I (?:press|touch) list item \"([^\\\"]*)\"$/ do |cell_name|"
+      },
+      {
+        "id": "touch-9",
+        "syntax": "Then /^I toggle the switch$/ do"
+      },
+      {
+        "id": "touch-10",
+        "syntax": "Then /^I toggle the \"([^\\\"]*)\" switch$/ do |name|"
+      },
+      {
+        "id": "touch-11",
+        "syntax": "Then /^I touch (?:the)? user location$/ do"
+      },
+      {
+        "id": "touch-12",
+        "syntax": "Then /^I (?:touch|press) (?:done|search)$/ do"
+      }
+    ]
+  },
+  {
+    "id": "enteringtext",
+    "name": "Entering text",
+    "steps": [
+      {
+        "id": "enteringtext-0",
+        "syntax": "Then /^I enter \"([^\\\"]*)\" into the \"([^\\\"]*)\" field$/ do |text_to_type, field_name|"
+      },
+      {
+        "id": "enteringtext-1",
+        "syntax": "Then /^I enter \"([^\\\"]*)\" into the \"([^\\\"]*)\" (?:text|input) field$/ do |text_to_type, field_name|"
+      },
+      {
+        "id": "enteringtext-2",
+        "syntax": "Then /^I fill in \"([^\\\"]*)\" with \"([^\\\"]*)\"$/ do |text_field, text_to_type|"
+      },
+      {
+        "id": "enteringtext-3",
+        "syntax": "Then /^I use the native keyboard to enter \"([^\\\"]*)\" into the \"([^\\\"]*)\" (?:text|input) field$/ do |text_to_type, field_name|"
+      },
+      {
+        "id": "enteringtext-4",
+        "syntax": "Then /^I fill in text fields as follows:$/ do |table|"
+      },
+      {
+        "id": "enteringtext-5",
+        "syntax": "Then /^I enter \"([^\\\"]*)\" into (?:input|text) field number (\\d+)$/ do |text, index|"
+      },
+      {
+        "id": "enteringtext-6",
+        "syntax": "Then /^I use the native keyboard to enter \"([^\\\"]*)\" into (?:input|text) field number (\\d+)$/ do |text_to_type, index|"
+      },
+      {
+        "id": "enteringtext-7",
+        "syntax": "When /^I clear \"([^\\\"]*)\"$/ do |name|"
+      },
+      {
+        "id": "enteringtext-8",
+        "syntax": "Then /^I clear (?:input|text) field number (\\d+)$/ do |index|"
+      }
+    ]
+  },
+  {
+    "id": "see",
+    "name": "See",
+    "steps": [
+      {
+        "id": "see-0",
+        "syntax": "Then /^I wait to see \"([^\\\"]*)\"$/ do |expected_mark|"
+      },
+      {
+        "id": "see-1",
+        "syntax": "Then /^I wait until I don't see \"([^\\\"]*)\"$/ do |expected_mark|"
+      },
+      {
+        "id": "see-2",
+        "syntax": "Then /^I wait to not see \"([^\\\"]*)\"$/ do |expected_mark|"
+      },
+      {
+        "id": "see-3",
+        "syntax": "Then /^I wait for \"([^\\\"]*)\" to appear$/ do |name|"
+      },
+      {
+        "id": "see-4",
+        "syntax": "Then /^I wait for the \"([^\\\"]*)\" button to appear$/ do |name|"
+      },
+      {
+        "id": "see-5",
+        "syntax": "Then /^I wait to see a navigation bar titled \"([^\\\"]*)\"$/ do |expected_mark|"
+      },
+      {
+        "id": "see-6",
+        "syntax": "Then /^I wait for the \"([^\\\"]*)\" (?:input|text) field$/ do |placeholder_or_view_mark|"
+      },
+      {
+        "id": "see-7",
+        "syntax": "Then /^I wait for (\\d+) (?:input|text) field(?:s)?$/ do |count|"
+      },
+      {
+        "id": "see-8",
+        "syntax": "Then /^I wait$/ do"
+      },
+      {
+        "id": "see-9",
+        "syntax": "Then /^I wait and wait$/ do"
+      },
+      {
+        "id": "see-10",
+        "syntax": "Then /^I wait and wait and wait...$/ do"
+      },
+      {
+        "id": "see-11",
+        "syntax": "When /^I wait for ([\\d\\.]+) second(?:s)?$/ do |num_seconds|"
+      },
+      {
+        "id": "see-12",
+        "syntax": "Then /^I go back$/ do"
+      },
+      {
+        "id": "see-13",
+        "syntax": "Then /^(?:I\\s)?take (?:picture|screenshot)$/ do"
+      },
+      {
+        "id": "see-14",
+        "syntax": "Then /^I swipe (left|right|up|down)$/ do |dir|"
+      },
+      {
+        "id": "see-15",
+        "syntax": "Then /^I swipe (left|right|up|down) on number (\\d+)$/ do |dir, index|"
+      },
+      {
+        "id": "see-16",
+        "syntax": "Then /^I swipe (left|right|up|down) on number (\\d+) at x (\\d+) and y (\\d+)$/ do |dir, index, x, y|"
+      },
+      {
+        "id": "see-17",
+        "syntax": "Then /^I swipe (left|right|up|down) on \"([^\\\"]*)\"$/ do |dir, mark|"
+      },
+      {
+        "id": "see-18",
+        "syntax": "Then /^I swipe on cell number (\\d+)$/ do |index|"
+      }
+    ]
+  },
+  {
+    "id": "pinch",
+    "name": "Pinch",
+    "steps": [
+      {
+        "id": "pinch-0",
+        "syntax": "Then /^I pinch to zoom (in|out)$/ do |in_out|"
+      },
+      {
+        "id": "pinch-1",
+        "syntax": "Then /^I pinch to zoom (in|out) on \"([^\\\"]*)\"$/ do |in_out, name|"
+      },
+      {
+        "id": "pinch-2",
+        "syntax": "Then /^I scroll (left|right|up|down)$/ do |dir|"
+      },
+      {
+        "id": "pinch-3",
+        "syntax": "Then /^I scroll (left|right|up|down) on \"([^\\\"]*)\"$/ do |dir, name|"
+      }
+    ]
+  },
+  {
+    "id": "playback",
+    "name": "Playback",
+    "steps": [
+      {
+        "id": "playback-0",
+        "syntax": "Then /^I playback recording \"([^\\\"]*)\"$/ do |filename|"
+      },
+      {
+        "id": "playback-1",
+        "syntax": "Then /^I playback recording \"([^\\\"]*)\" on \"([^\\\"]*)\"$/ do |filename, name|"
+      },
+      {
+        "id": "playback-2",
+        "syntax": "Then /^I playback recording \"([^\\\"]*)\" on \"([^\\\"]*)\" with offset (\\d+),(\\d+)$/ do |filename, name, x, y|"
+      },
+      {
+        "id": "playback-3",
+        "syntax": "Then /^I reverse playback recording \"([^\\\"]*)\"$/ do |filename|"
+      },
+      {
+        "id": "playback-4",
+        "syntax": "Then /^I reverse playback recording \"([^\\\"]*)\" on \"([^\\\"]*)\"$/ do |filename, name|"
+      },
+      {
+        "id": "playback-5",
+        "syntax": "Then /^I reverse playback recording \"([^\\\"]*)\" on \"([^\\\"]*)\" with offset (\\d+),(\\d+)$/ do |filename, name, x, y|"
+      }
+    ]
+  },
+  {
+    "id": "deviceorientation",
+    "name": "Device orientation",
+    "steps": [
+      {
+        "id": "deviceorientation-0",
+        "syntax": "Then /^I rotate device (left|right)$/ do |dir|"
+      },
+      {
+        "id": "deviceorientation-1",
+        "syntax": "Then /^I send app to background for (\\d+) seconds$/ do |secs|"
+      }
+    ]
+  },
+  {
+    "id": "assertions",
+    "name": "Assertions",
+    "steps": [
+      {
+        "id": "assertions-0",
+        "syntax": "Then /^I should see \"([^\\\"]*)\"$/ do |expected_mark|"
+      },
+      {
+        "id": "assertions-1",
+        "syntax": "Then /^I should not see \"([^\\\"]*)\"$/ do |expected_mark|"
+      },
+      {
+        "id": "assertions-2",
+        "syntax": "Then /^I should see a \"([^\\\"]*)\" button$/ do |expected_mark|"
+      },
+      {
+        "id": "assertions-3",
+        "syntax": "Then /^I should not see a \"([^\\\"]*)\" button$/ do |expected_mark|"
+      },
+      {
+        "id": "assertions-4",
+        "syntax": "Then /^I don't see the text \"([^\\\"]*)\"$/ do |text|"
+      },
+      {
+        "id": "assertions-5",
+        "syntax": "Then /^I don't see the \"([^\\\"]*)\"$/ do |text|"
+      },
+      {
+        "id": "assertions-6",
+        "syntax": "Then /^I see the text \"([^\\\"]*)\"$/ do |text|"
+      },
+      {
+        "id": "assertions-7",
+        "syntax": "Then /^I see the \"([^\\\"]*)\"$/ do |text|"
+      },
+      {
+        "id": "assertions-8",
+        "syntax": "Then /^I (?:should)? see text starting with \"([^\\\"]*)\"$/ do |text|"
+      },
+      {
+        "id": "assertions-9",
+        "syntax": "Then /^I (?:should)? see text containing \"([^\\\"]*)\"$/ do |text|"
+      },
+      {
+        "id": "assertions-10",
+        "syntax": "Then /^I (?:should)? see text ending with \"([^\\\"]*)\"$/ do |text|"
+      },
+      {
+        "id": "assertions-11",
+        "syntax": "Then /^I see (\\d+) (?:input|text) field(?:s)?$/ do |count|"
+      },
+      {
+        "id": "assertions-12",
+        "syntax": "Then /^I should see a \"([^\\\"]*)\" (?:input|text) field$/ do |expected_mark|"
+      },
+      {
+        "id": "assertions-13",
+        "syntax": "Then /^I should not see a \"([^\\\"]*)\" (?:input|text) field$/ do |expected_mark|"
+      },
+      {
+        "id": "assertions-14",
+        "syntax": "Then /^I should see a map$/ do"
+      },
+      {
+        "id": "assertions-15",
+        "syntax": "Then /^I should see (?:the)? user location$/ do"
+      }
+    ]
+  }
+]
