@@ -1,0 +1,17 @@
+<div class="features" id="features">
+                        <div class="scenario" id="scenario_2">
+                        <div class="scenario_name">
+                        	<label class="col-sm-2" for="scenario_name">Scenario name: </label>
+                        	<input class="scenario_name col-sm-10" type="text">
+                        </div>
+                        <div>
+                        <ul class="sorttable scenarioitem" id="scenarioitem2">
+                        	<li class="sorttable" id="login" draggable="false">
+                        		<b>Given I press the "login" button</b>
+                        		<button type="button" class="js-remove btn btn-danger btn-xs">Delete</button> 
+                        		<button type="button" class="js-edit btn btn-warning btn-xs">Edit</button>
+                        	</li>
+                        </ul>
+
+
+                        </div></div><div class="scenario" id="scenario_3"><div class="scenario_name"><label class="col-sm-2" for="scenario_name">Scenario name: </label><input class="scenario_name col-sm-10" type="text"></div><div><ul class="sorttable scenarioitem" id="scenarioitem3"><li class="sorttable" draggable="false"><b>Then I enter "First name" into input field number 1</b><button type="button" class="js-remove btn btn-danger btn-xs">Delete</button> <button type="button" class="js-edit btn btn-warning btn-xs">Edit</button></li></ul></div></div></div>
