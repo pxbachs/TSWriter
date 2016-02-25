@@ -62,3 +62,10 @@ div.scenario {
     margin-left: -35px;
     
 }
+
+#trashcan {
+  width: 200px;
+  height: 200px;
+  background: red;
+  float: bottom;
+}
