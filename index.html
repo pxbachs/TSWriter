@@ -47,14 +47,17 @@
                 <li class="sidebar">
                     <button type="button" class="btn btn-info" id="create_scenario">Create New Scenario</button>
                 </li>
-                <li>
+                <li id='menu_item'>
                     <a href="#">Touching</a>
                     <ul class="sidebarsorttable" id="touching">
-                        <li class=""><b>Given I press the "login" button</b></li>
-                        <li class=""><b>Then I enter "First name" into input field number 1</b></li>
-                        <li class=""><b>Press Index</b></li>
-                        <li class=""><b>Press Id</b></li>
+                        <li class="touching" id="login"><b>Given I press the "login" button</b></li>
+                        <li class="touching"><b>Then I enter "First name" into input field number 1</b></li>
+                        <li class="touching"><b>Press Index</b></li>
+                        <li class="touching"><b>Press Id</b></li>
                     </ul>
+                </li>
+                <li>
+                    <div class="trashcan" id="trashcan">Trash Can</div>
                 </li>
             </ul>
             
@@ -67,24 +70,6 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="features" id="features">
-                            <!-- <div class="scenario" id="scenario_1">
-                                <div class="scenario_name">
-                                    <label class="col-sm-2" for="scenario_name">Scenario name: </label>
-                                    <input class="scenario_name col-sm-10" type="text">
-                                </div> 
-                                <div>
-                                    <ul class="sorttable scenarioitem" id="scenarioitem1"></ul>
-                                </div>
-                            </div>
-                            <div class="scenario" id="scenario_2">
-                                <div class="scenario_name">
-                                    <label class="col-sm-2" for="scenario_name">Scenario name: </label>
-                                    <input class="scenario_name col-sm-10" type="text">
-                                </div> 
-                                <div>
-                                    <ul class="sorttable scenarioitem" id="scenarioitem2"></ul>
-                                </div>
-                            </div> -->
                         </div>
                         <div id="submit">
                                 Submit
@@ -122,8 +107,8 @@
                                         +'</div>');
             var itemID = 'scenarioitem' +id;
             var el = document.getElementById(itemID);
-            console.log(itemID);
-            console.log(el);
+            //console.log(itemID);
+            //console.log(el);
             initSorttable(el);
         });
 
@@ -134,36 +119,52 @@
         e.preventDefault();
         $("#wrapper").toggleClass("toggled");
     });
-
+    var backupElement;
     Sortable.create(touching, {
         group: {
             name: 'shared',
             pull: 'clone',
             put: false
         },
+        onStart: function (/**Event*/evt) {
+            evt.oldIndex;  // element index within parent
+            backupElement = evt.item.innerHTML;
+        },
         onEnd: function (/**Event*/evt) {
-        evt.oldIndex;  // element's old index within parent
-        evt.newIndex;  // element's new index within parent
-        var el = evt.item;
-        //alert(1);
-        console.log(el.innerText);
+            var el = evt.item;
+            
+            
         },
         sort: false         //Disabling sorting
     });
 
     Sortable.create(features, {
+        group: {
+            name: 'feature',
+            pull: true
+        },
         animation: 200,
-        
     });
     //console.log(scenarioitem2);
-
+    console.log(trashcan);
+    Sortable.create(trashcan, {
+        group: {
+            name: 'feature',
+            pull: true
+        },
+        // Element is dropped into the list from another list
+        onAdd: function (/**Event*/evt) {
+            var el = evt.item;
+            el.parentNode.removeChild(el);
+        }
+    });
 
 
     function initSorttable(scenarioitem) {
         Sortable.create(scenarioitem, {
         group: {
             name: 'shared',
-            put: true       
+            put: true
         },
         // Element is dropped into the list from another list
         onAdd: function (evt) {
@@ -179,6 +180,8 @@
             el_bu.innerHTML = el_tmp;
             //console.log(el_bu);
             el_bu.parentNode.appendChild(el_bu);
+            resetSidebar();
+            initFeatureMenuSorttable(document.getElementById('touching'));
         },
         // Called by any change to the list (add / update / remove)
         onSort: function (/**Event*/evt) {
@@ -203,6 +206,34 @@
     });
     }
 
+    function initFeatureMenuSorttable(scenarioitem) {
+        Sortable.create(scenarioitem, {
+        group: {
+            name: 'shared',
+            pull: 'clone',
+            put: false
+        },
+        onStart: function (/**Event*/evt) {
+            evt.oldIndex;  // element index within parent
+            backupElement = evt.item.innerHTML;
+        },
+        onEnd: function (/**Event*/evt) {
+            var el = evt.item;
+            
+            
+        },
+        sort: false         //Disabling sorting
+    });
+
+    Sortable.create(features, {
+        animation: 200,
+    });
+    }
+
+    function resetSidebar() {
+        var menu = document.getElementById('menu_item');
+        menu.innerHTML = '<a href="#">Touching</a><ul class="sidebarsorttable" id="touching"><li class="touching" id="login"><b>Given I press the "login" button</b></li><li class="touching"><b>Then I enter "First name" into input field number 1</b></li><li class="touching"><b>Press Index</b></li><li class="touching"><b>Press Id</b></li></ul>';
+    }
     //initSorttable(scenarioitem1);
     //initSorttable(scenarioitem2);
     </script>
