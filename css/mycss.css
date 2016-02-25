@@ -1,0 +1,64 @@
+
+.scenario {
+  border: 2px solid black;
+  min-height: 100px
+}
+.scenario_name {
+  border-bottom: 2px solid black;
+  min-height: 30px
+}
+.scenarioitem {
+  min-height: 100px
+}
+
+ul.sorttable {
+  list-style: none;
+  padding: 0;
+}
+
+li.sorttable {
+  background: #eee;
+  margin: 1px;
+  padding: 10px 15px;
+  cursor: move;
+  border-radius: 5px;
+}
+
+.sortable-ghost {
+  opacity: .3;
+  background: #f60;
+}
+
+button.js-remove {
+  float: right;
+  cursor: pointer;
+  margin-right: 5px;
+}
+button.js-edit {
+  float: right;
+  cursor: pointer;
+  margin-right: 5px;
+}
+
+div.scenario {
+  margin-bottom: 20px;
+}
+
+#submit {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+/* For the demo only */
+#submit {
+    background: #0070FF;
+    line-height: 2;
+    text-align: center;
+    color: #042E64;
+    font-size: 30px;
+    font-family: sans-serif;
+    font-weight: bold;
+    margin-left: -35px;
+    
+}
