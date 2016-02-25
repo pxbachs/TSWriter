@@ -1,0 +1,103 @@
+### Touch ###
+Then /^I (?:press|touch) on screen (\d+) from the left and (\d+) from the top$/ do |x, y|
+Then /^I (?:press|touch) "([^\"]*)"$/ do |name|
+Then /^I (?:press|touch) (\d+)% right and (\d+)% down from "([^\"]*)"$/ do |x, y, name|
+Then /^I (?:press|touch) button number (\d+)$/ do |index|
+Then /^I (?:press|touch) the "([^\"]*)" button$/ do |name|
+Then /^I (?:press|touch) (?:input|text) field number (\d+)$/ do |index|
+Then /^I (?:press|touch) the "([^\"]*)" (?:input|text) field$/ do |name|
+
+# Note in tables views: this means visible cell index!
+Then /^I (?:press|touch) list item number (\d+)$/ do |index|
+Then /^I (?:press|touch) list item "([^\"]*)"$/ do |cell_name|
+Then /^I toggle the switch$/ do
+Then /^I toggle the "([^\"]*)" switch$/ do |name|
+Then /^I touch (?:the)? user location$/ do
+Then /^I (?:touch|press) (?:done|search)$/ do
+
+
+### Entering text ###
+Then /^I enter "([^\"]*)" into the "([^\"]*)" field$/ do |text_to_type, field_name|
+Then /^I enter "([^\"]*)" into the "([^\"]*)" (?:text|input) field$/ do |text_to_type, field_name|
+
+# Alias
+Then /^I fill in "([^\"]*)" with "([^\"]*)"$/ do |text_field, text_to_type|
+Then /^I use the native keyboard to enter "([^\"]*)" into the "([^\"]*)" (?:text|input) field$/ do |text_to_type, field_name|
+Then /^I fill in text fields as follows:$/ do |table|
+Then /^I enter "([^\"]*)" into (?:input|text) field number (\d+)$/ do |text, index|
+Then /^I use the native keyboard to enter "([^\"]*)" into (?:input|text) field number (\d+)$/ do |text_to_type, index|
+When /^I clear "([^\"]*)"$/ do |name|
+Then /^I clear (?:input|text) field number (\d+)$/ do |index|
+
+### See ###
+Then /^I wait to see "([^\"]*)"$/ do |expected_mark|
+Then /^I wait until I don't see "([^\"]*)"$/ do |expected_mark|
+Then /^I wait to not see "([^\"]*)"$/ do |expected_mark|
+Then /^I wait for "([^\"]*)" to appear$/ do |name|
+Then /^I wait for the "([^\"]*)" button to appear$/ do |name|
+Then /^I wait to see a navigation bar titled "([^\"]*)"$/ do |expected_mark|
+Then /^I wait for the "([^\"]*)" (?:input|text) field$/ do |placeholder_or_view_mark|
+Then /^I wait for (\d+) (?:input|text) field(?:s)?$/ do |count|
+Then /^I wait$/ do
+Then /^I wait and wait$/ do
+Then /^I wait and wait and wait...$/ do
+When /^I wait for ([\d\.]+) second(?:s)?$/ do |num_seconds|
+Then /^I go back$/ do
+Then /^(?:I\s)?take (?:picture|screenshot)$/ do
+Then /^I swipe (left|right|up|down)$/ do |dir|
+Then /^I swipe (left|right|up|down) on number (\d+)$/ do |dir, index|
+Then /^I swipe (left|right|up|down) on number (\d+) at x (\d+) and y (\d+)$/ do |dir, index, x, y|
+Then /^I swipe (left|right|up|down) on "([^\"]*)"$/ do |dir, mark|
+Then /^I swipe on cell number (\d+)$/ do |index|
+
+
+### Pinch ###
+Then /^I pinch to zoom (in|out)$/ do |in_out|
+Then /^I pinch to zoom (in|out) on "([^\"]*)"$/ do |in_out, name|
+
+
+# Note "up/left/right" seems to be missing on the web base
+Then /^I scroll (left|right|up|down)$/ do |dir|
+Then /^I scroll (left|right|up|down) on "([^\"]*)"$/ do |dir, name|
+
+### Playback ###
+Then /^I playback recording "([^\"]*)"$/ do |filename|
+Then /^I playback recording "([^\"]*)" on "([^\"]*)"$/ do |filename, name|
+Then /^I playback recording "([^\"]*)" on "([^\"]*)" with offset (\d+),(\d+)$/ do |filename, name, x, y|
+Then /^I reverse playback recording "([^\"]*)"$/ do |filename|
+Then /^I reverse playback recording "([^\"]*)" on "([^\"]*)"$/ do |filename, name|
+Then /^I reverse playback recording "([^\"]*)" on "([^\"]*)" with offset (\d+),(\d+)$/ do |filename, name, x, y|
+
+
+### Device orientation ###
+Then /^I rotate device (left|right)$/ do |dir|
+Then /^I send app to background for (\d+) seconds$/ do |secs|
+
+
+### Assertions ###
+Then /^I should see "([^\"]*)"$/ do |expected_mark|
+Then /^I should not see "([^\"]*)"$/ do |expected_mark|
+Then /^I should see a "([^\"]*)" button$/ do |expected_mark|
+Then /^I should not see a "([^\"]*)" button$/ do |expected_mark|
+Then /^I don't see the text "([^\"]*)"$/ do |text|
+Then /^I don't see the "([^\"]*)"$/ do |text|
+Then /^I see the text "([^\"]*)"$/ do |text|
+Then /^I see the "([^\"]*)"$/ do |text|
+Then /^I (?:should)? see text starting with "([^\"]*)"$/ do |text|
+Then /^I (?:should)? see text containing "([^\"]*)"$/ do |text|
+Then /^I (?:should)? see text ending with "([^\"]*)"$/ do |text|
+Then /^I see (\d+) (?:input|text) field(?:s)?$/ do |count|
+Then /^I should see a "([^\"]*)" (?:input|text) field$/ do |expected_mark|
+Then /^I should not see a "([^\"]*)" (?:input|text) field$/ do |expected_mark|
+Then /^I should see a map$/ do
+Then /^I should see (?:the)? user location$/ do
+
+
+### Date Picker ###
+# time_str can be in any format that Time can parse
+Then(/^I change the date picker time to "([^"]*)"$/) do |time_str|
+# date_str can be in any format that Date can parse
+Then(/^I change the date picker date to "([^"]*)"$/) do |date_str|
+# date_str can be in any format that Date can parse
+Then(/^I change the date picker date to "([^"]*)" at "([^"]*)"$/) do |date_str, time_str|
+
