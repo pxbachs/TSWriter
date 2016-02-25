@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Simple Sidebar - Start Bootstrap Template</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="css/simple-sidebar.css" rel="stylesheet">
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+     <!-- Latest Sortable -->
+     
+    <script src="js/Sortable.js"></script>
+    <link href="css/mycss.css" rel="stylesheet">
+
+    <script src="js/sweetalert.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/sweetalert.css">
+</head>
+
+<body>
+
+    <div id="wrapper">
+
+        <!-- Sidebar -->
+        <div id="sidebar-wrapper">
+            <ul class="sidebar-nav">
+                <li class="sidebar-brand">
+                    <a href="#">
+                        Start Bootstrap
+                    </a>
+                </li>
+                <li class="sidebar">
+                    <button type="button" class="btn btn-info" id="create_scenario">Create New Scenario</button>
+                </li>
+                <li>
+                    <a href="#">Touching</a>
+                    <ul class="sidebarsorttable" id="touching">
+                        <li class=""><b>Given I press the "login" button</b></li>
+                        <li class=""><b>Then I enter "First name" into input field number 1</b></li>
+                        <li class=""><b>Press Index</b></li>
+                        <li class=""><b>Press Id</b></li>
+                    </ul>
+                </li>
+            </ul>
+            
+        </div>
+        <!-- /#sidebar-wrapper -->
+
+        <!-- Page Content -->
+        <div id="page-content-wrapper">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="features" id="features">
+                            <!-- <div class="scenario" id="scenario_1">
+                                <div class="scenario_name">
+                                    <label class="col-sm-2" for="scenario_name">Scenario name: </label>
+                                    <input class="scenario_name col-sm-10" type="text">
+                                </div> 
+                                <div>
+                                    <ul class="sorttable scenarioitem" id="scenarioitem1"></ul>
+                                </div>
+                            </div>
+                            <div class="scenario" id="scenario_2">
+                                <div class="scenario_name">
+                                    <label class="col-sm-2" for="scenario_name">Scenario name: </label>
+                                    <input class="scenario_name col-sm-10" type="text">
+                                </div> 
+                                <div>
+                                    <ul class="sorttable scenarioitem" id="scenarioitem2"></ul>
+                                </div>
+                            </div> -->
+                        </div>
+                        <div id="submit">
+                                Submit
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /#page-content-wrapper -->
+
+    </div>
+    <!-- /#wrapper -->
+
+    <!-- jQuery -->
+    <script src="js/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="js/bootstrap.min.js"></script>
+
+    <!-- Menu Toggle Script -->
+    <script>
+    $(document).ready(function()
+    {
+        var id = 1;
+        $(".sidebar-nav").on('click', '#create_scenario', function () {
+            id++;
+            $('#features').append('<div class="scenario" id="scenario_'+id+'">'
+                                        +'<div class="scenario_name">'
+                                        +    '<label class="col-sm-2" for="scenario_name">Scenario name: </label>'
+                                        +    '<input class="scenario_name col-sm-10" type="text">'
+                                        +'</div>'
+                                        +'<div>'
+                                        +    '<ul class="sorttable scenarioitem" id="scenarioitem'+id+'"></ul>'
+                                        +'</div>'
+                                        +'</div>');
+            var itemID = 'scenarioitem' +id;
+            var el = document.getElementById(itemID);
+            console.log(itemID);
+            console.log(el);
+            initSorttable(el);
+        });
+
+    
+    });
+
+    $("#menu-toggle").click(function(e) {
+        e.preventDefault();
+        $("#wrapper").toggleClass("toggled");
+    });
+
+    Sortable.create(touching, {
+        group: {
+            name: 'shared',
+            pull: 'clone',
+            put: false
+        },
+        onEnd: function (/**Event*/evt) {
+        evt.oldIndex;  // element's old index within parent
+        evt.newIndex;  // element's new index within parent
+        var el = evt.item;
+        //alert(1);
+        console.log(el.innerText);
+        },
+        sort: false         //Disabling sorting
+    });
+
+    Sortable.create(features, {
+        animation: 200,
+        
+    });
+    //console.log(scenarioitem2);
+
+
+
+    function initSorttable(scenarioitem) {
+        Sortable.create(scenarioitem, {
+        group: {
+            name: 'shared',
+            put: true       
+        },
+        // Element is dropped into the list from another list
+        onAdd: function (evt) {
+            var el = evt.item; // dragged HTMLElement
+            var el_tmp;
+            el.setAttribute('class', 'sorttable');
+            if(el.innerHTML.indexOf('js-remove') == -1) 
+                el_tmp = el.innerHTML + '<button type="button" class="js-remove btn btn-danger btn-xs">Delete</button> <button type="button" class="js-edit btn btn-warning btn-xs">Edit</button>';
+            else 
+                el_tmp = el.innerHTML;
+            var el_bu = el;
+            //el.parentNode.removeChild(el);
+            el_bu.innerHTML = el_tmp;
+            //console.log(el_bu);
+            el_bu.parentNode.appendChild(el_bu);
+        },
+        // Called by any change to the list (add / update / remove)
+        onSort: function (/**Event*/evt) {
+            var itemEl = evt.item; // dragged HTMLElement
+        },
+
+        filter: '.js-edit, .js-remove',
+         // Attempt to drag a filtered element
+        onFilter: function (evt) {
+            var ctrl = evt.target;
+            if (Sortable.utils.is(ctrl, '.js-remove')) {
+                evt.from.removeChild(evt.item);
+            }
+            else {
+                var el = evt.item.firstElementChild,
+                    name = el.innerHTML;
+                var editValue = prompt("Edit:", name);
+                if(editValue != null)
+                    el.innerHTML = editValue;
+            }
+        }
+    });
+    }
+
+    //initSorttable(scenarioitem1);
+    //initSorttable(scenarioitem2);
+    </script>
+
+</body>
+
+</html>
