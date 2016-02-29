@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 	<head>
 
 		<meta charset="utf-8">
@@ -119,23 +118,6 @@
 				e.preventDefault();
 				$("#wrapper").toggleClass("toggled");
 			});
-			var backupElement;
-			Sortable.create(touching, {
-				group : {
-					name : 'shared',
-					pull : 'clone',
-					put : false
-				},
-				onStart : function(/**Event*/evt) {
-					evt.oldIndex// element index within parent
-					backupElement = evt.item.innerHTML;
-				},
-				onEnd : function(/**Event*/evt) {
-					var el = evt.item;
-
-				},
-				sort : false //Disabling sorting
-			});
 
 			Sortable.create(features, {
 				group : {
@@ -144,7 +126,7 @@
 				},
 				animation : 200,
 			});
-			//console.log(scenarioitem2);
+
 			console.log(trashcan);
 			Sortable.create(trashcan, {
 				group : {
@@ -179,8 +161,6 @@
 						el_bu.innerHTML = el_tmp;
 						//console.log(el_bu);
 						el_bu.parentNode.appendChild(el_bu);
-						resetSidebar();
-						initFeatureMenuSorttable(document.getElementById('touching'));
 					},
 					// Called by any change to the list (add / update / remove)
 					onSort : function(/**Event*/evt) {
@@ -205,36 +185,6 @@
 				});
 			}
 
-			function initFeatureMenuSorttable(scenarioitem) {
-				Sortable.create(scenarioitem, {
-					group : {
-						name : 'shared',
-						pull : 'clone',
-						put : false
-					},
-					onStart : function(/**Event*/evt) {
-						evt.oldIndex// element index within parent
-						backupElement = evt.item.innerHTML;
-					},
-					onEnd : function(/**Event*/evt) {
-						var el = evt.item;
-
-					},
-					sort : false //Disabling sorting
-				});
-
-				Sortable.create(features, {
-					animation : 200,
-				});
-			}
-
-			function resetSidebar() {
-				var menu = document.getElementById('menu_item');
-				menu.innerHTML = '<a href="#">Touching</a><ul class="sidebarsorttable" id="touching"><li class="touching" id="login"><b>Given I press the "login" button</b></li><li class="touching"><b>Then I enter "First name" into input field number 1</b></li><li class="touching"><b>Press Index</b></li><li class="touching"><b>Press Id</b></li></ul>';
-			}
-
-			//initSorttable(scenarioitem1);
-			//initSorttable(scenarioitem2);
 		</script>
 
 	</body>
