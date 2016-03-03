@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 	<head>
 
 		<meta charset="utf-8">
@@ -8,20 +9,22 @@
 		<meta name="description" content="">
 		<meta name="author" content="">
 
-		<title>Simple Sidebar - Start Bootstrap Template</title>
+		<title>Test Script Writer</title>
 
+		<link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
+		<link rel="stylesheet" href="bower_components/angular-bootstrap/ui-bootstrap-csp.css">
 
-		<!-- jQuery -->
-		<script src="js/jquery.js"></script>
+		<script src="bower_components/jquery/dist/jquery.js"></script>
+		<script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+		<script src="bower_components/angular/angular.js"></script>
+		<script src="bower_components/angular-animate/angular-animate.js"></script>
+		<script src="bower_components/angular-route/angular-route.js"></script>
+		<script src="bower_components/angular-resource/angular-resource.js"></script>
+		<script src="bower_components/ng-file-model/ng-file-model.js"></script>
 
-		<!-- Bootstrap Core JavaScript -->
-		<script src="js/bootstrap.min.js"></script>
-		
-		<!-- Bootstrap Core CSS -->
-		<link href="css/bootstrap.min.css" rel="stylesheet">
+		<script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+		<script src="js/angular-drag-and-drop-lists.js"></script>
 
-		<!-- Custom CSS -->
-		<link href="css/simple-sidebar.css" rel="stylesheet">
 		<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 		<!--[if lt IE 9]>
@@ -30,171 +33,33 @@
 		<![endif]-->
 		<!-- Latest Sortable -->
 
-		<script src="js/Sortable.js"></script>
-		<link href="css/mycss.css" rel="stylesheet">
-
-		<script src="js/sweetalert.min.js"></script>
-		<link rel="stylesheet" type="text/css" href="css/sweetalert.css">
-
 		<!-- Script Writer Angular App-->
-		<script src="js/angular.min.js"></script>
 		<script src="js/script_writer_app.js"></script>
 		<script src="js/script_writer_ctroller.js"></script>
-		
-		<script>
-$(document).ready(function(){
-    $('[rel=tooltip]').tooltip({html:true});   
-});
-</script>
+
+		<!-- Custom CSS -->
+		<link href="css/mycss.css" rel="stylesheet">
+		<link href="css/nested.css" rel="stylesheet">
+		<link href="css/simple-sidebar.css" rel="stylesheet">
+
 	</head>
 
 	<body ng-app="scriptWriterApp">
-
-		<div id="wrapper">
-
-			<!-- Sidebar -->
-			<div id="sidebar-wrapper" ng-controller="StepsController">
-				<ul class="sidebar-nav">
-					<li class="sidebar-brand">
-						<a href="#"> Start Bootstrap </a>
-					</li>
-					<li class="sidebar">
-						<button type="button" class="btn btn-info" id="create_scenario">
-							Create New Scenario
-						</button>
-					</li>
-					<li class="panel-group" ng-repeat="group in steps_def">
-						<div class="panel panel-default">
-							<div class="panel-heading">
-								<h4 class="panel-title"><a data-toggle="collapse" href="#div_{{group.id}}">{{group.name}}</a></h4>
-							</div>
-							<div id="div_{{group.id}}" class="panel-collapse collapse">
-								<ul class="list-group sidebarsorttable" id="{{group.id}}" >
-									<li rel="tooltip"  class="list-group-item" data-toggle="tooltip" data-html="true" title="<b>{{step.syntax}}</b>" group-id="{{group.id}}" ng-repeat="step in group.steps" steps-repeat-directive>
-										<span>{{step.syntax}}</span>
-									</li>
-								</ul>
-							</div>
-						</div>
-					</li>
-					<li>
-						<div class="trashcan" id="trashcan">
-							Trash Can
-						</div>
-					</li>
-				</ul>
-
-			</div>
-			<!-- /#sidebar-wrapper -->
-
-			<!-- Page Content -->
-			<div id="page-content-wrapper">
-				<div class="container-fluid">
-					<div class="row">
-						<div class="col-lg-12">
-							<div class="features" id="features"></div>
-							<div id="submit">
-								Submit
-							</div>
-						</div>
-					</div>
+		<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+			<div class="container">
+				<div class="navbar-header">
+					<a class="navbar-brand" href="#">angular-drag-and-drop-lists</a>
+				</div>
+				<div class="navbar-collapse collapse">
+					<ul class="nav navbar-nav" navigation></ul>
 				</div>
 			</div>
-			<!-- /#page-content-wrapper -->
-
 		</div>
-		<!-- /#wrapper -->
-
-
-		<!-- Menu Toggle Script -->
-		<script>
-			$(document).ready(function() {
-				var id = 1;
-				$(".sidebar-nav").on('click', '#create_scenario', function() {
-					id++;
-					$('#features').append('<div class="scenario" id="scenario_' + id + '">' + '<div class="scenario_name">' + '<label class="col-sm-2" for="scenario_name">Scenario name: </label>' + '<input class="scenario_name col-sm-10" type="text">' + '</div>' + '<div>' + '<ul class="sorttable scenarioitem" id="scenarioitem' + id + '"></ul>' + '</div>' + '</div>');
-					var itemID = 'scenarioitem' + id;
-					var el = document.getElementById(itemID);
-					//console.log(itemID);
-					//console.log(el);
-					initSorttable(el);
-				});
-
-			});
-
-			$("#menu-toggle").click(function(e) {
-				e.preventDefault();
-				$("#wrapper").toggleClass("toggled");
-			});
-
-			Sortable.create(features, {
-				group : {
-					name : 'feature',
-					pull : true
-				},
-				animation : 200,
-			});
-
-			console.log(trashcan);
-			Sortable.create(trashcan, {
-				group : {
-					name : 'feature',
-					pull : true
-				},
-				// Element is dropped into the list from another list
-				onAdd : function(/**Event*/evt) {
-					var el = evt.item;
-					el.parentNode.removeChild(el);
-				}
-			});
-
-			function initSorttable(scenarioitem) {
-				Sortable.create(scenarioitem, {
-					group : {
-						name : 'shared',
-						put : true
-					},
-					// Element is dropped into the list from another list
-					onAdd : function(evt) {
-						var el = evt.item;
-						// dragged HTMLElement
-						var el_tmp;
-						el.setAttribute('class', 'sorttable');
-						if (el.innerHTML.indexOf('js-remove') == -1)
-							el_tmp = el.innerHTML + '<button type="button" class="js-remove btn btn-danger btn-xs">Delete</button> <button type="button" class="js-edit btn btn-warning btn-xs">Edit</button>';
-						else
-							el_tmp = el.innerHTML;
-						var el_bu = el;
-						//el.parentNode.removeChild(el);
-						el_bu.innerHTML = el_tmp;
-						//console.log(el_bu);
-						el_bu.parentNode.appendChild(el_bu);
-					},
-					// Called by any change to the list (add / update / remove)
-					onSort : function(/**Event*/evt) {
-						var itemEl = evt.item;
-						// dragged HTMLElement
-					},
-
-					filter : '.js-edit, .js-remove',
-					// Attempt to drag a filtered element
-					onFilter : function(evt) {
-						var ctrl = evt.target;
-						if (Sortable.utils.is(ctrl, '.js-remove')) {
-							evt.from.removeChild(evt.item);
-						} else {
-							var el = evt.item.firstElementChild,
-							    name = el.innerHTML;
-							var editValue = prompt("Edit:", name);
-							if (editValue != null)
-								el.innerHTML = editValue;
-						}
-					}
-				});
-			}
-
-		</script>
+		<div class="main-content">
+			<div id="wrapper">
+			<div ng-view></div>
+			</div>
+		</div>
 
 	</body>
-
 </html>

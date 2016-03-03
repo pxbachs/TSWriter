@@ -13,40 +13,13 @@ scriptWriterApp.controller('StepsController', ["$scope", "$http", function($scop
 	});
 }]); 
 
-scriptWriterApp.controller('FeatureController', ["$scope", "$http", "$uibModal", "$log", function($scope, $http, $uibModal, $log) {
+scriptWriterApp.controller('DashboardController',["$scope", function($scope){}]);
+
+scriptWriterApp.controller('FeatureController', ["$scope", "$http", function($scope, $http) {
 	
   $scope.items = ['item1', 'item2', 'item3'];
 
-  $scope.animationsEnabled = true;
-
-  $scope.open = function (size) {
-
-    var modalInstance = $uibModal.open({
-      animation: $scope.animationsEnabled,
-      templateUrl: 'myModalContent.html',
-      controller: 'ModalInstanceCtrl',
-      size: size,
-      resolve: {
-        items: function () {
-          return $scope.items;
-        }
-      }
-    });
-
-    modalInstance.result.then(function (selectedItem) {
-      $scope.selected = selectedItem;
-    }, function () {
-      $log.info('Modal dismissed at: ' + new Date());
-    });
-  };
-
-  $scope.toggleAnimation = function () {
-    $scope.animationsEnabled = !$scope.animationsEnabled;
-  };
-  
-  
-	
-	$scope.index_id = 0;
+  	$scope.index_id = 0;
 	
 	$http.get('data/ios/steps_defination.json').success(function(data) {
 		//$scope.group_steps = [];
@@ -100,22 +73,6 @@ scriptWriterApp.controller('FeatureController', ["$scope", "$http", "$uibModal",
         $scope.features = features;
     }, true);
 }]);
-
-scriptWriterApp.controller('ModalInstanceCtrl', function ($scope, $uibModalInstance, items) {
-
-  $scope.items = items;
-  $scope.selected = {
-    item: $scope.items[0]
-  };
-
-  $scope.ok = function () {
-    $uibModalInstance.close($scope.selected.item);
-  };
-
-  $scope.cancel = function () {
-    $uibModalInstance.dismiss('cancel');
-  };
-});
 
 scriptWriterApp.directive('stepsRepeatDirective', function() {
   return function(scope, element, attrs) {
