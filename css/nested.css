@@ -99,7 +99,7 @@
 
 /***************************** Toolbox *****************************/
 .scriptWriter .nav-right {
-    z-index: 100000;
+    z-index: 100;
     position: fixed;
     right: 0px;
     width: 200px;

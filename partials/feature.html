@@ -35,6 +35,24 @@
 
 	<!-- TODO feature here -->
 	<div class="col-md-9"  ng-controller="FeatureController">
+		<script type="text/ng-template" id="myModalContent.html">
+				<div class="modal-header">
+				<h4 class="modal-title">Edit Step</h4>
+				</div>
+				<div class="modal-body">
+					<div>
+					Syntax: <input type="text" ng-model="selectedEditStep.syntax" class="form-control input-sm"/>
+					</div>
+					<div  ng-show="editRuby">
+					Ruby: <textarea ng-model="selectedEditStep.rb" class="form-control input-sm"/>
+					</div>
+				</div>
+				<div class="modal-footer">
+				<button class="btn btn-primary" type="button" ng-click="ok()">OK</button>
+				<button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+				</div>
+			</script>
+			
 		<ul class="list-group" dnd-list="steps_def"
 		dnd-allowed-types="scenarioAllowedTypes">
 			<li class="panel-group" ng-repeat="group in steps_def"
@@ -64,7 +82,7 @@
 							>
 								<div class="item">
 									{{step.syntax}}
-									<input type="button" class="btn btn-default" value="AA" ng-click="showEdit(this)"/>
+									<input type="button" class="btn btn-default" value="Edit" ng-click="showEdit(this)"/>
 								</div>
 							</li>
 							<li class="dndPlaceholder">
@@ -82,13 +100,22 @@
 		
 		<br/>
 					<h3>Output</h3>
+					<h5>Feature</h5>
 					<pre>{{features}}</pre>
+					<h5>Ruby</h5>
+					<pre>{{rubyCode}}</pre>
+					<br/>
+					<h5>Model as Json</h5>
 					<pre>{{modelAsJson}}</pre>
+		<button id="savebtn" ng-click="save()" style="display: none;">Save</button>
 	</div>
 	
 	
 	<!-- TODO toolbox here -->
 	<div class="nav-right">
+		<div>
+			<button class="btn btn-warning" onclick="$('#savebtn').click();">Save</button>
+		</div>
 		<div class="toolbox box box-grey box-padding">
 			<h5>New Elements</h5>
 			<ul id="toolbox">
@@ -98,7 +125,7 @@
 				dnd-draggable="item"
 				dnd-effect-allowed="copy"
 				dnd-type="item.type"
-				dnd-copied="item.index = item.index + 1; item.id = 'scenario_' + item.index"
+				dnd-copied="item.index = item.index + 1; item.id =  item.type + '-custom-' + item.index"
 				>
 					<div class="item">
 						{{item.name}}
