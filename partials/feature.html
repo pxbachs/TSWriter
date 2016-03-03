@@ -22,7 +22,7 @@
 							dnd-type="step.type"
 							ng-class="{selected: models.selected === step}"
 							>
-								<div class="item">
+								<div class="">
 									{{step.syntax}}
 								</div>
 							</li>
@@ -34,7 +34,7 @@
 	</div>
 
 	<!-- TODO feature here -->
-	<div class="col-md-10"  ng-controller="FeatureController">
+	<div class="col-md-9"  ng-controller="FeatureController">
 		<ul class="list-group" dnd-list="steps_def"
 		dnd-allowed-types="scenarioAllowedTypes">
 			<li class="panel-group" ng-repeat="group in steps_def"
@@ -81,7 +81,7 @@
 		</ul>
 	</div>
 	<!-- TODO toolbox here -->
-	<div class="col-md-2">
+	<div class="nav-right">
 		<div class="toolbox box box-grey box-padding">
 			<h5>New Elements</h5>
 			<ul id="toolbox">
@@ -110,7 +110,3 @@
 		</div>
 	</div>
 </div>
-</div>
-</div>
-<hr/>
-<br/>

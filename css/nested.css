@@ -98,11 +98,31 @@
 }
 
 /***************************** Toolbox *****************************/
+.scriptWriter .nav-right {
+    z-index: 100000;
+    position: fixed;
+    right: 0px;
+    width: 200px;
+    height: 100%;
+    margin-right: 10px;
+    overflow-y: auto;
+    background: #fff;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
 
 .scriptWriter .toolbox ul {
     list-style: none;
     padding-left: 0px;
     cursor: move;
+}
+
+.scriptWriter .toolbox .item {
+    padding: 10px;
+    width: 100%;
+    border: 1px solid #ddd;
 }
 
 .scriptWriter .toolbox button {
@@ -120,30 +140,31 @@
 }
 
 /***************************** Trashcan *****************************/
-.scriptWriter .trashcan {
+.scriptWriter .nav-right .trashcan {
 
 }
-.scriptWriter .trashcan ul {
+
+.scriptWriter .nav-right .trashcan ul {
     list-style: none;
     padding-left: 0px;
 
 }
 
-.scriptWriter .trashcan img {
+.scriptWriter .nav-right .trashcan img {
     width: 100%;
     -webkit-filter: grayscale(100%);
     -moz-filter: grayscale(100%);
     filter: grayscale(100%);
 }
 
-.scriptWriter .trashcan .dndDragover img {
+.scriptWriter .nav-right .trashcan .dndDragover img {
     width: 100%;
     -webkit-filter: none;
     -moz-filter: none;
     filter: none;
 }
 
-.scriptWriter .trashcan .dndPlaceholder {
+.scriptWriter .nav-right .trashcan .dndPlaceholder {
     display: none;
 }
 
