@@ -3,3 +3,6 @@ data/.project
 .project
 angular.html
 countries.json
+bower_components
+angular
+angulardad
