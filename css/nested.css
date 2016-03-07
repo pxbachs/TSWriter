@@ -4,6 +4,9 @@
  * For the correct positioning of the placeholder element, the dnd-list and
  * it's children must have position: relative
  */
+.scriptWriter ul[dnd-list] {
+	list-style: none;
+}
 .scriptWriter ul[dnd-list],
 .scriptWriter ul[dnd-list] > li {
 	position: relative;
@@ -71,6 +74,7 @@
     background-color: #dff0d8;
 }
 
+
 .scriptWriter .dropzone .selected .box {
     border-color: #d6e9c6;
 }
@@ -86,8 +90,13 @@
 
 .scriptWriter .dropzone .item {
     padding: 10px 15px;
+    min-height: 50px;
 }
 
+.scriptWriter .dropzone .item .functions {
+	padding: 0px !important;
+	float: right;
+}
 .scriptWriter .dropzone .container-element {
     margin: 10px;
 }
@@ -95,6 +104,49 @@
 .scriptWriter .dropzone .container-element .column {
     float: left;
     width: 50%;
+}
+
+/***************************** Steps predifinded *******************/
+.scriptWriter ul {
+	list-style: none;
+}
+
+.scriptWriter .sidebar-nav ul {
+	padding-left: 0px  !important;
+    padding-right: 15px !important;
+}
+
+.scriptWriter .sidebar-nav ul ul {
+	padding-left: 0px  !important;
+    padding-right: 0px !important;
+}
+
+.scriptWriter .sidebar-nav .list-group-item {
+	background-color: #C1E2B3 !important;
+	padding: 10px !important;
+	margin: 0px !important;
+}
+
+.scriptWriter .sidebar-nav .list-group-item:hover {
+	background-color: #AC2925 !important;
+}
+
+.scriptWriter .sidebar-nav .list-group-item a:hover {
+	background-color: #AC2925 !important;
+} 
+
+.scriptWriter .sidebar-nav .item{
+	background-color: #fff;
+    border: 1px solid #ddd;
+    display: block;
+    padding: 5px;
+    text-indent: 0px;
+    min-height: 40px;
+    max-height: 80px;
+}
+
+.scriptWriter .sidebar-nav .item:hover {
+	background-color: #FCF8E3;
 }
 
 /***************************** Toolbox *****************************/

@@ -1,6 +1,6 @@
 <div class="scriptWriter" >
 
-	<div id="sidebar-wrapper" ng-controller="StepsController" >
+	<div id="sidebar-wrapper" ng-controller="StepsController">
 
 		<ul class="sidebar-nav">
 			<li >
@@ -14,7 +14,7 @@
 					</div>
 					<div id="div_{{group.id}}" class="panel-collapse collapse">
 
-						<ul dnd-list="group.steps"  class="list-group"
+						<ul dnd-list="group.steps"  class="steps"
 						dnd-disable-if="true">
 							<li ng-repeat="step in group.steps"
 							dnd-draggable="step"
@@ -22,7 +22,7 @@
 							dnd-type="step.type"
 							ng-class="{selected: models.selected === step}"
 							>
-								<div class="">
+								<div class="item">
 									{{step.syntax}}
 								</div>
 							</li>
@@ -81,9 +81,13 @@
 							ng-class="{selected: models.selected === step}"
 							>
 								<div class="item">
-									{{step.syntax}}
-									<input type="button" class="btn btn-default" value="Edit" ng-click="showEdit(this)"/>
+									<span>{{step.syntax}}</span>
+									<div class="functions">
+										<input type="button" class="btn btn-primary" value="Edit" ng-click="showEdit(this)"/>
+										<input type="button" class="btn btn-danger" value="Remove" ng-click="remove(this)"/>
+									</div>
 								</div>
+								
 							</li>
 							<li class="dndPlaceholder">
 								Drop STEP here

@@ -75,6 +75,10 @@ scriptWriterApp.controller('FeatureController', ["$scope", "$http", "$uibModal",
 		
 	};
 	
+	$scope.remove = function(idx){
+			console.log(idx);
+	};
+	
 	$scope.save = function(){
 		console.log("Call save" + $scope.features);
 		var zip = new JSZip();
