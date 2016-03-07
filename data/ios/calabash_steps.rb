@@ -1,10 +1,3 @@
-WAIT_TIMEOUT = (ENV['WAIT_TIMEOUT'] || 30).to_f
-STEP_PAUSE = (ENV['STEP_PAUSE'] || 0.5).to_f
-
-Given /^(my|the) app is running$/ do |_|
-  # no-op exists for backwards compatibility
-end
-
 ### Touch ###
 Then /^I (?:press|touch) on screen (\d+) from the left and (\d+) from the top$/ do |x, y|
   touch(nil, { offset: { x: x.to_i, y: y.to_i } })

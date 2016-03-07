@@ -36,7 +36,9 @@ scriptWriterApp.controller('FeatureController', ["$scope", "$http", "$uibModal",
 	$scope.models = {
         selected: null,
         templates: [
-            {index: 1, type: "step",name:"Step", id: "step-custom-1",  syntax:"Then You want an action here", rb: "Then /^You want an action here$/ do |_| \n\nend\n"},
+        	{index: 1, type: "step",name:"Given step", id: "step-custom-given-1",  syntax:"Given You want an action here", rb: "Given /^You want an action here$/ do |_| \n\nend\n"},
+        	{index: 1, type: "step",name:"Then Step", id: "step-custom-then-1",  syntax:"Then You want an action here", rb: "Then /^You want an action here$/ do |_| \n\nend\n"},
+            {index: 1, type: "step",name:"And Step", id: "step-custom-and-1",  syntax:"And You want an action here", rb: "And /^You want an action here$/ do |_| \n\nend\n"},
             {index: 1, id: "scenario-custom-1",  name: "Scenario ", allowedTypes: ['step'], type:"scenario", steps: []}
         ]
       };
@@ -118,9 +120,9 @@ scriptWriterApp.controller('ModalInstanceCtrl', function($scope, $uibModalInstan
 				if ($scope.selectedEditStep.id.indexOf("step-custom")===0) {
 					if (!$scope.selectedEditStep.rb)
 						$scope.selectedEditStep.rb = "Then /^You want an action here$/ do |_| \n\nend\n";
-					$scope.editRuby = true;
+					$scope.rbCodeReadOnly = false;
 				} else {
-					$scope.editRuby = false;
+					$scope.rbCodeReadOnly = true;
 				}
 					
 				

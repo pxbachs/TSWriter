@@ -4,7 +4,7 @@
 
 		<ul class="sidebar-nav">
 			<li >
-				<span>STEPS</span>
+				<h3>STEPS</h3>
 			</li>
 
 			<li ng-repeat="group in steps_def">
@@ -43,8 +43,8 @@
 					<div>
 					Syntax: <input type="text" ng-model="selectedEditStep.syntax" class="form-control input-sm"/>
 					</div>
-					<div  ng-show="editRuby">
-					Ruby: <textarea ng-model="selectedEditStep.rb" class="form-control input-sm"/>
+					<div  >
+					Ruby: <textarea rows="10" ng-model="selectedEditStep.rb" class="form-control input-sm" ng-readonly="rbCodeReadOnly"/>
 					</div>
 				</div>
 				<div class="modal-footer">
@@ -112,7 +112,7 @@
 	
 	
 	<!-- TODO toolbox here -->
-	<div class="nav-right">
+	<div class="nav-right row ng-scope">
 		<div>
 			<button class="btn btn-warning" onclick="$('#savebtn').click();">Save</button>
 		</div>
