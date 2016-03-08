@@ -1,6 +1,6 @@
-scriptWriterApp.controller('StepsController', ["$scope", "$http",
-function($scope, $http) {
-	$http.get('data/ios/steps_defination.json').success(function(data) {
+scriptWriterApp.controller('StepsController', ["$scope", "$http", "$routeParams",
+function($scope, $http,$routeParams) {
+	$http.get('data/'+$routeParams.platform+'/steps_defination.json').success(function(data) {
 		//$scope.group_steps = [];
 		//$scope.group_steps.push({pre_def: data});
 		//console.log($scope.group_steps);
@@ -14,6 +14,8 @@ function($scope, $http) {
 			"A" : {}
 		}];
 	});
+	
+
 }]);
 
 scriptWriterApp.controller('DashboardController', ["$scope",
@@ -22,6 +24,14 @@ function($scope) {
 
 scriptWriterApp.controller('FeatureController', ["$scope", "$http", "$uibModal",
 function($scope, $http, $uibModal) {
+	
+	$scope.$on('$locationChangeStart', function(event) {
+        var answer = confirm("Are you sure you want to leave this page?")
+        if (!answer) {
+            event.preventDefault();
+        }
+    });
+    
 	$scope.index_id = 0;
 
 	$http.get('data/ios/steps_defination.json').success(function(data) {

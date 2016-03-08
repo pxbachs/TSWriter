@@ -32,7 +32,7 @@ scriptWriterApp.config(function($routeProvider) {
             link: function (scope, element, attr) {
                 scope.options = [
                     {label: "Create iOS Script", href: "#/feature/ios"},
-                    {label: "Create Android Script", href: "#/feature/ios"},
+                    {label: "Create Android Script", href: "#/feature/android"},
                 ];
 
                 scope.isActive = function(option) {
