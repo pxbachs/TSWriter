@@ -67,6 +67,18 @@
 				</div>
 			</script>
 			
+			<script type="text/ng-template" id="ImportModalContent.html">
+				<div class="modal-header">
+				<h4 class="modal-title">Import Content</h4>
+				</div>
+				<div class="modal-body">
+					<b>Model Content: </b><textarea rows="15" ng-model="importContent" class="form-control input-sm"/>
+				</div>
+				<div class="modal-footer">
+				<button class="btn btn-primary" type="button" ng-click="ok()">OK</button>
+				<button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+				</div>
+			</script>
 		<ul class="list-group" dnd-list="steps_def"
 		dnd-allowed-types="scenarioAllowedTypes">
 			<li class="panel-group" ng-repeat="group in steps_def"

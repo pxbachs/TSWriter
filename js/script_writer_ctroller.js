@@ -158,6 +158,8 @@ $scope.selectedStepIdx = 0;
 		console.log(zip);
 		zip.file("testscript.feature", $scope.features);
 		zip.file("testscript.rb", $scope.rubyCode);
+		zip.file("testscript.json", $scope.modelAsJson);
+		
 		var content = zip.generate({
 			type : "blob"
 		});
@@ -165,6 +167,23 @@ $scope.selectedStepIdx = 0;
 		saveAs(content, "testscript.zip");
 	};
 
+	$scope.showImport = function() {
+		var modalInstanceRemove = $uibModal.open({
+			animation : $scope.animationsEnabled,
+			templateUrl : 'ImportModalContent.html',
+			controller : 'ImportModalInstanceCtrl',
+			size : 'lg',
+			resolve : {}
+		});
+
+		modalInstanceRemove.result.then(function(importContent) {
+			console.log(importContent);
+			$scope.steps_def = angular.fromJson(importContent);
+		}, function() {
+			console.log('Modal dismissed at: ' + new Date());
+		});
+	};
+	
 	$scope.$watch('steps_def', function(model) {
 		$scope.modelAsJson = angular.toJson(model, true);
 		features = "";
@@ -221,6 +240,18 @@ scriptWriterApp.controller('RemoveStepModalInstanceCtrl', function($scope, $uibM
 	
 	$scope.ok = function() {
 		$uibModalInstance.close($scope.selectedIdx);
+	};
+
+	$scope.cancel = function() {
+		$uibModalInstance.dismiss('cancel');
+	};
+});
+
+scriptWriterApp.controller('ImportModalInstanceCtrl', function($scope, $uibModalInstance) {
+	console.log("ImportModalInstanceCtrl ");
+	
+	$scope.ok = function() {
+		$uibModalInstance.close($scope.importContent);
 	};
 
 	$scope.cancel = function() {
