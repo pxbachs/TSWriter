@@ -257,6 +257,11 @@ scriptWriterApp.controller('ImportModalInstanceCtrl', function($scope, $uibModal
 	$scope.cancel = function() {
 		$uibModalInstance.dismiss('cancel');
 	};
+	
+	$scope.myLoaded = function() {
+		console.log($scope.file.data);
+		$scope.importContent = $scope.file.data;
+	};
 });
 
 scriptWriterApp.directive('stepsRepeatDirective', function() {

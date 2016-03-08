@@ -73,6 +73,7 @@
 				</div>
 				<div class="modal-body">
 					<b>Model Content: </b><textarea rows="15" ng-model="importContent" class="form-control input-sm"/>
+					<input type="file" ng-model="importContent" file-select="data" file-loaded="myLoaded()" file-error="myError($error)" file-progress="myProgress($total,$loaded)">
 				</div>
 				<div class="modal-footer">
 				<button class="btn btn-primary" type="button" ng-click="ok()">OK</button>
