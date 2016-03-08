@@ -1,470 +1,401 @@
 [
-  {
-    "id": "touch",
-    "name": "Touch",
-    "steps": [
-      {
-        "id": "touch-0",
-        "type": "step",
-        "syntax": "Then I touch on screen X from the left and Y from the top",
-        "rb": "Then /^I (?:press|touch) on screen (\\d+) from the left and (\\d+) from the top$/ do |x, y|\n  touch(nil, { offset: { x: x.to_i, y: y.to_i } })\n  sleep(STEP_PAUSE)\nend\n"
-      },
-      {
-        "id": "touch-1",
-        "type": "step",
-        "syntax": "Then I touch \"NAME\"",
-        "rb": "Then /^I (?:press|touch) \"([^\\\"]*)\"$/ do |name|\n  touch(\"view marked: '#{name}'\")\n  sleep(STEP_PAUSE)\nend\n"
-      },
-      {
-        "id": "touch-2",
-        "type": "step",
-        "syntax": "Then I touch X% right and Y% down from \"NAME\"",
-        "rb": "Then /^I (?:press|touch) (\\d+)% right and (\\d+)% down from \"([^\\\"]*)\"$/ do |x, y, name|\n  raise 'This step is not yet implemented on iOS'\nend\n"
-      },
-      {
-        "id": "touch-3",
-        "type": "step",
-        "syntax": "Then I touch button number INDEX",
-        "rb": "Then /^I (?:press|touch) button number (\\d+)$/ do |index|\n  index = index.to_i\n  screenshot_and_raise(\"Index should be positive (was: #{index})\") if index <= 0\n  touch(\"button index: #{index - 1}\")\n  sleep(STEP_PAUSE)\nend\n"
-      },
-      {
-        "id": "touch-4",
-        "type": "step",
-        "syntax": "Then I touch the \"NAME\" button",
-        "rb": "Then /^I (?:press|touch) the \"([^\\\"]*)\" button$/ do |name|\n  touch(\"button marked: '#{name}'\")\n  sleep(STEP_PAUSE)\nend\n"
-      },
-      {
-        "id": "touch-5",
-        "type": "step",
-        "syntax": "Then I touch input field number INDEX",
-        "rb": "Then /^I (?:press|touch) (?:input|text) field number (\\d+)$/ do |index|\n  index = index.to_i\n  screenshot_and_raise(\"Index should be positive (was: #{index})\") if index <= 0\n  touch(\"textField index: #{index - 1}\")\n  sleep(STEP_PAUSE)\nend\n"
-      },
-      {
-        "id": "touch-6",
-        "type": "step",
-        "syntax": "Then I touch the \"NAME\" input field",
-        "rb": "Then /^I (?:press|touch) the \"([^\\\"]*)\" (?:input|text) field$/ do |name|\n  placeholder_query = \"textField placeholder: '#{name}'\"\n  marked_query = \"textField marked: '#{name}'\"\n  if !query(placeholder_query).empty?\n    touch(placeholder_query)\n  elsif !query(marked_query).empty?\n    touch(marked_query)\n  else\n    screenshot_and_raise \"Could not find text field with placeholder '#{name}' or marked as '#{name}'\"\n  end\n  sleep(STEP_PAUSE)\nend\n"
-      },
-      {
-        "id": "touch-7",
-        "type": "step",
-        "syntax": "Then I touch list item number INDEX",
-        "rb": "Then /^I (?:press|touch) list item number (\\d+)$/ do |index|\n  index = index.to_i\n  screenshot_and_raise(\"Index should be positive (was: #{index})\") if index <= 0\n  touch(\"tableViewCell index: #{index - 1}\")\n  sleep(STEP_PAUSE)\nend\n"
-      },
-      {
-        "id": "touch-8",
-        "type": "step",
-        "syntax": "Then I touch list item \"CELL_NAME\"",
-        "rb": "Then /^I (?:press|touch) list item \"([^\\\"]*)\"$/ do |cell_name|\n  if query(\"tableViewCell marked: '#{cell_name}'\").empty?\n    touch(\"tableViewCell text: '#{cell_name}'\")\n  else\n    touch(\"tableViewCell marked: '#{cell_name}'\")\n  end\n  sleep(STEP_PAUSE)\nend\n"
-      },
-      {
-        "id": "touch-9",
-        "type": "step",
-        "syntax": "Then I toggle the switch",
-        "rb": "Then /^I toggle the switch$/ do\n  touch('switch')\n  sleep(STEP_PAUSE)\nend\n"
-      },
-      {
-        "id": "touch-10",
-        "type": "step",
-        "syntax": "Then I toggle the \"NAME\" switch",
-        "rb": "Then /^I toggle the \"([^\\\"]*)\" switch$/ do |name|\n  touch(\"switch marked: '#{name}'\")\n  sleep(STEP_PAUSE)\nend\n"
-      },
-      {
-        "id": "touch-11",
-        "type": "step",
-        "syntax": "Then I touch (?:the)? user location",
-        "rb": "Then /^I touch (?:the)? user location$/ do\n  touch(\"view: 'MKUserLocationView'\")\n  sleep(STEP_PAUSE)\nend\n"
-      },
-      {
-        "id": "touch-12",
-        "type": "step",
-        "syntax": "Then I (?:touch|press) (?:done|search)",
-        "rb": "Then /^I (?:touch|press) (?:done|search)$/ do\n  done\n  sleep(STEP_PAUSE)\nend\n"
-      }
-    ]
-  },
-  {
-    "id": "enteringtext",
-    "name": "Entering text",
-    "steps": [
-      {
-        "id": "enteringtext-0",
-        "type": "step",
-        "syntax": "Then I enter \"TEXT_TO_TYPE\" into the \"FIELD_NAME\" field",
-        "rb": "Then /^I enter \"([^\\\"]*)\" into the \"([^\\\"]*)\" field$/ do |text_to_type, field_name|\n  touch(\"textField marked: '#{field_name}'\")\n  wait_for_keyboard\n  keyboard_enter_text text_to_type\n  sleep(STEP_PAUSE)\nend\n"
-      },
-      {
-        "id": "enteringtext-1",
-        "type": "step",
-        "syntax": "Then I enter \"TEXT_TO_TYPE\" into the \"FIELD_NAME\" (?:text|input) field",
-        "rb": "Then /^I enter \"([^\\\"]*)\" into the \"([^\\\"]*)\" (?:text|input) field$/ do |text_to_type, field_name|\n  touch(\"textField marked: '#{field_name}'\")\n  wait_for_keyboard\n  keyboard_enter_text text_to_type\n  sleep(STEP_PAUSE)\nend\n"
-      },
-      {
-        "id": "enteringtext-2",
-        "type": "step",
-        "syntax": "Then I fill in \"TEXT_FIELD\" with \"TEXT_TO_TYPE\"",
-        "rb": "Then /^I fill in \"([^\\\"]*)\" with \"([^\\\"]*)\"$/ do |text_field, text_to_type|\n  macro %(I enter \"#{text_to_type}\" into the \"#{text_field}\" text field)\nend\n"
-      },
-      {
-        "id": "enteringtext-3",
-        "type": "step",
-        "syntax": "Then I use the native keyboard to enter \"TEXT_TO_TYPE\" into the \"FIELD_NAME\" (?:text|input) field",
-        "rb": "Then /^I use the native keyboard to enter \"([^\\\"]*)\" into the \"([^\\\"]*)\" (?:text|input) field$/ do |text_to_type, field_name|\n  macro %(I touch the \"#{field_name}\" text field)\n  wait_for_keyboard\n  keyboard_enter_text(text_to_type)\n  sleep(STEP_PAUSE)\nend\n"
-      },
-      {
-        "id": "enteringtext-4",
-        "type": "step",
-        "syntax": "Then I fill in text fields as follows:",
-        "rb": "Then /^I fill in text fields as follows:$/ do |table|\n  table.hashes.each do |row|\n    macro %(I enter \"#{row['text']}\" into the \"#{row['field']}\" text field)\n  end\nend\n"
-      },
-      {
-        "id": "enteringtext-5",
-        "type": "step",
-        "syntax": "Then I enter \"TEXT\" into input field number INDEX",
-        "rb": "Then /^I enter \"([^\\\"]*)\" into (?:input|text) field number (\\d+)$/ do |text, index|\n  index = index.to_i\n  screenshot_and_raise(\"Index should be positive (was: #{index})\") if index <= 0\n  touch(\"textField index: #{index - 1}\")\n  wait_for_keyboard\n  keyboard_enter_text text\n  sleep(STEP_PAUSE)\nend\n"
-      },
-      {
-        "id": "enteringtext-6",
-        "type": "step",
-        "syntax": "Then I use the native keyboard to enter \"TEXT_TO_TYPE\" into input field number INDEX",
-        "rb": "Then /^I use the native keyboard to enter \"([^\\\"]*)\" into (?:input|text) field number (\\d+)$/ do |text_to_type, index|\n  macro %(I touch text field number #{index})\n  wait_for_keyboard\n  keyboard_enter_text(text_to_type)\n  sleep(STEP_PAUSE)\nend\n"
-      },
-      {
-        "id": "enteringtext-7",
-        "type": "step",
-        "syntax": "When I clear \"NAME\"",
-        "rb": "When /^I clear \"([^\\\"]*)\"$/ do |name|\n  msg = \"When I clear <name>' will be deprecated because it is ambiguous - what should be cleared?\"\n  _deprecated('0.9.151', msg, :warn)\n  clear_text(\"textField marked: '#{name}'\")\nend\n"
-      },
-      {
-        "id": "enteringtext-8",
-        "type": "step",
-        "syntax": "Then I clear input field number INDEX",
-        "rb": "Then /^I clear (?:input|text) field number (\\d+)$/ do |index|\n  index = index.to_i\n  screenshot_and_raise(\"Index should be positive (was: #{index})\") if index <= 0\n  clear_text(\"textField index: #{index - 1}\")\nend\n"
-      }
-    ]
-  },
-  {
-    "id": "see",
-    "name": "See",
-    "steps": [
-      {
-        "id": "see-0",
-        "type": "step",
-        "syntax": "Then I wait to see \"EXPECTED_MARK\"",
-        "rb": "Then /^I wait to see \"([^\\\"]*)\"$/ do |expected_mark|\n  wait_for(WAIT_TIMEOUT) { view_with_mark_exists(expected_mark) }\nend\n"
-      },
-      {
-        "id": "see-1",
-        "type": "step",
-        "syntax": "Then I wait until I don't see \"EXPECTED_MARK\"",
-        "rb": "Then /^I wait until I don't see \"([^\\\"]*)\"$/ do |expected_mark|\n  sleep 1 # wait for previous screen to disappear\n  wait_for(WAIT_TIMEOUT) { !element_exists(\"view marked: '#{expected_mark}'\") }\nend\n"
-      },
-      {
-        "id": "see-2",
-        "type": "step",
-        "syntax": "Then I wait to not see \"EXPECTED_MARK\"",
-        "rb": "Then /^I wait to not see \"([^\\\"]*)\"$/ do |expected_mark|\n  macro %(I wait until I don't see \"#{expected_mark}\")\nend\n"
-      },
-      {
-        "id": "see-3",
-        "type": "step",
-        "syntax": "Then I wait for \"NAME\" to appear",
-        "rb": "Then /^I wait for \"([^\\\"]*)\" to appear$/ do |name|\n  macro %(I wait to see \"#{name}\")\nend\n"
-      },
-      {
-        "id": "see-4",
-        "type": "step",
-        "syntax": "Then I wait for the \"NAME\" button to appear",
-        "rb": "Then /^I wait for the \"([^\\\"]*)\" button to appear$/ do |name|\n  wait_for(WAIT_TIMEOUT) { element_exists(\"button marked: '#{name}'\") }\nend\n"
-      },
-      {
-        "id": "see-5",
-        "type": "step",
-        "syntax": "Then I wait to see a navigation bar titled \"EXPECTED_MARK\"",
-        "rb": "Then /^I wait to see a navigation bar titled \"([^\\\"]*)\"$/ do |expected_mark|\n  msg = \"Waited for '#{WAIT_TIMEOUT}' seconds but did not see the navbar with title '#{expected_mark}'\"\n  wait_for(timeout: WAIT_TIMEOUT, timeout_message: msg ) do\n    all_items = query(\"navigationItemView marked: '#{expected_mark}'\")\n    button_items = query('navigationItemButtonView')\n    non_button_items = all_items.delete_if { |item| button_items.include?(item) }\n    !non_button_items.empty?\n  end\nend\n"
-      },
-      {
-        "id": "see-6",
-        "type": "step",
-        "syntax": "Then I wait for the \"PLACEHOLDER_OR_VIEW_MARK\" input field",
-        "rb": "Then /^I wait for the \"([^\\\"]*)\" (?:input|text) field$/ do |placeholder_or_view_mark|\n  wait_for(WAIT_TIMEOUT) do\n    element_exists(\"textField placeholder: '#{placeholder_or_view_mark}'\") ||\n    element_exists(\"textField marked: '#{placeholder_or_view_mark}'\")\n  end\nend\n"
-      },
-      {
-        "id": "see-7",
-        "type": "step",
-        "syntax": "Then I wait for COUNT input field(?:s)?",
-        "rb": "Then /^I wait for (\\d+) (?:input|text) field(?:s)?$/ do |count|\n  wait_for(WAIT_TIMEOUT) { query(:textField).count >= count.to_i }\nend\n"
-      },
-      {
-        "id": "see-8",
-        "type": "step",
-        "syntax": "Then I wait",
-        "rb": "Then /^I wait$/ do\n  sleep 2\nend\n"
-      },
-      {
-        "id": "see-9",
-        "type": "step",
-        "syntax": "Then I wait and wait",
-        "rb": "Then /^I wait and wait$/ do\n  sleep 4\nend\n"
-      },
-      {
-        "id": "see-10",
-        "type": "step",
-        "syntax": "Then I wait and wait and wait...",
-        "rb": "Then /^I wait and wait and wait...$/ do\n  sleep 10\nend\n"
-      },
-      {
-        "id": "see-11",
-        "type": "step",
-        "syntax": "When I wait for ([\\d\\.]+) second(?:s)?",
-        "rb": "When /^I wait for ([\\d\\.]+) second(?:s)?$/ do |num_seconds|\n  sleep num_seconds.to_f\nend\n"
-      },
-      {
-        "id": "see-12",
-        "type": "step",
-        "syntax": "Then I go back",
-        "rb": "Then /^I go back$/ do\n  touch('navigationItemButtonView first')\n  sleep(STEP_PAUSE)\nend\n"
-      },
-      {
-        "id": "see-13",
-        "type": "step",
-        "syntax": "Then /^(?:I\\s)?take (?:picture|screenshot)",
-        "rb": "Then /^(?:I\\s)?take (?:picture|screenshot)$/ do\n  sleep(STEP_PAUSE)\n  screenshot_embed\nend\n"
-      },
-      {
-        "id": "see-14",
-        "type": "step",
-        "syntax": "Then I swipe (left|right|up|down)",
-        "rb": "Then /^I swipe (left|right|up|down)$/ do |dir|\n  swipe(dir)\n  sleep(STEP_PAUSE)\nend\n"
-      },
-      {
-        "id": "see-15",
-        "type": "step",
-        "syntax": "Then I swipe (left|right|up|down) on number DIR",
-        "rb": "Then /^I swipe (left|right|up|down) on number (\\d+)$/ do |dir, index|\n  index = index.to_i\n  screenshot_and_raise(\"Index should be positive (was: #{index})\") if index <= 0\n  swipe(dir, { query: \"scrollView index: #{index - 1}\" })\n  sleep(STEP_PAUSE)\nend\n"
-      },
-      {
-        "id": "see-16",
-        "type": "step",
-        "syntax": "Then I swipe (left|right|up|down) on number DIR at x INDEX and y X",
-        "rb": "Then /^I swipe (left|right|up|down) on number (\\d+) at x (\\d+) and y (\\d+)$/ do |dir, index, x, y|\n  index = index.to_i\n  screenshot_and_raise(\"Index should be positive (was: #{index})\") if index <= 0\n  swipe(dir, { offset: { x: x.to_i, y: y.to_i }, query: \"scrollView index: #{index - 1}\" })\n  sleep(STEP_PAUSE)\nend\n"
-      },
-      {
-        "id": "see-17",
-        "type": "step",
-        "syntax": "Then I swipe (left|right|up|down) on \"DIR\"",
-        "rb": "Then /^I swipe (left|right|up|down) on \"([^\\\"]*)\"$/ do |dir, mark|\n  swipe(dir, { query: \"view marked: '#{mark}'\" })\n  sleep(STEP_PAUSE)\nend\n"
-      },
-      {
-        "id": "see-18",
-        "type": "step",
-        "syntax": "Then I swipe on cell number INDEX",
-        "rb": "Then /^I swipe on cell number (\\d+)$/ do |index|\n  index = index.to_i\n  screenshot_and_raise(\"Index should be positive (was: #{index})\") if index <= 0\n  cell_swipe({ query: \"tableViewCell index: #{index - 1}\" })\n  sleep(STEP_PAUSE)\nend\n"
-      }
-    ]
-  },
-  {
-    "id": "pinch",
-    "name": "Pinch",
-    "steps": [
-      {
-        "id": "pinch-0",
-        "type": "step",
-        "syntax": "Then I pinch to zoom (in|out)",
-        "rb": "Then /^I pinch to zoom (in|out)$/ do |in_out|\n  pinch(in_out)\n  sleep(STEP_PAUSE)\nend\n"
-      },
-      {
-        "id": "pinch-1",
-        "type": "step",
-        "syntax": "Then I pinch to zoom (in|out) on \"IN_OUT\"",
-        "rb": "Then /^I pinch to zoom (in|out) on \"([^\\\"]*)\"$/ do |in_out, name|\n  pinch(in_out, { query: \"view marked: '#{name}'\" })\n  sleep(STEP_PAUSE)\nend\n"
-      },
-      {
-        "id": "pinch-2",
-        "type": "step",
-        "syntax": "Then I scroll (left|right|up|down)",
-        "rb": "Then /^I scroll (left|right|up|down)$/ do |dir|\n  scroll('scrollView index: 0', dir)\n  sleep(STEP_PAUSE)\nend\n"
-      },
-      {
-        "id": "pinch-3",
-        "type": "step",
-        "syntax": "Then I scroll (left|right|up|down) on \"DIR\"",
-        "rb": "Then /^I scroll (left|right|up|down) on \"([^\\\"]*)\"$/ do |dir, name|\n  scroll(\"view marked: '#{name}'\", dir)\n  sleep(STEP_PAUSE)\nend\n"
-      }
-    ]
-  },
-  {
-    "id": "playback",
-    "name": "Playback",
-    "steps": [
-      {
-        "id": "playback-0",
-        "type": "step",
-        "syntax": "Then I playback recording \"FILENAME\"",
-        "rb": "Then /^I playback recording \"([^\\\"]*)\"$/ do |filename|\n  playback(filename)\n  sleep(STEP_PAUSE)\nend\n"
-      },
-      {
-        "id": "playback-1",
-        "type": "step",
-        "syntax": "Then I playback recording \"FILENAME\" on \"NAME\"",
-        "rb": "Then /^I playback recording \"([^\\\"]*)\" on \"([^\\\"]*)\"$/ do |filename, name|\n  playback(filename, { query: \"view marked: '#{name}'\" })\n  sleep(STEP_PAUSE)\nend\n"
-      },
-      {
-        "id": "playback-2",
-        "type": "step",
-        "syntax": "Then I playback recording \"FILENAME\" on \"NAME\" with offset X,Y",
-        "rb": "Then /^I playback recording \"([^\\\"]*)\" on \"([^\\\"]*)\" with offset (\\d+),(\\d+)$/ do |filename, name, x, y|\n  playback(filename, { query: \"view marked:'#{name}'\", offset: { x: x.to_i, y: y.to_i } })\n  sleep(STEP_PAUSE)\nend\n"
-      },
-      {
-        "id": "playback-3",
-        "type": "step",
-        "syntax": "Then I reverse playback recording \"FILENAME\"",
-        "rb": "Then /^I reverse playback recording \"([^\\\"]*)\"$/ do |filename|\n  playback(filename, { reverse: true })\n  sleep(STEP_PAUSE)\nend\n"
-      },
-      {
-        "id": "playback-4",
-        "type": "step",
-        "syntax": "Then I reverse playback recording \"FILENAME\" on \"NAME\"",
-        "rb": "Then /^I reverse playback recording \"([^\\\"]*)\" on \"([^\\\"]*)\"$/ do |filename, name|\n  playback(filename, { query: \"view marked: '#{name}'\", reverse: true })\n  sleep(STEP_PAUSE)\nend\n"
-      },
-      {
-        "id": "playback-5",
-        "type": "step",
-        "syntax": "Then I reverse playback recording \"FILENAME\" on \"NAME\" with offset X,Y",
-        "rb": "Then /^I reverse playback recording \"([^\\\"]*)\" on \"([^\\\"]*)\" with offset (\\d+),(\\d+)$/ do |filename, name, x, y|\n  playback(filename, { query: \"view marked: '#{name}'\", offset: { x: x.to_i, y: y.to_i }, reverse: true })\n  sleep(STEP_PAUSE)\nend\n"
-      }
-    ]
-  },
-  {
-    "id": "deviceorientation",
-    "name": "Device orientation",
-    "steps": [
-      {
-        "id": "deviceorientation-0",
-        "type": "step",
-        "syntax": "Then I rotate device (left|right)",
-        "rb": "Then /^I rotate device (left|right)$/ do |dir|\n  rotate(dir.to_sym)\n  sleep 5 # Servo wait\nend\n"
-      },
-      {
-        "id": "deviceorientation-1",
-        "type": "step",
-        "syntax": "Then I send app to background for SECS seconds",
-        "rb": "Then /^I send app to background for (\\d+) seconds$/ do |secs|\n  secs = secs.to_f\n  send_app_to_background(secs)\n  sleep(secs + 10)\nend\n"
-      }
-    ]
-  },
-  {
-    "id": "assertions",
-    "name": "Assertions",
-    "steps": [
-      {
-        "id": "assertions-0",
-        "type": "step",
-        "syntax": "Then I should see \"EXPECTED_MARK\"",
-        "rb": "Then /^I should see \"([^\\\"]*)\"$/ do |expected_mark|\n  until element_exists(\"view marked:'#{expected_mark}'\") ||\n        element_exists(\"view text:'#{expected_mark}'\")\n    screenshot_and_raise \"No element found with mark or text: #{expected_mark}\"\n  end\nend\n"
-      },
-      {
-        "id": "assertions-1",
-        "type": "step",
-        "syntax": "Then I should not see \"EXPECTED_MARK\"",
-        "rb": "Then /^I should not see \"([^\\\"]*)\"$/ do |expected_mark|\n  res = query(\"view marked: '#{expected_mark}'\")\n  res.concat query(\"view text: '#{expected_mark}'\")\n  unless res.empty?\n    screenshot_and_raise \"Expected no element with text nor accessibilityLabel: #{expected_mark}, found #{res.join(', ')}\"\n  end\nend\n"
-      },
-      {
-        "id": "assertions-2",
-        "type": "step",
-        "syntax": "Then I should see a \"EXPECTED_MARK\" button",
-        "rb": "Then /^I should see a \"([^\\\"]*)\" button$/ do |expected_mark|\n  check_element_exists(\"button marked: '#{expected_mark}'\")\nend\nThen /^I should not see a \"([^\\\"]*)\" button$/ do |expected_mark|\n  check_element_does_not_exist(\"button marked: '#{expected_mark}'\")\nend\n"
-      },
-      {
-        "id": "assertions-3",
-        "type": "step",
-        "syntax": "Then I don't see the text \"TEXT\"",
-        "rb": "Then /^I don't see the text \"([^\\\"]*)\"$/ do |text|\n  macro %(I should not see \"#{text}\")\nend\nThen /^I don't see the \"([^\\\"]*)\"$/ do |text|\n  macro %(I should not see \"#{text}\")\nend\n"
-      },
-      {
-        "id": "assertions-4",
-        "type": "step",
-        "syntax": "Then I see the text \"TEXT\"",
-        "rb": "Then /^I see the text \"([^\\\"]*)\"$/ do |text|\n  macro %(I should see \"#{text}\")\nend\n"
-      },
-      {
-        "id": "assertions-5",
-        "type": "step",
-        "syntax": "Then I see the \"TEXT\"",
-        "rb": "Then /^I see the \"([^\\\"]*)\"$/ do |text|\n  macro %(I should see \"#{text}\")\nend\n"
-      },
-      {
-        "id": "assertions-6",
-        "type": "step",
-        "syntax": "Then I (?:should)? see text starting with \"TEXT\"",
-        "rb": "Then /^I (?:should)? see text starting with \"([^\\\"]*)\"$/ do |text|\n  if query(\"view {text BEGINSWITH '#{text}'}\").empty?\n    screenshot_and_raise \"No text found starting with: #{text}\"\n  end\nend\n"
-      },
-      {
-        "id": "assertions-7",
-        "type": "step",
-        "syntax": "Then I (?:should)? see text containing \"TEXT\"",
-        "rb": "Then /^I (?:should)? see text containing \"([^\\\"]*)\"$/ do |text|\n  if query(\"view {text LIKE '*#{text}*'}\").empty?\n    screenshot_and_raise \"No text found containing: #{text}\"\n  end\nend\n"
-      },
-      {
-        "id": "assertions-8",
-        "type": "step",
-        "syntax": "Then I (?:should)? see text ending with \"TEXT\"",
-        "rb": "Then /^I (?:should)? see text ending with \"([^\\\"]*)\"$/ do |text|\n  if query(\"view {text ENDSWITH '#{text}'}\").empty?\n    screenshot_and_raise \"No text found ending with: #{text}\"\n  end\nend\n"
-      },
-      {
-        "id": "assertions-9",
-        "type": "step",
-        "syntax": "Then I see COUNT input field(?:s)?",
-        "rb": "Then /^I see (\\d+) (?:input|text) field(?:s)?$/ do |count|\n  cnt = query(:textField).count\n  if cnt < count.to_i\n    screenshot_and_raise \"Expected at least #{count} text/input fields, found #{cnt}\"\n  end\nend\n"
-      },
-      {
-        "id": "assertions-10",
-        "type": "step",
-        "syntax": "Then I should see a \"EXPECTED_MARK\" input field",
-        "rb": "Then /^I should see a \"([^\\\"]*)\" (?:input|text) field$/ do |expected_mark|\n  unless element_exists(\"textField placeholder: '#{expected_mark}'\") ||\n         element_exists(\"textField marked: '#{expected_mark}'\")\n    screenshot_and_raise \"Expected textfield with placeholder or accessibilityLabel: #{expected_mark}\"\n  end\nend\n"
-      },
-      {
-        "id": "assertions-11",
-        "type": "step",
-        "syntax": "Then I should not see a \"EXPECTED_MARK\" input field",
-        "rb": "Then /^I should not see a \"([^\\\"]*)\" (?:input|text) field$/ do |expected_mark|\n  res = query(\"textField placeholder: '#{expected_mark}'\")\n  res.concat query(\"textField marked: '#{expected_mark}'\")\n  unless res.empty?\n    screenshot_and_raise \"Expected no textfield with placeholder nor accessibilityLabel: #{expected_mark}, found #{res}\"\n  end\nend\n"
-      },
-      {
-        "id": "assertions-12",
-        "type": "step",
-        "syntax": "Then I should see a map",
-        "rb": "Then /^I should see a map$/ do\n  check_element_exists(\"view: 'MKMapView'\")\nend\n"
-      },
-      {
-        "id": "assertions-13",
-        "type": "step",
-        "syntax": "Then I should see (?:the)? user location",
-        "rb": "Then /^I should see (?:the)? user location$/ do\n  check_element_exists(\"view: 'MKUserLocationView'\")\nend\n"
-      }
-    ]
-  },
-  {
-    "id": "datepicker",
-    "name": "Date Picker",
-    "steps": [
-      {
-        "id": "datepicker-0",
-        "type": "step",
-        "syntax": "Then I change the date picker time to \"TIME_STR\"",
-        "rb": "Then(/^I change the date picker time to \"([^\"]*)\"$/) do |time_str|\n  target_time = Time.parse(time_str)\n  current_date = date_time_from_picker\n  current_date = DateTime.new(current_date.year,\n                              current_date.mon,\n                              current_date.day,\n                              target_time.hour,\n                              target_time.min,\n                              0,\n                              target_time.gmt_offset)\n  picker_set_date_time current_date\n  sleep(STEP_PAUSE)\nend\n"
-      },
-      {
-        "id": "datepicker-1",
-        "type": "step",
-        "syntax": "Then I change the date picker date to \"DATE_STR\"",
-        "rb": "Then(/^I change the date picker date to \"([^\"]*)\"$/) do |date_str|\n  target_date = Date.parse(date_str)\n  current_time = date_time_from_picker\n  date_time = DateTime.new(target_date.year,\n                           target_date.mon,\n                           target_date.day,\n                           current_time.hour,\n                           current_time.min,\n                           0,\n                           Time.now.sec,\n                           current_time.offset)\n  picker_set_date_time date_time\n  sleep(STEP_PAUSE)\nend\n"
-      },
-      {
-        "id": "datepicker-2",
-        "type": "step",
-        "syntax": "Then I change the date picker date to \"DATE_STR\" at \"TIME_STR\"",
-        "rb": "Then(/^I change the date picker date to \"([^\"]*)\" at \"([^\"]*)\"$/) do |date_str, time_str|\n  macro %(I change the date picker time to \"#{time_str}\")\n  macro %(I change the date picker date to \"#{date_str}\")\nend\n"
-      }
-    ]
-  }
+	{
+		"id": "touch",
+		"name": "Touch",
+		"steps": [
+			{
+				"id": "touch-0",
+				"type": "step",
+				"syntax": "Then I touch on screen X from the left and Y from the top",
+				"rb": "Then \/^I (?:press|touch) on screen (\\d+) from the left and (\\d+) from the top$\/ do |x, y|\n  touch(nil, { offset: { x: x.to_i, y: y.to_i } })\n  sleep(STEP_PAUSE)\nend\n"
+			}, {
+				"id": "touch-1",
+				"type": "step",
+				"syntax": "Then I touch \"NAME\"",
+				"rb": "Then \/^I (?:press|touch) \"([^\\\"]*)\"$\/ do |name|\n  touch(\"view marked: '#{name}'\")\n  sleep(STEP_PAUSE)\nend\n"
+			}, {
+				"id": "touch-2",
+				"type": "step",
+				"syntax": "Then I touch X% right and Y% down from \"NAME\"",
+				"rb": "Then \/^I (?:press|touch) (\\d+)% right and (\\d+)% down from \"([^\\\"]*)\"$\/ do |x, y, name|\n  raise 'This step is not yet implemented on iOS'\nend\n"
+			}, {
+				"id": "touch-3",
+				"type": "step",
+				"syntax": "Then I touch button number INDEX",
+				"rb": "Then \/^I (?:press|touch) button number (\\d+)$\/ do |index|\n  index = index.to_i\n  screenshot_and_raise(\"Index should be positive (was: #{index})\") if index <= 0\n  touch(\"button index: #{index - 1}\")\n  sleep(STEP_PAUSE)\nend\n"
+			}, {
+				"id": "touch-4",
+				"type": "step",
+				"syntax": "Then I touch the \"NAME\" button",
+				"rb": "Then \/^I (?:press|touch) the \"([^\\\"]*)\" button$\/ do |name|\n  touch(\"button marked: '#{name}'\")\n  sleep(STEP_PAUSE)\nend\n"
+			}, {
+				"id": "touch-5",
+				"type": "step",
+				"syntax": "Then I touch input field number INDEX",
+				"rb": "Then \/^I (?:press|touch) (?:input|text) field number (\\d+)$\/ do |index|\n  index = index.to_i\n  screenshot_and_raise(\"Index should be positive (was: #{index})\") if index <= 0\n  touch(\"textField index: #{index - 1}\")\n  sleep(STEP_PAUSE)\nend\n"
+			}, {
+				"id": "touch-6",
+				"type": "step",
+				"syntax": "Then I touch the \"NAME\" input field",
+				"rb": "Then \/^I (?:press|touch) the \"([^\\\"]*)\" (?:input|text) field$\/ do |name|\n  placeholder_query = \"textField placeholder: '#{name}'\"\n  marked_query = \"textField marked: '#{name}'\"\n  if !query(placeholder_query).empty?\n    touch(placeholder_query)\n  elsif !query(marked_query).empty?\n    touch(marked_query)\n  else\n    screenshot_and_raise \"Could not find text field with placeholder '#{name}' or marked as '#{name}'\"\n  end\n  sleep(STEP_PAUSE)\nend\n"
+			}, {
+				"id": "touch-7",
+				"type": "step",
+				"syntax": "Then I touch list item number INDEX",
+				"rb": "Then \/^I (?:press|touch) list item number (\\d+)$\/ do |index|\n  index = index.to_i\n  screenshot_and_raise(\"Index should be positive (was: #{index})\") if index <= 0\n  touch(\"tableViewCell index: #{index - 1}\")\n  sleep(STEP_PAUSE)\nend\n"
+			}, {
+				"id": "touch-8",
+				"type": "step",
+				"syntax": "Then I touch list item \"CELL_NAME\"",
+				"rb": "Then \/^I (?:press|touch) list item \"([^\\\"]*)\"$\/ do |cell_name|\n  if query(\"tableViewCell marked: '#{cell_name}'\").empty?\n    touch(\"tableViewCell text: '#{cell_name}'\")\n  else\n    touch(\"tableViewCell marked: '#{cell_name}'\")\n  end\n  sleep(STEP_PAUSE)\nend\n"
+			}, {
+				"id": "touch-9",
+				"type": "step",
+				"syntax": "Then I toggle the switch",
+				"rb": "Then \/^I toggle the switch$\/ do\n  touch('switch')\n  sleep(STEP_PAUSE)\nend\n"
+			}, {
+				"id": "touch-10",
+				"type": "step",
+				"syntax": "Then I toggle the \"NAME\" switch",
+				"rb": "Then \/^I toggle the \"([^\\\"]*)\" switch$\/ do |name|\n  touch(\"switch marked: '#{name}'\")\n  sleep(STEP_PAUSE)\nend\n"
+			}, {
+				"id": "touch-11",
+				"type": "step",
+				"syntax": "Then I touch (?:the)? user location",
+				"rb": "Then \/^I touch (?:the)? user location$\/ do\n  touch(\"view: 'MKUserLocationView'\")\n  sleep(STEP_PAUSE)\nend\n"
+			}, {
+				"id": "touch-12",
+				"type": "step",
+				"syntax": "Then I (?:touch|press) (?:done|search)",
+				"rb": "Then \/^I (?:touch|press) (?:done|search)$\/ do\n  done\n  sleep(STEP_PAUSE)\nend\n"
+			}
+		]
+	}, {
+		"id": "enteringtext",
+		"name": "Entering text",
+		"steps": [
+			{
+				"id": "enteringtext-0",
+				"type": "step",
+				"syntax": "Then I enter \"TEXT_TO_TYPE\" into the \"FIELD_NAME\" field",
+				"rb": "Then \/^I enter \"([^\\\"]*)\" into the \"([^\\\"]*)\" field$\/ do |text_to_type, field_name|\n  touch(\"textField marked: '#{field_name}'\")\n  wait_for_keyboard\n  keyboard_enter_text text_to_type\n  sleep(STEP_PAUSE)\nend\n"
+			}, {
+				"id": "enteringtext-1",
+				"type": "step",
+				"syntax": "Then I enter \"TEXT_TO_TYPE\" into the \"FIELD_NAME\" (?:text|input) field",
+				"rb": "Then \/^I enter \"([^\\\"]*)\" into the \"([^\\\"]*)\" (?:text|input) field$\/ do |text_to_type, field_name|\n  touch(\"textField marked: '#{field_name}'\")\n  wait_for_keyboard\n  keyboard_enter_text text_to_type\n  sleep(STEP_PAUSE)\nend\n"
+			}, {
+				"id": "enteringtext-2",
+				"type": "step",
+				"syntax": "Then I fill in \"TEXT_FIELD\" with \"TEXT_TO_TYPE\"",
+				"rb": "Then \/^I fill in \"([^\\\"]*)\" with \"([^\\\"]*)\"$\/ do |text_field, text_to_type|\n  macro %(I enter \"#{text_to_type}\" into the \"#{text_field}\" text field)\nend\n"
+			}, {
+				"id": "enteringtext-3",
+				"type": "step",
+				"syntax": "Then I use the native keyboard to enter \"TEXT_TO_TYPE\" into the \"FIELD_NAME\" (?:text|input) field",
+				"rb": "Then \/^I use the native keyboard to enter \"([^\\\"]*)\" into the \"([^\\\"]*)\" (?:text|input) field$\/ do |text_to_type, field_name|\n  macro %(I touch the \"#{field_name}\" text field)\n  wait_for_keyboard\n  keyboard_enter_text(text_to_type)\n  sleep(STEP_PAUSE)\nend\n"
+			}, {
+				"id": "enteringtext-4",
+				"type": "step",
+				"syntax": "Then I fill in text fields as follows:",
+				"rb": "Then \/^I fill in text fields as follows:$\/ do |table|\n  table.hashes.each do |row|\n    macro %(I enter \"#{row['text']}\" into the \"#{row['field']}\" text field)\n  end\nend\n"
+			}, {
+				"id": "enteringtext-5",
+				"type": "step",
+				"syntax": "Then I enter \"TEXT\" into input field number INDEX",
+				"rb": "Then \/^I enter \"([^\\\"]*)\" into (?:input|text) field number (\\d+)$\/ do |text, index|\n  index = index.to_i\n  screenshot_and_raise(\"Index should be positive (was: #{index})\") if index <= 0\n  touch(\"textField index: #{index - 1}\")\n  wait_for_keyboard\n  keyboard_enter_text text\n  sleep(STEP_PAUSE)\nend\n"
+			}, {
+				"id": "enteringtext-6",
+				"type": "step",
+				"syntax": "Then I use the native keyboard to enter \"TEXT_TO_TYPE\" into input field number INDEX",
+				"rb": "Then \/^I use the native keyboard to enter \"([^\\\"]*)\" into (?:input|text) field number (\\d+)$\/ do |text_to_type, index|\n  macro %(I touch text field number #{index})\n  wait_for_keyboard\n  keyboard_enter_text(text_to_type)\n  sleep(STEP_PAUSE)\nend\n"
+			}, {
+				"id": "enteringtext-7",
+				"type": "step",
+				"syntax": "When I clear \"NAME\"",
+				"rb": "When \/^I clear \"([^\\\"]*)\"$\/ do |name|\n  msg = \"When I clear <name>' will be deprecated because it is ambiguous - what should be cleared?\"\n  _deprecated('0.9.151', msg, :warn)\n  clear_text(\"textField marked: '#{name}'\")\nend\n"
+			}, {
+				"id": "enteringtext-8",
+				"type": "step",
+				"syntax": "Then I clear input field number INDEX",
+				"rb": "Then \/^I clear (?:input|text) field number (\\d+)$\/ do |index|\n  index = index.to_i\n  screenshot_and_raise(\"Index should be positive (was: #{index})\") if index <= 0\n  clear_text(\"textField index: #{index - 1}\")\nend\n"
+			}
+		]
+	}, {
+		"id": "see",
+		"name": "See",
+		"steps": [
+			{
+				"id": "see-0",
+				"type": "step",
+				"syntax": "Then I wait to see \"EXPECTED_MARK\"",
+				"rb": "Then \/^I wait to see \"([^\\\"]*)\"$\/ do |expected_mark|\n  wait_for(WAIT_TIMEOUT) { view_with_mark_exists(expected_mark) }\nend\n"
+			}, {
+				"id": "see-1",
+				"type": "step",
+				"syntax": "Then I wait until I don't see \"EXPECTED_MARK\"",
+				"rb": "Then \/^I wait until I don't see \"([^\\\"]*)\"$\/ do |expected_mark|\n  sleep 1 # wait for previous screen to disappear\n  wait_for(WAIT_TIMEOUT) { !element_exists(\"view marked: '#{expected_mark}'\") }\nend\n"
+			}, {
+				"id": "see-2",
+				"type": "step",
+				"syntax": "Then I wait to not see \"EXPECTED_MARK\"",
+				"rb": "Then \/^I wait to not see \"([^\\\"]*)\"$\/ do |expected_mark|\n  macro %(I wait until I don't see \"#{expected_mark}\")\nend\n"
+			}, {
+				"id": "see-3",
+				"type": "step",
+				"syntax": "Then I wait for \"NAME\" to appear",
+				"rb": "Then \/^I wait for \"([^\\\"]*)\" to appear$\/ do |name|\n  macro %(I wait to see \"#{name}\")\nend\n"
+			}, {
+				"id": "see-4",
+				"type": "step",
+				"syntax": "Then I wait for the \"NAME\" button to appear",
+				"rb": "Then \/^I wait for the \"([^\\\"]*)\" button to appear$\/ do |name|\n  wait_for(WAIT_TIMEOUT) { element_exists(\"button marked: '#{name}'\") }\nend\n"
+			}, {
+				"id": "see-5",
+				"type": "step",
+				"syntax": "Then I wait to see a navigation bar titled \"EXPECTED_MARK\"",
+				"rb": "Then \/^I wait to see a navigation bar titled \"([^\\\"]*)\"$\/ do |expected_mark|\n  msg = \"Waited for '#{WAIT_TIMEOUT}' seconds but did not see the navbar with title '#{expected_mark}'\"\n  wait_for(timeout: WAIT_TIMEOUT, timeout_message: msg ) do\n    all_items = query(\"navigationItemView marked: '#{expected_mark}'\")\n    button_items = query('navigationItemButtonView')\n    non_button_items = all_items.delete_if { |item| button_items.include?(item) }\n    !non_button_items.empty?\n  end\nend\n"
+			}, {
+				"id": "see-6",
+				"type": "step",
+				"syntax": "Then I wait for the \"PLACEHOLDER_OR_VIEW_MARK\" input field",
+				"rb": "Then \/^I wait for the \"([^\\\"]*)\" (?:input|text) field$\/ do |placeholder_or_view_mark|\n  wait_for(WAIT_TIMEOUT) do\n    element_exists(\"textField placeholder: '#{placeholder_or_view_mark}'\") ||\n    element_exists(\"textField marked: '#{placeholder_or_view_mark}'\")\n  end\nend\n"
+			}, {
+				"id": "see-7",
+				"type": "step",
+				"syntax": "Then I wait for COUNT input field(?:s)?",
+				"rb": "Then \/^I wait for (\\d+) (?:input|text) field(?:s)?$\/ do |count|\n  wait_for(WAIT_TIMEOUT) { query(:textField).count >= count.to_i }\nend\n"
+			}, {
+				"id": "see-8",
+				"type": "step",
+				"syntax": "Then I wait",
+				"rb": "Then \/^I wait$\/ do\n  sleep 2\nend\n"
+			}, {
+				"id": "see-9",
+				"type": "step",
+				"syntax": "Then I wait and wait",
+				"rb": "Then \/^I wait and wait$\/ do\n  sleep 4\nend\n"
+			}, {
+				"id": "see-10",
+				"type": "step",
+				"syntax": "Then I wait and wait and wait...",
+				"rb": "Then \/^I wait and wait and wait...$\/ do\n  sleep 10\nend\n"
+			}, {
+				"id": "see-11",
+				"type": "step",
+				"syntax": "When I wait for ([\\d\\.]+) second(?:s)?",
+				"rb": "When \/^I wait for ([\\d\\.]+) second(?:s)?$\/ do |num_seconds|\n  sleep num_seconds.to_f\nend\n"
+			}, {
+				"id": "see-12",
+				"type": "step",
+				"syntax": "Then I go back",
+				"rb": "Then \/^I go back$\/ do\n  touch('navigationItemButtonView first')\n  sleep(STEP_PAUSE)\nend\n"
+			}, {
+				"id": "see-13",
+				"type": "step",
+				"syntax": "Then \/^(?:I\\s)?take (?:picture|screenshot)",
+				"rb": "Then \/^(?:I\\s)?take (?:picture|screenshot)$\/ do\n  sleep(STEP_PAUSE)\n  screenshot_embed\nend\n"
+			}, {
+				"id": "see-14",
+				"type": "step",
+				"syntax": "Then I swipe (left|right|up|down)",
+				"rb": "Then \/^I swipe (left|right|up|down)$\/ do |dir|\n  swipe(dir)\n  sleep(STEP_PAUSE)\nend\n"
+			}, {
+				"id": "see-15",
+				"type": "step",
+				"syntax": "Then I swipe (left|right|up|down) on number DIR",
+				"rb": "Then \/^I swipe (left|right|up|down) on number (\\d+)$\/ do |dir, index|\n  index = index.to_i\n  screenshot_and_raise(\"Index should be positive (was: #{index})\") if index <= 0\n  swipe(dir, { query: \"scrollView index: #{index - 1}\" })\n  sleep(STEP_PAUSE)\nend\n"
+			}, {
+				"id": "see-16",
+				"type": "step",
+				"syntax": "Then I swipe (left|right|up|down) on number DIR at x INDEX and y X",
+				"rb": "Then \/^I swipe (left|right|up|down) on number (\\d+) at x (\\d+) and y (\\d+)$\/ do |dir, index, x, y|\n  index = index.to_i\n  screenshot_and_raise(\"Index should be positive (was: #{index})\") if index <= 0\n  swipe(dir, { offset: { x: x.to_i, y: y.to_i }, query: \"scrollView index: #{index - 1}\" })\n  sleep(STEP_PAUSE)\nend\n"
+			}, {
+				"id": "see-17",
+				"type": "step",
+				"syntax": "Then I swipe (left|right|up|down) on \"DIR\"",
+				"rb": "Then \/^I swipe (left|right|up|down) on \"([^\\\"]*)\"$\/ do |dir, mark|\n  swipe(dir, { query: \"view marked: '#{mark}'\" })\n  sleep(STEP_PAUSE)\nend\n"
+			}, {
+				"id": "see-18",
+				"type": "step",
+				"syntax": "Then I swipe on cell number INDEX",
+				"rb": "Then \/^I swipe on cell number (\\d+)$\/ do |index|\n  index = index.to_i\n  screenshot_and_raise(\"Index should be positive (was: #{index})\") if index <= 0\n  cell_swipe({ query: \"tableViewCell index: #{index - 1}\" })\n  sleep(STEP_PAUSE)\nend\n"
+			}
+		]
+	}, {
+		"id": "pinch",
+		"name": "Pinch",
+		"steps": [
+			{
+				"id": "pinch-0",
+				"type": "step",
+				"syntax": "Then I pinch to zoom (in|out)",
+				"rb": "Then \/^I pinch to zoom (in|out)$\/ do |in_out|\n  pinch(in_out)\n  sleep(STEP_PAUSE)\nend\n"
+			}, {
+				"id": "pinch-1",
+				"type": "step",
+				"syntax": "Then I pinch to zoom (in|out) on \"IN_OUT\"",
+				"rb": "Then \/^I pinch to zoom (in|out) on \"([^\\\"]*)\"$\/ do |in_out, name|\n  pinch(in_out, { query: \"view marked: '#{name}'\" })\n  sleep(STEP_PAUSE)\nend\n"
+			}, {
+				"id": "pinch-2",
+				"type": "step",
+				"syntax": "Then I scroll (left|right|up|down)",
+				"rb": "Then \/^I scroll (left|right|up|down)$\/ do |dir|\n  scroll('scrollView index: 0', dir)\n  sleep(STEP_PAUSE)\nend\n"
+			}, {
+				"id": "pinch-3",
+				"type": "step",
+				"syntax": "Then I scroll (left|right|up|down) on \"DIR\"",
+				"rb": "Then \/^I scroll (left|right|up|down) on \"([^\\\"]*)\"$\/ do |dir, name|\n  scroll(\"view marked: '#{name}'\", dir)\n  sleep(STEP_PAUSE)\nend\n"
+			}
+		]
+	}, {
+		"id": "playback",
+		"name": "Playback",
+		"steps": [
+			{
+				"id": "playback-0",
+				"type": "step",
+				"syntax": "Then I playback recording \"FILENAME\"",
+				"rb": "Then \/^I playback recording \"([^\\\"]*)\"$\/ do |filename|\n  playback(filename)\n  sleep(STEP_PAUSE)\nend\n"
+			}, {
+				"id": "playback-1",
+				"type": "step",
+				"syntax": "Then I playback recording \"FILENAME\" on \"NAME\"",
+				"rb": "Then \/^I playback recording \"([^\\\"]*)\" on \"([^\\\"]*)\"$\/ do |filename, name|\n  playback(filename, { query: \"view marked: '#{name}'\" })\n  sleep(STEP_PAUSE)\nend\n"
+			}, {
+				"id": "playback-2",
+				"type": "step",
+				"syntax": "Then I playback recording \"FILENAME\" on \"NAME\" with offset X,Y",
+				"rb": "Then \/^I playback recording \"([^\\\"]*)\" on \"([^\\\"]*)\" with offset (\\d+),(\\d+)$\/ do |filename, name, x, y|\n  playback(filename, { query: \"view marked:'#{name}'\", offset: { x: x.to_i, y: y.to_i } })\n  sleep(STEP_PAUSE)\nend\n"
+			}, {
+				"id": "playback-3",
+				"type": "step",
+				"syntax": "Then I reverse playback recording \"FILENAME\"",
+				"rb": "Then \/^I reverse playback recording \"([^\\\"]*)\"$\/ do |filename|\n  playback(filename, { reverse: true })\n  sleep(STEP_PAUSE)\nend\n"
+			}, {
+				"id": "playback-4",
+				"type": "step",
+				"syntax": "Then I reverse playback recording \"FILENAME\" on \"NAME\"",
+				"rb": "Then \/^I reverse playback recording \"([^\\\"]*)\" on \"([^\\\"]*)\"$\/ do |filename, name|\n  playback(filename, { query: \"view marked: '#{name}'\", reverse: true })\n  sleep(STEP_PAUSE)\nend\n"
+			}, {
+				"id": "playback-5",
+				"type": "step",
+				"syntax": "Then I reverse playback recording \"FILENAME\" on \"NAME\" with offset X,Y",
+				"rb": "Then \/^I reverse playback recording \"([^\\\"]*)\" on \"([^\\\"]*)\" with offset (\\d+),(\\d+)$\/ do |filename, name, x, y|\n  playback(filename, { query: \"view marked: '#{name}'\", offset: { x: x.to_i, y: y.to_i }, reverse: true })\n  sleep(STEP_PAUSE)\nend\n"
+			}
+		]
+	}, {
+		"id": "deviceorientation",
+		"name": "Device orientation",
+		"steps": [
+			{
+				"id": "deviceorientation-0",
+				"type": "step",
+				"syntax": "Then I rotate device (left|right)",
+				"rb": "Then \/^I rotate device (left|right)$\/ do |dir|\n  rotate(dir.to_sym)\n  sleep 5 # Servo wait\nend\n"
+			}, {
+				"id": "deviceorientation-1",
+				"type": "step",
+				"syntax": "Then I send app to background for SECS seconds",
+				"rb": "Then \/^I send app to background for (\\d+) seconds$\/ do |secs|\n  secs = secs.to_f\n  send_app_to_background(secs)\n  sleep(secs + 10)\nend\n"
+			}
+		]
+	}, {
+		"id": "assertions",
+		"name": "Assertions",
+		"steps": [
+			{
+				"id": "assertions-0",
+				"type": "step",
+				"syntax": "Then I should see \"EXPECTED_MARK\"",
+				"rb": "Then \/^I should see \"([^\\\"]*)\"$\/ do |expected_mark|\n  until element_exists(\"view marked:'#{expected_mark}'\") ||\n        element_exists(\"view text:'#{expected_mark}'\")\n    screenshot_and_raise \"No element found with mark or text: #{expected_mark}\"\n  end\nend\n"
+			}, {
+				"id": "assertions-1",
+				"type": "step",
+				"syntax": "Then I should not see \"EXPECTED_MARK\"",
+				"rb": "Then \/^I should not see \"([^\\\"]*)\"$\/ do |expected_mark|\n  res = query(\"view marked: '#{expected_mark}'\")\n  res.concat query(\"view text: '#{expected_mark}'\")\n  unless res.empty?\n    screenshot_and_raise \"Expected no element with text nor accessibilityLabel: #{expected_mark}, found #{res.join(', ')}\"\n  end\nend\n"
+			}, {
+				"id": "assertions-2",
+				"type": "step",
+				"syntax": "Then I should see a \"EXPECTED_MARK\" button",
+				"rb": "Then \/^I should see a \"([^\\\"]*)\" button$\/ do |expected_mark|\n  check_element_exists(\"button marked: '#{expected_mark}'\")\nend\nThen \/^I should not see a \"([^\\\"]*)\" button$\/ do |expected_mark|\n  check_element_does_not_exist(\"button marked: '#{expected_mark}'\")\nend\n"
+			}, {
+				"id": "assertions-3",
+				"type": "step",
+				"syntax": "Then I don't see the text \"TEXT\"",
+				"rb": "Then \/^I don't see the text \"([^\\\"]*)\"$\/ do |text|\n  macro %(I should not see \"#{text}\")\nend\nThen \/^I don't see the \"([^\\\"]*)\"$\/ do |text|\n  macro %(I should not see \"#{text}\")\nend\n"
+			}, {
+				"id": "assertions-4",
+				"type": "step",
+				"syntax": "Then I see the text \"TEXT\"",
+				"rb": "Then \/^I see the text \"([^\\\"]*)\"$\/ do |text|\n  macro %(I should see \"#{text}\")\nend\n"
+			}, {
+				"id": "assertions-5",
+				"type": "step",
+				"syntax": "Then I see the \"TEXT\"",
+				"rb": "Then \/^I see the \"([^\\\"]*)\"$\/ do |text|\n  macro %(I should see \"#{text}\")\nend\n"
+			}, {
+				"id": "assertions-6",
+				"type": "step",
+				"syntax": "Then I (?:should)? see text starting with \"TEXT\"",
+				"rb": "Then \/^I (?:should)? see text starting with \"([^\\\"]*)\"$\/ do |text|\n  if query(\"view {text BEGINSWITH '#{text}'}\").empty?\n    screenshot_and_raise \"No text found starting with: #{text}\"\n  end\nend\n"
+			}, {
+				"id": "assertions-7",
+				"type": "step",
+				"syntax": "Then I (?:should)? see text containing \"TEXT\"",
+				"rb": "Then \/^I (?:should)? see text containing \"([^\\\"]*)\"$\/ do |text|\n  if query(\"view {text LIKE '*#{text}*'}\").empty?\n    screenshot_and_raise \"No text found containing: #{text}\"\n  end\nend\n"
+			}, {
+				"id": "assertions-8",
+				"type": "step",
+				"syntax": "Then I (?:should)? see text ending with \"TEXT\"",
+				"rb": "Then \/^I (?:should)? see text ending with \"([^\\\"]*)\"$\/ do |text|\n  if query(\"view {text ENDSWITH '#{text}'}\").empty?\n    screenshot_and_raise \"No text found ending with: #{text}\"\n  end\nend\n"
+			}, {
+				"id": "assertions-9",
+				"type": "step",
+				"syntax": "Then I see COUNT input field(?:s)?",
+				"rb": "Then \/^I see (\\d+) (?:input|text) field(?:s)?$\/ do |count|\n  cnt = query(:textField).count\n  if cnt < count.to_i\n    screenshot_and_raise \"Expected at least #{count} text\/input fields, found #{cnt}\"\n  end\nend\n"
+			}, {
+				"id": "assertions-10",
+				"type": "step",
+				"syntax": "Then I should see a \"EXPECTED_MARK\" input field",
+				"rb": "Then \/^I should see a \"([^\\\"]*)\" (?:input|text) field$\/ do |expected_mark|\n  unless element_exists(\"textField placeholder: '#{expected_mark}'\") ||\n         element_exists(\"textField marked: '#{expected_mark}'\")\n    screenshot_and_raise \"Expected textfield with placeholder or accessibilityLabel: #{expected_mark}\"\n  end\nend\n"
+			}, {
+				"id": "assertions-11",
+				"type": "step",
+				"syntax": "Then I should not see a \"EXPECTED_MARK\" input field",
+				"rb": "Then \/^I should not see a \"([^\\\"]*)\" (?:input|text) field$\/ do |expected_mark|\n  res = query(\"textField placeholder: '#{expected_mark}'\")\n  res.concat query(\"textField marked: '#{expected_mark}'\")\n  unless res.empty?\n    screenshot_and_raise \"Expected no textfield with placeholder nor accessibilityLabel: #{expected_mark}, found #{res}\"\n  end\nend\n"
+			}, {
+				"id": "assertions-12",
+				"type": "step",
+				"syntax": "Then I should see a map",
+				"rb": "Then \/^I should see a map$\/ do\n  check_element_exists(\"view: 'MKMapView'\")\nend\n"
+			}, {
+				"id": "assertions-13",
+				"type": "step",
+				"syntax": "Then I should see (?:the)? user location",
+				"rb": "Then \/^I should see (?:the)? user location$\/ do\n  check_element_exists(\"view: 'MKUserLocationView'\")\nend\n"
+			}
+		]
+	}, {
+		"id": "datepicker",
+		"name": "Date Picker",
+		"steps": [
+			{
+				"id": "datepicker-0",
+				"type": "step",
+				"syntax": "Then I change the date picker time to \"TIME_STR\"",
+				"rb": "Then(\/^I change the date picker time to \"([^\"]*)\"$\/) do |time_str|\n  target_time = Time.parse(time_str)\n  current_date = date_time_from_picker\n  current_date = DateTime.new(current_date.year,\n                              current_date.mon,\n                              current_date.day,\n                              target_time.hour,\n                              target_time.min,\n                              0,\n                              target_time.gmt_offset)\n  picker_set_date_time current_date\n  sleep(STEP_PAUSE)\nend\n"
+			}, {
+				"id": "datepicker-1",
+				"type": "step",
+				"syntax": "Then I change the date picker date to \"DATE_STR\"",
+				"rb": "Then(\/^I change the date picker date to \"([^\"]*)\"$\/) do |date_str|\n  target_date = Date.parse(date_str)\n  current_time = date_time_from_picker\n  date_time = DateTime.new(target_date.year,\n                           target_date.mon,\n                           target_date.day,\n                           current_time.hour,\n                           current_time.min,\n                           0,\n                           Time.now.sec,\n                           current_time.offset)\n  picker_set_date_time date_time\n  sleep(STEP_PAUSE)\nend\n"
+			}, {
+				"id": "datepicker-2",
+				"type": "step",
+				"syntax": "Then I change the date picker date to \"DATE_STR\" at \"TIME_STR\"",
+				"rb": "Then(\/^I change the date picker date to \"([^\"]*)\" at \"([^\"]*)\"$\/) do |date_str, time_str|\n  macro %(I change the date picker time to \"#{time_str}\")\n  macro %(I change the date picker date to \"#{date_str}\")\nend\n"
+			}
+		]
+	}
 ]

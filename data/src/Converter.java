@@ -19,59 +19,67 @@ public class Converter {
 	static final String STEP = "{	\"id\": \"%s\", \"type\": \"step\",	\"syntax\": \"%s\", \"rb\":\"%s\"}";
 
 	public static void main(String[] args) {
-		// convert("ios/steps_raw.txt", false);
-		convert("ios/calabash_steps.rb", false);
+		//convertIOS("ios/calabash_steps.rb", false);
 
+		convertAndroid();
 	}
 
-	private static void replaceVariables(String syntax) {
-		String s = syntax;
-		System.out.println(s.indexOf("([^\\\"]*)", 30));
-		int i1, i2;
-		int count = 4;
+	private static void convertAndroid() {
+		String path = "android/calabash-defined";
+		File[] rbFiles = new File(path).listFiles();
+		StringBuffer buff = new StringBuffer();
+		String line = "";
+		String groupId = "";
+		String groupName = "";
+		String stepId = "";
+		StringBuffer groupSteps = null;
+		int stepIndex = 0;
+		
+		for (File file : rbFiles) {
+			System.out.println(file.getName().substring(0, file.getName().length() - "_steps.rb".length()).replaceAll("_", " "));
+			
+			groupName = file.getName().substring(0, file.getName().length() - "_steps.rb".length()).replaceAll("_", " ").trim();
+			groupId = toMSDOSStandard(groupName).toLowerCase();
+			groupSteps = new StringBuffer();
+			stepIndex = 0;
+			groupName = StringUtils.capitalize(groupName);
+			
+			try {
+				BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file), "utf8"));
 
-		String[] t = "filename, name, x, y".split(",");
-		while (count > 0) {
-			i1 = s.indexOf("([^\\\"]*)");
-			i2 = s.indexOf("(\\d+)");
-			System.out.println(i1 + "\t" + i2);
+				StringBuffer rbBuffer = new StringBuffer();
+				while ((line = reader.readLine()) != null) {
+					if (line.startsWith("#")) continue;
+					if (line.trim().isEmpty()) while ((line = reader.readLine()).trim().isEmpty());
+					if (groupSteps.length() > 0)
+						groupSteps.append(",\n");
+					rbBuffer = new StringBuffer();
+					rbBuffer.append(line).append("\n");
+					String rbLine = null;
+					boolean isEnd = false;
+					while ((rbLine = reader.readLine()) != null) {
+						if (rbLine.trim().isEmpty() && isEnd)
+							break;
+						// System.out.println("#" + line);
+						// System.out.println(rbLine);
+						isEnd = rbLine.trim().equalsIgnoreCase("end");
+						rbBuffer.append(rbLine).append("\n");
+					}
 
-			if (i1 > 0) {
-				if (i2 > 0) {
-					if (i1 < i2)
-						s = StringUtils.replaceOnce(s, "([^\\\"]*)", t[t.length - count].trim().toUpperCase());
-					else
-						s = StringUtils.replaceOnce(s, "(\\d+)", t[t.length - count].trim().toUpperCase());
-				} else
-					s = StringUtils.replaceOnce(s, "([^\\\"]*)", t[t.length - count].trim().toUpperCase());
-			} else
-				s = StringUtils.replaceOnce(s, "(\\d+)", t[t.length - count].trim().toUpperCase());
-			count--;
-		}
-
-		System.out.println(s);
-	}
-
-	private static void testConvertSteps() {
-		try {
-			BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(new File("ios/steps_raw.txt")), "utf8"));
-			String line = "";
-
-			while ((line = reader.readLine()) != null) {
-				// System.out.println("$" + line);
-				if (line.startsWith("###")) {
-
-				} else if (line.isEmpty() || line.startsWith("#")) {
-
-				} else {
-					convertStepSyntax(line);
-
+					groupSteps.append(String.format(STEP, groupId + "-" + stepIndex, StringEscapeUtils.escapeJson(convertStepSyntax(line)), StringEscapeUtils.escapeJson(rbBuffer.toString())));
+					stepIndex++;
 				}
-
+				if (groupId != null && !groupId.isEmpty()) {
+					if (buff.length() > 0)
+						buff.append(",\n");
+					buff.append(String.format(GROUP, groupId, groupName, groupSteps.toString()));
+				}
+			} catch (Exception e) {
+				System.out.println(file.getName());
+				e.printStackTrace();
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
 		}
+		System.out.println("[\n" + buff.toString() + "\n]");
 	}
 
 	private static String convertStepSyntax(String rbSyntax) {
@@ -126,6 +134,7 @@ public class Converter {
 			}
 		}
 		
+		System.out.println("@@@@\n" + tmp +"\t******\t" + tt + "\n@@@@@@@@@@@@");
 		tmp = tmp.substring(0, tmp.indexOf(tt));
 		tmp = tmp.replace("(/^I", " I");
 		tmp = tmp.replace("/^I", "I");
@@ -136,7 +145,7 @@ public class Converter {
 		return tmp;
 	}
 
-	private static void convert(String file, boolean isRaw) {
+	private static void convertIOS(String file, boolean isRaw) {
 		StringBuffer buff = new StringBuffer();
 		try {
 			BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(new File(file)), "utf8"));

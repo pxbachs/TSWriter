@@ -1,0 +1,518 @@
+[
+	{
+		"id": "assert",
+		"name": "Assert",
+		"steps": [
+			{
+				"id": "assert-0",
+				"type": "step",
+				"syntax": "Then I see the text \"TEXT\"",
+				"rb": "Then \/^I see the text \"([^\\\"]*)\"$\/ do |text|\n  wait_for_text(text, timeout: 10)\nend\n"
+			}, {
+				"id": "assert-1",
+				"type": "step",
+				"syntax": "Then I see \"TEXT\"",
+				"rb": "Then \/^I see \"([^\\\"]*)\"$\/ do |text|\n  wait_for_text(text, timeout: 10)\nend\n"
+			}, {
+				"id": "assert-2",
+				"type": "step",
+				"syntax": "Then I should see \"TEXT\"",
+				"rb": "Then \/^I should see \"([^\\\"]*)\"$\/ do |text|\n  wait_for_text(text, timeout: 10)\nend\n"
+			}, {
+				"id": "assert-3",
+				"type": "step",
+				"syntax": "Then I should see text containing \"TEXT\"",
+				"rb": "Then \/^I should see text containing \"([^\\\"]*)\"$\/ do |text|\n  wait_for_text(text, timeout: 10)\nend\n"
+			}, {
+				"id": "assert-4",
+				"type": "step",
+				"syntax": "Then I should not see \"TEXT\"",
+				"rb": "Then \/^I should not see \"([^\\\"]*)\"$\/ do |text|\n  wait_for_text_to_disappear(text, timeout: 10)\nend\n"
+			}, {
+				"id": "assert-5",
+				"type": "step",
+				"syntax": "Then I don't see the text \"TEXT\"",
+				"rb": "Then \/^I don't see the text \"([^\\\"]*)\"$\/ do |text|\n  wait_for_text_to_disappear(text, timeout: 10)\nend\n"
+			}, {
+				"id": "assert-6",
+				"type": "step",
+				"syntax": "Then I don't see \"TEXT\"",
+				"rb": "Then \/^I don't see \"([^\\\"]*)\"$\/ do |text|\n  wait_for_text_to_disappear(text, timeout: 10)\nend\n"
+			}
+		]
+	}, {
+		"id": "checkbox",
+		"name": "Check box",
+		"steps": [
+			{
+				"id": "checkbox-0",
+				"type": "step",
+				"syntax": "Then I toggle checkbox number INDEX",
+				"rb": "Then \/^I toggle checkbox number (\\d+)$\/ do |index|\n  tap_when_element_exists(\"android.widget.CheckBox index:#{index.to_i-1}\")\nend\n"
+			}
+		]
+	}, {
+		"id": "contextmenu",
+		"name": "Context menu",
+		"steps": [
+			{
+				"id": "contextmenu-0",
+				"type": "step",
+				"syntax": "Then I long press \"TEXT\" and select item number INDEX",
+				"rb": "Then \/^I long press \"([^\\\"]*)\" and select item number (\\d+)$\/ do |text, index|\n  step_deprecated\n\n  long_press_when_element_exists(\"* {text CONTAINS[c] '#{text}'}\")\n  tap_when_element_exists(\"com.android.internal.view.menu.ListMenuItemView android.widget.TextView index:#{index.to_i - 1}\")\nend\n"
+			}, {
+				"id": "contextmenu-1",
+				"type": "step",
+				"syntax": "Then I long press \"TEXT\" and select \"IDENTIFIER\"",
+				"rb": "Then \/^I long press \"([^\\\"]*)\" and select \"([^\\\"]*)\"$\/ do |text, identifier|\n  step_deprecated\n\n  long_press_when_element_exists(\"* {text CONTAINS[c] '#{text}'}\")\n  tap_when_element_exists(\"com.android.internal.view.menu.ListMenuItemView android.widget.TextView marked:'#{identifier}'\")\nend\n"
+			}, {
+				"id": "contextmenu-2",
+				"type": "step",
+				"syntax": "Then I long press \"TEXT\"",
+				"rb": "Then \/^I long press \"([^\\\"]*)\"$\/ do |text|\n  long_press_when_element_exists(\"* {text CONTAINS[c] '#{text}'}\")\nend\n"
+			}
+		]
+	}, {
+		"id": "datepicker",
+		"name": "Date picker",
+		"steps": [
+			{
+				"id": "datepicker-0",
+				"type": "step",
+				"syntax": "Given I set the date to \"(\\d\\d-\\d\\d-\\d\\d\\d\\d)\" on DatePicker with index DATE",
+				"rb": "Given \/^I set the date to \"(\\d\\d-\\d\\d-\\d\\d\\d\\d)\" on DatePicker with index ([^\\\"]*)$\/ do |date, index|\n  set_date(\"android.widget.DatePicker index:#{index.to_i-1}\", date)\nend\n"
+			}, {
+				"id": "datepicker-1",
+				"type": "step",
+				"syntax": "Given I set the \"CONTENT_DESCRIPTION\" date to \"(\\d\\d-\\d\\d-\\d\\d\\d\\d)\"",
+				"rb": "Given \/^I set the \"([^\\\"]*)\" date to \"(\\d\\d-\\d\\d-\\d\\d\\d\\d)\"$\/ do |content_description, date|\n  set_date(\"android.widget.DatePicker {contentDescription LIKE[c] '#{content_description}'}\", date)\nend\n"
+			}
+		]
+	}, {
+		"id": "entertext",
+		"name": "Enter text",
+		"steps": [
+			{
+				"id": "entertext-0",
+				"type": "step",
+				"syntax": "Then I enter \"TEXT\" as \"CONTENT_DESCRIPTION\"",
+				"rb": "Then \/^I enter \"([^\\\"]*)\" as \"([^\\\"]*)\"$\/ do |text, content_description|\n  enter_text(\"android.widget.EditText {contentDescription LIKE[c] '#{content_description}'}\", text)\nend\n"
+			}, {
+				"id": "entertext-1",
+				"type": "step",
+				"syntax": "Then I enter \"TEXT\" into \"CONTENT_DESCRIPTION\"",
+				"rb": "Then \/^I enter \"([^\\\"]*)\" into \"([^\\\"]*)\"$\/ do |text, content_description|\n  enter_text(\"android.widget.EditText {contentDescription LIKE[c] '#{content_description}'}\", text)\nend\n"
+			}, {
+				"id": "entertext-2",
+				"type": "step",
+				"syntax": "Then I enter \"TEXT\" into input field number INDEX",
+				"rb": "Then \/^I enter \"([^\\\"]*)\" into input field number (\\d+)$\/ do |text, index|\n  enter_text(\"android.widget.EditText index:#{index.to_i-1}\", text)\nend\n"
+			}, {
+				"id": "entertext-3",
+				"type": "step",
+				"syntax": "Then I enter text \"TEXT\" into field with id \"ID\"",
+				"rb": "Then \/^I enter text \"([^\\\"]*)\" into field with id \"([^\\\"]*)\"$\/ do |text, id|\n  enter_text(\"android.widget.EditText id:'#{id}'\", text)\nend\n"
+			}, {
+				"id": "entertext-4",
+				"type": "step",
+				"syntax": "Then I clear \"IDENTIFIER\"",
+				"rb": "Then \/^I clear \"([^\\\"]*)\"$\/ do |identifier|\n  clear_text_in(\"android.widget.EditText marked:'#{identifier}'}\")\nend\n"
+			}, {
+				"id": "entertext-5",
+				"type": "step",
+				"syntax": "Then I clear input field number INDEX",
+				"rb": "Then \/^I clear input field number (\\d+)$\/ do |index|\n  clear_text_in(\"android.widget.EditText index:#{index.to_i-1}\")\nend\n"
+			}, {
+				"id": "entertext-6",
+				"type": "step",
+				"syntax": "Then I clear input field with id \"ID\"",
+				"rb": "Then \/^I clear input field with id \"([^\\\"]*)\"$\/ do |id|\n  clear_text_in(\"android.widget.EditText id:'#{id}'\")\nend\n"
+			}
+		]
+	}, {
+		"id": "l10n",
+		"name": "L10n",
+		"steps": [
+			{
+				"id": "l10n-0",
+				"type": "step",
+				"syntax": "Then I press text of translated l10n?key \"?L10NKEY\"?",
+				"rb": "Then \/^I press text of translated l10n?key \"?([^\\\"]*)\"?$\/ do |l10nkey|\n  perform_action('press_l10n_element', l10nkey)\nend\n"
+			}, {
+				"id": "l10n-1",
+				"type": "step",
+				"syntax": "Then I press button of translated l10n?key \"?L10NKEY\"?",
+				"rb": "Then \/^I press button of translated l10n?key \"?([^\\\"]*)\"?$\/ do |l10nkey|\n  perform_action('press_l10n_element', l10nkey,'button')\nend\n"
+			}, {
+				"id": "l10n-2",
+				"type": "step",
+				"syntax": "Then I press menu item of translated l10n?key \"?L10NKEY\"?",
+				"rb": "Then \/^I press menu item of translated l10n?key \"?([^\\\"]*)\"?$\/ do |l10nkey|\n  perform_action('press_l10n_element', l10nkey,'menu_item')\nend\n"
+			}, {
+				"id": "l10n-3",
+				"type": "step",
+				"syntax": "Then I press toggle button of translated l10n?key \"?L10NKEY\"?",
+				"rb": "Then \/^I press toggle button of translated l10n?key \"?([^\\\"]*)\"?$\/ do |l10nkey|\n  perform_action('press_l10n_element', l10nkey,'toggle_button')\nend\n"
+			}, {
+				"id": "l10n-4",
+				"type": "step",
+				"syntax": "Then I wait for the translated \"?L10NKEY\"? l10n?key to appear",
+				"rb": "Then \/^I wait for the translated \"?([^\\\"]*)\"? l10n?key to appear$\/ do |l10nkey|\n  perform_action('wait_for_l10n_element', l10nkey)\nend\n"
+			}
+		]
+	}, {
+		"id": "location",
+		"name": "Location",
+		"steps": [
+			{
+				"id": "location-0",
+				"type": "step",
+				"syntax": "Then I am in \"LOCATION\"",
+				"rb": "Then \/^I am in \"([^\\\"]*)\"$\/ do |location|\n  set_gps_coordinates_from_location(location)\nend\n"
+			}, {
+				"id": "location-1",
+				"type": "step",
+				"syntax": "Then I am at \"LOCATION\"",
+				"rb": "Then \/^I am at \"([^\\\"]*)\"$\/ do |location|\n  set_gps_coordinates_from_location(location)\nend\n"
+			}, {
+				"id": "location-2",
+				"type": "step",
+				"syntax": "Then I go to \"LOCATION\"",
+				"rb": "Then \/^I go to \"([^\\\"]*)\"$\/ do |location|\n  set_gps_coordinates_from_location(location)\nend\n"
+			}, {
+				"id": "location-3",
+				"type": "step",
+				"syntax": "Then I am at ([-+]?[0-9]*\\.?[0-9]+), ([-+]?[0-9]*\\.?[0-9]+)",
+				"rb": "Then \/^I am at ([-+]?[0-9]*\\.?[0-9]+), ([-+]?[0-9]*\\.?[0-9]+)$\/ do |latitude, longitude|\n  set_gps_coordinates(latitude, longitude)\nend\n"
+			}, {
+				"id": "location-4",
+				"type": "step",
+				"syntax": "Then I go to ([-+]?[0-9]*\\.?[0-9]+), ([-+]?[0-9]*\\.?[0-9]+)",
+				"rb": "Then \/^I go to ([-+]?[0-9]*\\.?[0-9]+), ([-+]?[0-9]*\\.?[0-9]+)$\/ do |latitude, longitude|\n  set_gps_coordinates(latitude, longitude)\nend\n"
+			}
+		]
+	}, {
+		"id": "map",
+		"name": "Map",
+		"steps": [
+			{
+				"id": "map-0",
+				"type": "step",
+				"syntax": "When I centre the map at (-?\\d+\\.\\d+), (-?\\d+\\.\\d+)",
+				"rb": "When \/^I centre the map at (-?\\d+\\.\\d+), (-?\\d+\\.\\d+)$\/ do | lat, lon |\n  perform_action('set_map_center', lat, lon)\nend\n"
+			}, {
+				"id": "map-1",
+				"type": "step",
+				"syntax": "When I pan the map to (-?\\d+\\.\\d+), (-?\\d+\\.\\d+)",
+				"rb": "When \/^I pan the map to (-?\\d+\\.\\d+), (-?\\d+\\.\\d+)$\/ do | lat, lon |\n  perform_action('pan_map_to', lat, lon)\n  sleep(1)\nend\n"
+			}, {
+				"id": "map-2",
+				"type": "step",
+				"syntax": "When \/^(?:I )?set the map zoom level to ZOOM",
+				"rb": "When \/^(?:I )?set the map zoom level to (\\d+)$\/ do | zoom |\n  perform_action('set_map_zoom', zoom)\n  sleep(0.2)\nend\n"
+			}, {
+				"id": "map-3",
+				"type": "step",
+				"syntax": "When \/^(?:I )?zoom (in|out) on the map",
+				"rb": "When \/^(?:I )?zoom (in|out) on the map$\/ do | zoom |\n  perform_action('set_map_zoom', zoom)\n  sleep(0.2)\nend\n"
+			}, {
+				"id": "map-4",
+				"type": "step",
+				"syntax": "Then \/^the map zoom level should be ZOOM",
+				"rb": "Then \/^the map zoom level should be (\\d+)$\/ do | zoom |\n  result = perform_action('get_map_zoom')\n  raise StandardError.new( \"The map's zoom level should be #{zoom} but is #{result['message']}\"  ) unless zoom.eql?( result['message'] )\nend\n"
+			}, {
+				"id": "map-5",
+				"type": "step",
+				"syntax": "When I tap the map marker \"MARKER_TITLE\"",
+				"rb": "When \/^I tap the map marker \"([^\\\"]*)\"$\/ do | marker_title |\n  perform_action('tap_map_marker_by_title', marker_title, 60000)\nend\n"
+			}, {
+				"id": "map-6",
+				"type": "step",
+				"syntax": "When I double tap the map marker \"MARKER_TITLE\"",
+				"rb": "When \/^I double tap the map marker \"([^\\\"]*)\"$\/ do | marker_title |\n  perform_action('tap_map_marker_by_title', marker_title, 60000)\n  sleep(0.4)\n  perform_action('tap_map_marker_by_title', marker_title, 100)\nend\n"
+			}, {
+				"id": "map-7",
+				"type": "step",
+				"syntax": "When I tap away from the markers",
+				"rb": "When \/^I tap away from the markers$\/ do\n  perform_action('tap_map_away_from_markers')\nend\n"
+			}, {
+				"id": "map-8",
+				"type": "step",
+				"syntax": "Then I should see the following markers:",
+				"rb": "Then \/^I should see the following markers:$\/ do | marker_table |\n  verify_map_markers( marker_table )\nend\n"
+			}, {
+				"id": "map-9",
+				"type": "step",
+				"syntax": "Then \/^the map should be centred at (-?\\d+\\.\\d+), (-?\\d+\\.\\d+)",
+				"rb": "Then \/^the map should be centred at (-?\\d+\\.\\d+), (-?\\d+\\.\\d+)$\/ do | lat, lon |\n  result = perform_action('get_map_center')\n  bonus_info = result['bonusInformation']\n  actual_lat = bonus_info[0].to_f\n  actual_lon = bonus_info[1].to_f\n  lat = lat.to_f\n  lon = lon.to_f\n  tol = 0.00001\n  if( (lat - actual_lat).abs > tol || (lon - actual_lon).abs > tol ) \n    raise StandardError.new( \"The map should have been centred on: #{lat},#{lon} but was actually centred on #{bonus_info.inspect}\" )\n  end\nend\n"
+			}, {
+				"id": "map-10",
+				"type": "step",
+				"syntax": "Then \/^the map marker \"MARKER_TITLE\" should be highlighted",
+				"rb": "Then \/^the map marker \"([^\\\"]*)\" should be highlighted$\/ do | marker_title |\n  result = perform_action('get_map_marker', marker_title)\n  result = result['message']\n  result = JSON.parse( result )\n  raise StandardError.new( \"The marker '#{marker_title}' was found, but is not highlighted\" ) unless result['focused']\nend\n"
+			}
+		]
+	}, {
+		"id": "navigation",
+		"name": "Navigation",
+		"steps": [
+			{
+				"id": "navigation-0",
+				"type": "step",
+				"syntax": "Then I go back",
+				"rb": "Then \/^I go back$\/ do\n  press_back_button\nend\n"
+			}, {
+				"id": "navigation-1",
+				"type": "step",
+				"syntax": "Then I press the menu key",
+				"rb": "Then \/^I press the menu key$\/ do\n  press_menu_button\nend\n"
+			}, {
+				"id": "navigation-2",
+				"type": "step",
+				"syntax": "Then I press the enter button",
+				"rb": "Then \/^I press the enter button$\/ do\n  perform_action('send_key_enter')\nend\n"
+			}, {
+				"id": "navigation-3",
+				"type": "step",
+				"syntax": "Then I swipe left",
+				"rb": "Then \/^I swipe left$\/ do\n  perform_action('swipe', 'left')\nend\n"
+			}, {
+				"id": "navigation-4",
+				"type": "step",
+				"syntax": "Then I swipe right",
+				"rb": "Then \/^I swipe right$\/ do\n  perform_action('swipe', 'right')\nend\n"
+			}, {
+				"id": "navigation-5",
+				"type": "step",
+				"syntax": "Then I select \"IDENTIFIER\" from the menu",
+				"rb": "Then \/^I select \"([^\\\"]*)\" from the menu$\/ do |identifier|\n  select_options_menu_item(identifier)\nend\n"
+			}, {
+				"id": "navigation-6",
+				"type": "step",
+				"syntax": "Then I select tab number TAB",
+				"rb": "Then \/^I select tab number (\\d+)$\/ do | tab |\n  touch(\"android.widget.TabWidget descendant TextView index:#{tab.to_i-1}\")\nend\n"
+			}, {
+				"id": "navigation-7",
+				"type": "step",
+				"syntax": "Then I select the \"TAB\" tab",
+				"rb": "Then \/^I select the \"([^\\\"]*)\" tab$\/ do | tab |\n  touch(\"android.widget.TabWidget descendant TextView {text LIKE[c] '#{tab}'}\")\nend\n"
+			}, {
+				"id": "navigation-8",
+				"type": "step",
+				"syntax": "Then I scroll down",
+				"rb": "Then \/^I scroll down$\/ do\n  scroll_down\nend\n"
+			}, {
+				"id": "navigation-9",
+				"type": "step",
+				"syntax": "Then I scroll up",
+				"rb": "Then \/^I scroll up$\/ do\n  scroll_up\nend\n"
+			}, {
+				"id": "navigation-10",
+				"type": "step",
+				"syntax": "Then I drag from FROM_X:FROM_Y to TO_X:TO_Y moving with STEPS steps",
+				"rb": "Then \/^I drag from (\\d+):(\\d+) to (\\d+):(\\d+) moving with (\\d+) steps$\/ do |from_x, from_y, to_x, to_y, steps|\n  perform_action('drag', from_x, to_x, from_y, to_y, steps)\nend\n"
+			}
+		]
+	}, {
+		"id": "pressbutton",
+		"name": "Press button",
+		"steps": [
+			{
+				"id": "pressbutton-0",
+				"type": "step",
+				"syntax": "Given I press the \"TEXT\" button",
+				"rb": "Given \/^I press the \"([^\\\"]*)\" button$\/ do |text|\n  tap_when_element_exists(\"android.widget.Button {text CONTAINS[c] '#{text}'}\")\nend\n"
+			}, {
+				"id": "pressbutton-1",
+				"type": "step",
+				"syntax": "Then I press button number INDEX",
+				"rb": "Then \/^I press button number (\\d+)$\/ do |index|\n  tap_when_element_exists(\"android.widget.Button index:#{index.to_i-1}\")\nend\n"
+			}, {
+				"id": "pressbutton-2",
+				"type": "step",
+				"syntax": "Then I press image button number INDEX",
+				"rb": "Then \/^I press image button number (\\d+)$\/ do |index|\n  tap_when_element_exists(\"android.widget.ImageButton index:#{index.to_i-1}\")\nend\n"
+			}, {
+				"id": "pressbutton-3",
+				"type": "step",
+				"syntax": "Then I press view with id \"ID\"",
+				"rb": "Then \/^I press view with id \"([^\\\"]*)\"$\/ do |id|\n  tap_when_element_exists(\"* id:'#{id}'\")\nend\n"
+			}, {
+				"id": "pressbutton-4",
+				"type": "step",
+				"syntax": "Then I press \"IDENTIFIER\"",
+				"rb": "Then \/^I press \"([^\\\"]*)\"$\/ do |identifier|\n  tap_when_element_exists(\"* marked:'#{identifier}'\")\nend\n"
+			}, {
+				"id": "pressbutton-5",
+				"type": "step",
+				"syntax": "Then I click on screen X% from the left and Y% from the top",
+				"rb": "Then \/^I click on screen (\\d+)% from the left and (\\d+)% from the top$\/ do |x, y|\n  perform_action('click_on_screen', x, y)\nend\n"
+			}, {
+				"id": "pressbutton-6",
+				"type": "step",
+				"syntax": "Then I touch the \"TEXT\" text",
+				"rb": "Then \/^I touch the \"([^\\\"]*)\" text$\/ do |text|\n  tap_when_element_exists(\"* {text CONTAINS[c] '#{text}'}\")\nend\n"
+			}, {
+				"id": "pressbutton-7",
+				"type": "step",
+				"syntax": "Then I press list item number INDEX",
+				"rb": "Then \/^I press list item number (\\d+)$\/ do |index|\n  step_deprecated\n\n  tap_when_element_exists(\"android.widget.ListView index:0 android.widget.TextView index:#{index.to_i-1}\")\nend\n"
+			}, {
+				"id": "pressbutton-8",
+				"type": "step",
+				"syntax": "Then I long press list item number INDEX",
+				"rb": "Then \/^I long press list item number (\\d+)$\/ do |index|\n  step_deprecated\n\n  long_press_when_element_exists(\"android.widget.ListView index:0 android.widget.TextView index:#{index.to_i-1}\")\nend\n"
+			}
+		]
+	}, {
+		"id": "progress",
+		"name": "Progress",
+		"steps": [
+			{
+				"id": "progress-0",
+				"type": "step",
+				"syntax": "Then I wait for progress",
+				"rb": "Then \/^I wait for progress$\/ do\n  wait_for_element_does_not_exist(\"android.widget.ProgressBar\")\nend\n"
+			}, {
+				"id": "progress-1",
+				"type": "step",
+				"syntax": "Then I wait",
+				"rb": "Then \/^I wait$\/ do\n  sleep 2\nend\n"
+			}, {
+				"id": "progress-2",
+				"type": "step",
+				"syntax": "Then I wait for SECONDS seconds",
+				"rb": "Then \/^I wait for (\\d+) seconds$\/ do |seconds|\n  sleep(seconds.to_i)\nend\n"
+			}, {
+				"id": "progress-3",
+				"type": "step",
+				"syntax": "Then I wait for 1 second",
+				"rb": "Then \/^I wait for 1 second$\/ do\n  sleep 1\nend\n"
+			}, {
+				"id": "progress-4",
+				"type": "step",
+				"syntax": "Then I wait for a second",
+				"rb": "Then \/^I wait for a second$\/ do\n  sleep 1\nend\n"
+			}, {
+				"id": "progress-5",
+				"type": "step",
+				"syntax": "Then I wait for \"TEXT\" to appear",
+				"rb": "Then \/^I wait for \"([^\\\"]*)\" to appear$\/ do |text|\n  wait_for_text(text)\nend\n"
+			}, {
+				"id": "progress-6",
+				"type": "step",
+				"syntax": "Then I wait up to TIMEOUT seconds for \"TEXT\" to appear",
+				"rb": "Then \/^I wait up to (\\d+) seconds for \"([^\\\"]*)\" to appear$\/ do |timeout, text|\n  wait_for_text(text, timeout: timeout.to_i)\nend\n"
+			}, {
+				"id": "progress-7",
+				"type": "step",
+				"syntax": "Then I wait to see \"TEXT\"",
+				"rb": "Then \/^I wait to see \"([^\\\"]*)\"$\/ do |text|\n  wait_for_text(text)\nend\n"
+			}, {
+				"id": "progress-8",
+				"type": "step",
+				"syntax": "Then I wait up to TIMEOUT seconds to see \"TEXT\"",
+				"rb": "Then \/^I wait up to (\\d+) seconds to see \"([^\\\"]*)\"$\/ do |timeout, text|\n  wait_for_text(text, timeout: timeout.to_i)\nend\n"
+			}, {
+				"id": "progress-9",
+				"type": "step",
+				"syntax": "Then I wait for the \"IDENTIFIER\" button to appear",
+				"rb": "Then \/^I wait for the \"([^\\\"]*)\" button to appear$\/ do |identifier|\n  wait_for_element_exists(\"android.widget.Button marked:'#{identifier}'\");\nend\n"
+			}, {
+				"id": "progress-10",
+				"type": "step",
+				"syntax": "Then I wait for the view with id \"ID\" to appear",
+				"rb": "Then \/^I wait for the view with id \"([^\\\"]*)\" to appear$\/ do |id|\n  wait_for_element_exists(\"* id:'#{id}'\")\nend\n"
+			}, {
+				"id": "progress-11",
+				"type": "step",
+				"syntax": "Then I wait for the \"TEXT\" view to appear",
+				"rb": "Then \/^I wait for the \"([^\\\"]*)\" view to appear$\/ do |text|\n  wait_for_element_exists(\"* marked:'#{text}'\")\nend\n"
+			}, {
+				"id": "progress-12",
+				"type": "step",
+				"syntax": "Then I wait for the \"ACTIVITY_NAME\" screen to appear",
+				"rb": "Then \/^I wait for the \"([^\\\"]*)\" screen to appear$\/ do |activity_name|\n  wait_for_activity(activity_name)\nend\n"
+			}, {
+				"id": "progress-13",
+				"type": "step",
+				"syntax": "Then I wait upto TIMEOUT seconds for the \"ACTIVITY_NAME\" screen to appear",
+				"rb": "Then \/^I wait upto (\\d+) seconds for the \"([^\\\"]*)\" screen to appear$\/ do |timeout, activity_name|\n  wait_for_activity(activity_name, timeout: timeout.to_i)\nend\n"
+			}, {
+				"id": "progress-14",
+				"type": "step",
+				"syntax": "Then I wait up to TIMEOUT seconds for the \"ACTIVITY_NAME\" screen to appear",
+				"rb": "Then \/^I wait up to (\\d+) seconds for the \"([^\\\"]*)\" screen to appear$\/ do |timeout, activity_name|\n  wait_for_activity(activity_name, timeout: timeout.to_i)\nend\n"
+			}, {
+				"id": "progress-15",
+				"type": "step",
+				"syntax": "Then I wait for the \"TAB\" tab to appear",
+				"rb": "Then \/^I wait for the \"([^\\\"]*)\" tab to appear$\/ do |tab|\n  wait_for do\n    query(\"android.widget.TabWidget descendant TextView {text LIKE[c] '#{tab}'}\", :isSelected).first\n  end\nend\n"
+			}
+		]
+	}, {
+		"id": "screenshot",
+		"name": "Screenshot",
+		"steps": [
+			{
+				"id": "screenshot-0",
+				"type": "step",
+				"syntax": "Then \/^take picture",
+				"rb": "Then \/^take picture$\/ do\n  screenshot_embed\nend\n"
+			}, {
+				"id": "screenshot-1",
+				"type": "step",
+				"syntax": "Then I take a picture",
+				"rb": "Then \/^I take a picture$\/ do\n  screenshot_embed\nend\n"
+			}, {
+				"id": "screenshot-2",
+				"type": "step",
+				"syntax": "Then I take a screenshot",
+				"rb": "Then \/^I take a screenshot$\/ do\n  screenshot_embed\nend\n"
+			}
+		]
+	}, {
+		"id": "search",
+		"name": "Search",
+		"steps": [
+			{
+				"id": "search-0",
+				"type": "step",
+				"syntax": "Then I enter \"TEXT\" into search field",
+				"rb": "Then \/^I enter \"([^\\\"]*)\" into search field$\/ do |text|\n  enter_text(\"android.widget.SearchView index:0\", text)\nend\n"
+			}, {
+				"id": "search-1",
+				"type": "step",
+				"syntax": "Then I enter \"TEXT\" into search field number NUMBER",
+				"rb": "Then \/^I enter \"([^\\\"]*)\" into search field number (\\d+)$\/ do |text, number|\n  enter_text(\"android.widget.SearchView index:#{number.to_i-1}\", text)\nend\n"
+			}
+		]
+	}, {
+		"id": "spinner",
+		"name": "Spinner",
+		"steps": [
+			{
+				"id": "spinner-0",
+				"type": "step",
+				"syntax": "Then I select \"ITEM_IDENTIFIER\" from \"SPINNER_IDENTIFIER\"",
+				"rb": "Then \/^I select \"([^\\\"]*)\" from \"([^\\\"]*)\"$\/ do |item_identifier, spinner_identifier|\n  spinner = query(\"android.widget.Spinner marked:'#{spinner_identifier}'\")\n\n  if spinner.empty?\n    tap_when_element_exists(\"android.widget.Spinner * marked:'#{spinner_identifier}'\")\n  else\n    touch(spinner)\n  end\n  tap_when_element_exists(\"android.widget.PopupWindow$PopupViewContainer * marked:'#{item_identifier}'\")\nend\n"
+			}
+		]
+	}, {
+		"id": "timepicker",
+		"name": "Time picker",
+		"steps": [
+			{
+				"id": "timepicker-0",
+				"type": "step",
+				"syntax": "Given I set the time to \"(\\d\\d:\\d\\d)\" on TimePicker with index TIME",
+				"rb": "Given \/^I set the time to \"(\\d\\d:\\d\\d)\" on TimePicker with index ([^\\\"]*)$\/ do |time, index|\n  set_time(\"android.widget.TimePicker index:#{index.to_i-1}\", time)\nend\n"
+			}, {
+				"id": "timepicker-1",
+				"type": "step",
+				"syntax": "Given I set the \"CONTENT_DESCRIPTION\" time to \"(\\d\\d:\\d\\d)\"",
+				"rb": "Given \/^I set the \"([^\\\"]*)\" time to \"(\\d\\d:\\d\\d)\"$\/ do |content_description, time|\n  set_time(\"android.widget.TimePicker {contentDescription LIKE[c] '#{content_description}'}\", time)\nend\n"
+			}
+		]
+	}
+]
