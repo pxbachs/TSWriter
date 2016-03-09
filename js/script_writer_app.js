@@ -1,4 +1,4 @@
-var scriptWriterApp = angular.module('scriptWriterApp', ["ngRoute", 'ui.bootstrap', "dndLists"]);
+var scriptWriterApp = angular.module('scriptWriterApp', ["scriptWriterServices", "ngRoute", 'ui.bootstrap', "dndLists", "uuid", 'ui.ace']);
 scriptWriterApp.config(function($routeProvider) {
         $routeProvider
             .when('/dashboard', {

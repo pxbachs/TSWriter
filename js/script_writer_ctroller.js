@@ -1,56 +1,44 @@
-scriptWriterApp.controller('StepsController', ["$scope", "$http", "$routeParams",
-function($scope, $http,$routeParams) {
-	$http.get('data/'+$routeParams.platform+'/steps_defination.json').success(function(data) {
-		//$scope.group_steps = [];
-		//$scope.group_steps.push({pre_def: data});
-		//console.log($scope.group_steps);
-		$scope.steps_def = data;
-		angular.forEach($scope.steps_def, function(value, key) {
-			console.log(value.id + ": " + key);
-		});
-
-		$scope.models = [];
-		$scope.models.feature = [{
-			"A" : {}
-		}];
-	});
+scriptWriterApp.controller('StepsController', ["$scope", "StepsPredefinedSrv", "$routeParams",
+function($scope, StepsPredefinedSrv, $routeParams) {
+	//$http.get('data/'+$routeParams.platform+'/steps_defination.json').success(function(data) {
+	//	$scope.steps_def.platform = $routeParams.platform;
+	//	$scope.steps_def = data;
+	//});
+	StepsPredefinedSrv.get($routeParams.platform);
 	
-
+	StepsPredefinedSrv.awaitUpdate('StepsController',function(){
+        $scope.steps_def = StepsPredefinedSrv.steps_def;
+    });
+    
+	$scope.$on('$locationChangeStart', function(event) {
+        var answer = confirm("Are you sure you want to leave this page?");
+        if (!answer) {
+            event.preventDefault();
+        }
+    });
 }]);
 
 scriptWriterApp.controller('DashboardController', ["$scope",
 function($scope) {
 }]);
 
-scriptWriterApp.controller('FeatureController', ["$scope", "$http", "$uibModal",
-function($scope, $http, $uibModal) {
-	
-	$scope.$on('$locationChangeStart', function(event) {
-        var answer = confirm("Are you sure you want to leave this page?")
-        if (!answer) {
-            event.preventDefault();
-        }
-    });
-    
+
+
+scriptWriterApp.controller('FeatureController', ["$scope", "$http", "$uibModal", "$routeParams", "uuid4", "StepsPredefinedSrv",
+function($scope, $http, $uibModal, $routeParams, uuid4, StepsPredefinedSrv) {
+	$scope.platform = $routeParams.platform;
 	$scope.index_id = 0;
 
-	$http.get('data/ios/steps_defination.json').success(function(data) {
-		//$scope.group_steps = [];
-		//$scope.group_steps.push({pre_def: data});
-		//console.log($scope.group_steps);
-		$scope.steps_def = [{
-			"id" : "see",
-			"name" : "See",
+	$scope.steps_def = [{
+			"id" : "scenario-custom",
+			"name" : "Scenario name",
 			allowedTypes : ['step'],
 			"type" : "scenario",
 			"steps" : []
 		}];
-
-		angular.forEach($scope.steps_def, function(value, key) {
-			//console.log(value.id + ": " + key);
-		});
-
-	});
+	
+	console.log("uuid4: " + uuid4.generate());
+		
 
 	$scope.scenarioAllowedTypes = ["scenario"];
 	$scope.stepAllowedTypes = ["step"];
@@ -61,21 +49,21 @@ function($scope, $http, $uibModal) {
 			index : 1,
 			type : "step",
 			name : "Given step",
-			id : "step-custom-given-1",
+			id : "step-custom-given-" + uuid4.generate(),
 			syntax : "Given You want an action here",
 			rb : "Given /^You want an action here$/ do |_| \n\nend\n"
 		}, {
 			index : 1,
 			type : "step",
 			name : "Then Step",
-			id : "step-custom-then-1",
+			id : "step-custom-then-" + uuid4.generate(),
 			syntax : "Then You want an action here",
 			rb : "Then /^You want an action here$/ do |_| \n\nend\n"
 		}, {
 			index : 1,
 			type : "step",
 			name : "And Step",
-			id : "step-custom-and-1",
+			id : "step-custom-and-" + uuid4.generate(),
 			syntax : "And You want an action here",
 			rb : "And /^You want an action here$/ do |_| \n\nend\n"
 		}, {
@@ -88,6 +76,14 @@ function($scope, $http, $uibModal) {
 		}]
 	};
 
+	$scope.onCopied = function(item){
+		//TODO: check condition to add item to custom steps group
+		//StepsPredefinedSrv.addCustomStep(angular.copy(item));
+		
+		item.index = item.index + 1; 
+		item.id =  item.type + '-custom-' + uuid4.generate();
+	};
+	
 	$scope.addScenario = function() {
 		//console.log($scope.steps_def);
 		$scope.index_id = $scope.index_id + 1;
@@ -187,13 +183,16 @@ $scope.selectedStepIdx = 0;
 	$scope.$watch('steps_def', function(model) {
 		$scope.modelAsJson = angular.toJson(model, true);
 		features = "";
-		rbCode = "";
+		if ($scope.platform === "android")
+			rbCode = "require 'calabash-android/calabash_steps'\n";
+		else if ($scope.platform === "ios")
+			rbCode = "require 'calabash-cucumber/calabash_steps'\n";
 
 		angular.forEach($scope.steps_def, function(value, key) {
 			//console.log(value.id + ": " + value.steps);
 			features += "Scenario: " + value.name;
 			angular.forEach(value.steps, function(value, key) {
-				console.log(value.id + ": " + value.id.indexOf("custom"));
+				//console.log(value.id + ": " + value.id.indexOf("custom"));
 				features += "\n" + value.syntax;
 
 				if (value.id.indexOf("step-custom") === 0 && value.rb) {

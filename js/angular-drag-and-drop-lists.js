@@ -381,7 +381,10 @@ angular.module('dndLists', [])
             dndDropEffectWorkaround.dropEffect = event.ctrlKey ? "copy" : "move";
           }
         } else {
-          dndDropEffectWorkaround.dropEffect = event.dataTransfer.dropEffect;
+        	console.log("copyMove " + event.dataTransfer.dropEffect);
+          	console.log(event);
+          	console.log(event.ctrlKey);
+          dndDropEffectWorkaround.dropEffect = event.shiftKey ? "copy" : "move";;//vent.dataTransfer.dropEffect;
         }
 
         // Clean up

@@ -106,12 +106,18 @@
 /***************************** Element type specific styles *****************************/
 
 .scriptWriter .dropzone .item {
+	position: relative;
     padding: 10px 15px;
     min-height: 50px;
 }
 
+.scriptWriter .dropzone .item .syntax{
+    padding-right: 60px;
+}
+
 .scriptWriter .dropzone .item .functions {
-	padding: 0px !important;
+	padding-top: -5px !important;
+	padding-right: 5px !important;
 	float: right;
 }
 .scriptWriter .dropzone .container-element {
