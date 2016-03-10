@@ -27,8 +27,9 @@ function($scope) {
 scriptWriterApp.controller('FeatureController', ["$scope", "$http", "$uibModal", "$routeParams", "uuid4", "StepsPredefinedSrv",
 function($scope, $http, $uibModal, $routeParams, uuid4, StepsPredefinedSrv) {
 	$scope.platform = $routeParams.platform;
+	$scope.feature_name = "Enter feature name here";
 	$scope.index_id = 0;
-
+	
 	$scope.steps_def = [{
 			"id" : "scenario-custom",
 			"name" : "Scenario name",
@@ -37,9 +38,6 @@ function($scope, $http, $uibModal, $routeParams, uuid4, StepsPredefinedSrv) {
 			"steps" : []
 		}];
 	
-	console.log("uuid4: " + uuid4.generate());
-		
-
 	$scope.scenarioAllowedTypes = ["scenario"];
 	$scope.stepAllowedTypes = ["step"];
 
@@ -51,21 +49,21 @@ function($scope, $http, $uibModal, $routeParams, uuid4, StepsPredefinedSrv) {
 			name : "Given step",
 			id : "step-custom-given-" + uuid4.generate(),
 			syntax : "Given You want an action here",
-			rb : "Given /^You want an action here$/ do |_| \n\nend\n"
+			rb : "Given /^You want an action here$/ do \n\nend\n"
 		}, {
 			index : 1,
 			type : "step",
 			name : "Then Step",
 			id : "step-custom-then-" + uuid4.generate(),
 			syntax : "Then You want an action here",
-			rb : "Then /^You want an action here$/ do |_| \n\nend\n"
+			rb : "Then /^You want an action here$/ do \n\nend\n"
 		}, {
 			index : 1,
 			type : "step",
 			name : "And Step",
 			id : "step-custom-and-" + uuid4.generate(),
 			syntax : "And You want an action here",
-			rb : "And /^You want an action here$/ do |_| \n\nend\n"
+			rb : "And /^You want an action here$/ do \n\nend\n"
 		}, {
 			index : 1,
 			id : "scenario-custom-1",
@@ -104,7 +102,7 @@ function($scope, $http, $uibModal, $routeParams, uuid4, StepsPredefinedSrv) {
 		$scope.selectedEditStep = evt.step;
 		var modalInstance = $uibModal.open({
 			animation : $scope.animationsEnabled,
-			templateUrl : 'myModalContent.html',
+			templateUrl : 'EditStepModalContent.html',
 			controller : 'EditStepModalInstanceCtrl',
 			size : 'lg',
 			resolve : {
@@ -153,7 +151,7 @@ $scope.selectedStepIdx = 0;
 		var zip = new JSZip();
 		console.log(zip);
 		zip.file("testscript.feature", $scope.features);
-		zip.file("testscript.rb", $scope.rubyCode);
+		zip.file("step_definitions/testscript.rb", $scope.rubyCode);
 		zip.file("testscript.json", $scope.modelAsJson);
 		
 		var content = zip.generate({
@@ -182,7 +180,7 @@ $scope.selectedStepIdx = 0;
 	
 	$scope.$watch('steps_def', function(model) {
 		$scope.modelAsJson = angular.toJson(model, true);
-		features = "";
+		features = "Feature: "+ $scope.feature_name + "\n\n";
 		if ($scope.platform === "android")
 			rbCode = "require 'calabash-android/calabash_steps'\n";
 		else if ($scope.platform === "ios")
@@ -190,10 +188,10 @@ $scope.selectedStepIdx = 0;
 
 		angular.forEach($scope.steps_def, function(value, key) {
 			//console.log(value.id + ": " + value.steps);
-			features += "Scenario: " + value.name;
+			features += "  Scenario: " + value.name;
 			angular.forEach(value.steps, function(value, key) {
 				//console.log(value.id + ": " + value.id.indexOf("custom"));
-				features += "\n" + value.syntax;
+				features += "\n  \t" + value.syntax;
 
 				if (value.id.indexOf("step-custom") === 0 && value.rb) {
 					rbCode += value.rb + "\n";
@@ -208,11 +206,13 @@ $scope.selectedStepIdx = 0;
 	}, true);
 }]);
 
-scriptWriterApp.controller('EditStepModalInstanceCtrl', function($scope, $uibModalInstance, step) {
+scriptWriterApp.controller('EditStepModalInstanceCtrl', function($scope, $uibModalInstance, StepsPredefinedSrv, step) {
 
 	//$scope.selectedEditStep = {index: 1, type: "step",name:"Step", id: "custom-",  syntax:"Then You want an action here",rb:"Then /^You want an action here$/ do |_| \n\n end"};
 	//$scope.selectedEditStep.id = step.id;
 	//$scope.selectedEditStep.syntax = step.syntax;
+	console.log(StepsPredefinedSrv);
+	$scope.predefinedAPIs = StepsPredefinedSrv.predefinedAPIs;
 	$scope.selectedEditStep = angular.copy(step);
 	if ($scope.selectedEditStep.id.indexOf("step-custom") === 0) {
 		if (!$scope.selectedEditStep.rb)

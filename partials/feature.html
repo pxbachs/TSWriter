@@ -34,33 +34,74 @@
 	</div>
 
 	<div   ng-controller="FeatureController">
-	<!-- TODO feature here -->
-	<div class="col-md-9">
-		<script type="text/ng-template" id="myModalContent.html">
+		<!-- TODO feature here -->
+		<div class="col-md-9">
+			<script type="text/ng-template" id="EditStepModalContent.html">
 				<div class="modal-header">
 				<h4 class="modal-title">Edit Step</h4>
 				</div>
 				<div class="modal-body">
-					<div>
-					<b>Syntax:</b> <input type="text" ng-model="selectedEditStep.syntax" class="form-control input-sm"/>
+				<div class="row">
+					<div ng-show="rbCodeReadOnly" class="col-lg-12">
+						<div>
+							<b>Syntax:</b> <input type="text" ng-model="selectedEditStep.syntax" class="form-control input-sm"/>
+							</div>
+						<br/>
+						<div>
+							<b>Ruby: </b><textarea  ui-ace="{mode: 'ruby'}" style="height: 300px;"  rows="10" ng-model="selectedEditStep.rb" class="form-control input-sm" ng-readonly="rbCodeReadOnly"/>
+						</div>
 					</div>
-					<br/>
-					<div  >
-					<b>Ruby: </b><textarea  ui-ace="{mode: 'ruby'}"  rows="10" ng-model="selectedEditStep.rb" class="form-control input-sm" ng-readonly="rbCodeReadOnly"/>
+					
+					<div ng-show="!rbCodeReadOnly">
+						<div class="col-md-6">
+							<div>
+								<b>Syntax:</b> <input type="text" ng-model="selectedEditStep.syntax" class="form-control input-sm"/>
+							</div>
+						<br/>
+						<div  >
+							<b>Ruby: </b><textarea  ui-ace="{mode: 'ruby'}" style="height: 300px;"  rows="10" ng-model="selectedEditStep.rb" class="form-control input-sm" ng-readonly="rbCodeReadOnly"/>
+						</div>
+						</div>
+						<div class="col-md-2" ng-show="!rbCodeReadOnly">
+							<b>APIs</b>
+							<pre style="height: 350px; width: 400px;">
+								{{predefinedAPIs}}
+							</pre>
+						</div>
 					</div>
+				</div>
+
 				</div>
 				<div class="modal-footer">
 				<button class="btn btn-primary" type="button" ng-click="ok()">OK</button>
 				<button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
 				</div>
 			</script>
-			
+
 			<script type="text/ng-template" id="removeStepModalContent.html">
 				<div class="modal-header">
 				<h4 class="modal-title">Remove Step?</h4>
 				</div>
 				<div class="modal-body">
-					<b>Are you sure you want to remove this step: </b> {{selectedStep.syntax}}
+				<b>Are you sure you want to remove this step: </b> {{selectedStep.syntax}}
+				</div>
+				<div class="modal-footer">
+				<button class="btn btn-primary" type="button" ng-click="ok()">OK</button>
+				<button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+				</div>
+			</script>
+
+			<script type="text/ng-template" id="ImportModalContent.html">
+				<div class="modal-header">
+				<h4 class="modal-title">Import Content</h4>
+				</div>
+				<div class="modal-body">
+
+				<b>Model Content: </b><textarea ui-ace="{mode: 'ruby'}" rows="15" ng-model="importContent" class="form-control input-sm"/>
+				<br />
+				<input class="file" type="file" ng-model="importContent" file-select="data" file-loaded="myLoaded()" file-error="myError($error)" file-progress="myProgress($total,$loaded)">
+				</div>
+
 				</div>
 				<div class="modal-footer">
 				<button class="btn btn-primary" type="button" ng-click="ok()">OK</button>
@@ -68,118 +109,116 @@
 				</div>
 			</script>
 			
-			<script type="text/ng-template" id="ImportModalContent.html">
-				<div class="modal-header">
-				<h4 class="modal-title">Import Content</h4>
+			<div class="feature">
+				<h4 class="feature-label" >FEATURE</h4>
+				<div class="feature-input">
+					<input type="text" ng-model="feature_name" class="form-control input-sm input">
 				</div>
-				<div class="modal-body">
-					<b>Model Content: </b><textarea ui-ace="{mode: 'ruby'}" rows="15" ng-model="importContent" class="form-control input-sm"/>
-					<br />
-					<input class="file" type="file" ng-model="importContent" file-select="data" file-loaded="myLoaded()" file-error="myError($error)" file-progress="myProgress($total,$loaded)">
-				</div>
-				<div class="modal-footer">
-				<button class="btn btn-primary" type="button" ng-click="ok()">OK</button>
-				<button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
-				</div>
-			</script>
-		<ul class="list-group" dnd-list="steps_def"
-		dnd-allowed-types="scenarioAllowedTypes">
-			<li class="panel-group" ng-repeat="group in steps_def"
-			dnd-draggable="group"
-			dnd-effect-allowed="copyMove"
-			dnd-moved="steps_def.splice($index, 1)"
-			dnd-type="group.type"
-			>
-				<div class="dropzone panel panel-default">
-					<div class="panel-heading">
-						<h4 class="panel-title" >
-							<a data-toggle="collapse" href="~/#div2_{{group.id}}" class="scenario_label">Scenario: </a>
+			</div>
+						
+			<ul class="list-group" dnd-list="steps_def"
+				dnd-allowed-types="scenarioAllowedTypes">
+				<li class="panel-group" ng-repeat="group in steps_def"
+				dnd-draggable="group"
+				dnd-effect-allowed="copyMove"
+				dnd-moved="steps_def.splice($index, 1)"
+				dnd-type="group.type"
+				>
+					<div class="dropzone panel panel-default">
+						<div class="panel-heading">
+							<h4 class="panel-title" ><a data-toggle="collapse" href="~/#div2_{{group.id}}" class="scenario_label">Scenario: </a>
 							<div class="scenario_input">
 								<input type="text" ng-model="group.name" class="form-control input-sm">
-							</div>
-						</h4>
-					</div>
-					<div id="div2_{{group.id}}" class="panel-collapse collapse in">
+							</div></h4>
+						</div>
+						<div id="div2_{{group.id}}" class="panel-collapse collapse in">
 
-						<ul dnd-list="group.steps"
-						dnd-allowed-types="stepAllowedTypes">
-							<li ng-repeat="step in group.steps"
-							dnd-draggable="step"
-							dnd-type="step.type"
-							dnd-effect-allowed="move"
-							dnd-moved="group.steps.splice($index, 1)"
-							dnd-selected="models.selected = step"
-							ng-class="{selected: models.selected === step}"
-							>
-								<div class="item">
-									<div class="functions">
-										<input type="button" class="btn btn-primary" value="Edit" ng-click="showEdit(this)"/>
-										<input type="button" class="btn btn-danger" value="Remove" ng-click="remove(group.steps, $index)"/>
+							<ul dnd-list="group.steps"
+							dnd-allowed-types="stepAllowedTypes">
+								<li ng-repeat="step in group.steps"
+								dnd-draggable="step"
+								dnd-type="step.type"
+								dnd-effect-allowed="move"
+								dnd-moved="group.steps.splice($index, 1)"
+								dnd-selected="models.selected = step"
+								ng-class="{selected: models.selected === step}"
+								>
+									<div class="item">
+										<div class="functions">
+											<input type="button" class="btn btn-primary" value="Edit" ng-click="showEdit(this)"/>
+											<input type="button" class="btn btn-danger" value="Remove" ng-click="remove(group.steps, $index)"/>
+										</div>
+										<span class="syntax">{{step.syntax}}</span>
+
 									</div>
-									<span class="syntax">{{step.syntax}}</span>
-									
-								</div>
-								
-							</li>
-							<li class="dndPlaceholder">
-								Drop STEP here
-							</li>
-						</ul>
-					</div>
-				</div>
-			</li>
 
-			<li class="dndPlaceholder">
-				Drop any <strong>{{scenarioAllowedTypes.join(' or ')}}</strong> here
-			</li>
-		</ul>
-		
-		<br/>
-					<h3>Output</h3>
-					<h5>Feature</h5>
-					<pre>{{features}}</pre>
-					<h5>Ruby</h5>
-					<pre ui-ace="{mode: 'ruby'}" readonly ng-model="rubyCode"></pre>
-					<br/>
-					<h5>Model as Json</h5>
-					<pre ui-ace="{mode: 'json'}" readonly ng-model="modelAsJson"></pre>
-		<button id="savebtn" ng-click="save()" style="display: none;">Save</button>
-		<button id="importbtn" ng-click="showImport()" style="display: none;">Import</button>
-	</div>
-	
-	
-	<!-- TODO toolbox here -->
-	<div class="nav-right row ng-scope">
-		<div>
-			<button class="btn btn-warning" ng-click="save()">Save</button>
-			<button class="btn btn-primary" ng-click="showImport()">Import</button>
-		</div>
-		<div class="toolbox box box-grey box-padding">
-			<h5>New Elements</h5>
-			<ul id="toolbox">
-				<!-- The toolbox only allows to copy objects, not move it. After a new
-				element was created, dnd-copied is invoked and we generate the next id -->
-				<li ng-repeat="item in models.templates"
-				dnd-draggable="item"
-				dnd-effect-allowed="copy"
-				dnd-type="item.type"
-				dnd-moved="onCopied(item)"
-				>
-					<div class="item">
-						{{item.name}}
+								</li>
+								<li class="dndPlaceholder">
+									Drop STEP here
+								</li>
+							</ul>
+						</div>
 					</div>
 				</li>
-			</ul>
-		</div>
 
-		<div class="trashcan box box-grey box-padding">
-			<!-- If you use [] as referenced list, the dropped elements will be lost -->
-			<h5>Trashcan</h5>
-			<ul dnd-list="[]">
-				<li><img src="trashcan.jpg">
+				<li class="dndPlaceholder">
+					Drop any <strong>{{scenarioAllowedTypes.join(' or ')}}</strong> here
 				</li>
 			</ul>
+
+			<br/>
+			<h3>Output</h3>
+			<h5>Feature</h5>
+			<pre>{{features}}</pre>
+			<h5>Ruby</h5>
+			<pre ui-ace="{mode: 'ruby'}" readonly ng-model="rubyCode"></pre>
+			<br/>
+			<h5>Model as Json</h5>
+			<pre ui-ace="{mode: 'json'}" readonly ng-model="modelAsJson"></pre>
+			<button id="savebtn" ng-click="save()" style="display: none;">
+				Save
+			</button>
+			<button id="importbtn" ng-click="showImport()" style="display: none;">
+				Import
+			</button>
 		</div>
-	</div>
+
+		<!-- TODO toolbox here -->
+		<div class="nav-right row ng-scope">
+			<div>
+				<button class="btn btn-warning" ng-click="save()">
+					Save
+				</button>
+				<button class="btn btn-primary" ng-click="showImport()">
+					Import
+				</button>
+			</div>
+			<div class="toolbox box box-grey box-padding">
+				<h5>New Elements</h5>
+				<ul id="toolbox">
+					<!-- The toolbox only allows to copy objects, not move it. After a new
+					element was created, dnd-copied is invoked and we generate the next id -->
+					<li ng-repeat="item in models.templates"
+					dnd-draggable="item"
+					dnd-effect-allowed="copy"
+					dnd-type="item.type"
+					dnd-moved="onCopied(item)"
+					>
+						<div class="item">
+							{{item.name}}
+						</div>
+					</li>
+				</ul>
+			</div>
+
+			<div class="trashcan box box-grey box-padding">
+				<!-- If you use [] as referenced list, the dropped elements will be lost -->
+				<h5>Trashcan</h5>
+				<ul dnd-list="[]">
+					<li><img src="trashcan.jpg">
+					</li>
+				</ul>
+			</div>
+		</div>
 	</div>
 </div>

@@ -104,6 +104,23 @@
 }
 
 /***************************** Element type specific styles *****************************/
+.scriptWriter .feature {
+	position: relative;
+    padding-top: 10px;
+    padding-bottom: 15px;
+    min-height: 50px;
+}
+
+.scriptWriter .feature .feature-label {
+	float: left; 
+	width: 100px;
+	color: black !important;
+	margin-top: 5px !important;
+}
+
+.scriptWriter .feature .feature-input{
+	margin-left: 100px !important;
+}
 
 .scriptWriter .dropzone .item {
 	position: relative;

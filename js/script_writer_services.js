@@ -28,6 +28,11 @@ scriptWriterServices.service('StepsPredefinedSrv', ['$http',function($http){
 			
 			self.notifySubscribers();
 		});
+		
+		$http.get('data/'+ platform + '/apis.html').success(function(data){
+			console.log(data);
+			self.predefinedAPIs = data;
+		});
     };
     
     self.addCustomStep = function(step){

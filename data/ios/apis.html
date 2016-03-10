@@ -1,0 +1,32 @@
+touch(nil, { offset: { x: x.to_i, y: y.to_i } })
+touch("view marked: '#{name}'")
+
+touch("button marked: '#{name}'")
+touch("button index: #{index - 1}")
+
+touch("textField index: #{index - 1}")
+touch("textField placeholder: '#{name}'")
+touch("textField marked: '#{name}'")
+
+touch("tableViewCell index: #{index - 1}")
+touch("tableViewCell text: '#{cell_name}'")
+touch("tableViewCell marked: '#{cell_name}'")
+
+touch('switch')
+touch("switch marked: '#{name}'")
+
+touch("view: 'MKUserLocationView'")
+
+wait_for_keyboard
+keyboard_enter_text(text_to_type)
+
+clear_text("textField marked: '#{name}'")
+clear_text("textField index: #{index - 1}")
+
+element_exists("textField placeholder: '#{placeholder_or_view_mark}'")
+
+screenshot_and_raise("Index should be positive (was: #{index})")
+
+sleep(STEP_PAUSE
+wait_for(WAIT_TIMEOUT)
+
