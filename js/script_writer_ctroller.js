@@ -178,8 +178,23 @@ $scope.selectedStepIdx = 0;
 		});
 	};
 	
-	$scope.$watch('steps_def', function(model) {
-		$scope.modelAsJson = angular.toJson(model, true);
+	/*** text field focus ***/
+	$scope.onFocus = function(group){
+		//console.log(evt);
+		console.log(group);
+		group.draggable = false;
+		console.log(group.draggable);
+		console.log(group);
+	};
+	$scope.onBlur = function(group){
+		//console.log(evt);
+		console.log(group);
+		group.draggable = false;
+		console.log(group.draggable);
+	};
+	
+	$scope.$watch('[steps_def, feature_name]', function(model) {
+		$scope.modelAsJson = angular.toJson(model[0], true);
 		features = "Feature: "+ $scope.feature_name + "\n\n";
 		if ($scope.platform === "android")
 			rbCode = "require 'calabash-android/calabash_steps'\n";
