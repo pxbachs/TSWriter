@@ -4,11 +4,34 @@
 
 var scriptWriterServices = angular.module('scriptWriterServices', ['ngResource']);
 
-scriptWriterServices.service('StepsPredefinedSrv', ['$http',function($http){
+scriptWriterServices.service('StepsPredefinedSrv', ['$http',"uuid4",function($http, uuid4){
     var self = this;
     self.notificationSubscribers={};
     self.customGroup = null;
     
+    self.custom_steps = [{
+			index : 1,
+			type : "step",
+			name : "Given step",
+			id : "custom-predefined-step-" + uuid4.generate(),
+			syntax : "Given You want an action here",
+			rb : "Given /^You want an action here$/ do \n\nend\n"
+		}, {
+			index : 1,
+			type : "step",
+			name : "Then Step",
+			id : "custom-predefined-step-" + uuid4.generate(),
+			syntax : "Then You want an action here",
+			rb : "Then /^You want an action here$/ do \n\nend\n"
+		}, {
+			index : 1,
+			type : "step",
+			name : "And Step",
+			id : "custom-predefined-step-" + uuid4.generate(),
+			syntax : "And You want an action here",
+			rb : "And /^You want an action here$/ do \n\nend\n"
+		}];
+		
     self.awaitUpdate=function(key,callback){
         self.notificationSubscribers[key]=callback;
     };

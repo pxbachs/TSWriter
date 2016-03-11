@@ -1,5 +1,5 @@
-scriptWriterApp.controller('StepsController', ["$scope", "StepsPredefinedSrv", "$routeParams",
-function($scope, StepsPredefinedSrv, $routeParams) {
+scriptWriterApp.controller('StepsController', ["$scope", "StepsPredefinedSrv", "$routeParams", "uuid4",
+function($scope, StepsPredefinedSrv, $routeParams, uuid4) {
 	//$http.get('data/'+$routeParams.platform+'/steps_defination.json').success(function(data) {
 	//	$scope.steps_def.platform = $routeParams.platform;
 	//	$scope.steps_def = data;
@@ -8,6 +8,7 @@ function($scope, StepsPredefinedSrv, $routeParams) {
 	
 	StepsPredefinedSrv.awaitUpdate('StepsController',function(){
         $scope.steps_def = StepsPredefinedSrv.steps_def;
+        $scope.custom_steps = StepsPredefinedSrv.custom_steps;
     });
     
 	$scope.$on('$locationChangeStart', function(event) {
@@ -30,6 +31,10 @@ function($scope, $http, $uibModal, $routeParams, uuid4, StepsPredefinedSrv) {
 	$scope.feature_name = "Enter feature name here";
 	$scope.index_id = 0;
 	
+	StepsPredefinedSrv.awaitUpdate('FeatureController',function(){
+        $scope.custom_steps = StepsPredefinedSrv.custom_steps;
+    });
+    
 	$scope.steps_def = [{
 			"id" : "scenario-custom",
 			"name" : "Scenario name",
@@ -37,6 +42,7 @@ function($scope, $http, $uibModal, $routeParams, uuid4, StepsPredefinedSrv) {
 			"type" : "scenario",
 			"steps" : []
 		}];
+	
 	
 	$scope.scenarioAllowedTypes = ["scenario"];
 	$scope.stepAllowedTypes = ["step"];
@@ -193,8 +199,9 @@ $scope.selectedStepIdx = 0;
 		console.log(group.draggable);
 	};
 	
-	$scope.$watch('[steps_def, feature_name]', function(model) {
-		$scope.modelAsJson = angular.toJson(model[0], true);
+	$scope.$watch('[steps_def, feature_name, custom_steps]', function(model) {
+		var omodel = {"steps_def": model[0], "custom_steps":model[2]};
+		$scope.modelAsJson = angular.toJson(omodel, true);
 		features = "Feature: "+ $scope.feature_name + "\n\n";
 		if ($scope.platform === "android")
 			rbCode = "require 'calabash-android/calabash_steps'\n";
@@ -202,19 +209,23 @@ $scope.selectedStepIdx = 0;
 			rbCode = "require 'calabash-cucumber/calabash_steps'\n";
 
 		angular.forEach($scope.steps_def, function(value, key) {
-			//console.log(value.id + ": " + value.steps);
 			features += "  Scenario: " + value.name;
 			angular.forEach(value.steps, function(value, key) {
-				//console.log(value.id + ": " + value.id.indexOf("custom"));
 				features += "\n  \t" + value.syntax;
-
 				if (value.id.indexOf("step-custom") === 0 && value.rb) {
 					rbCode += value.rb + "\n";
 				}
 			});
 			features += "\n\n\n";
 		});
-
+		//add all custom steps rb code
+		rbCode += "\n\n#Custom codes\n\n";
+		angular.forEach($scope.custom_steps, function(value, key) {
+			if (value.rb) {
+				rbCode += value.rb + "\n";
+			}
+		});
+		
 		$scope.features = features;
 		$scope.rubyCode = rbCode;
 
@@ -229,7 +240,7 @@ scriptWriterApp.controller('EditStepModalInstanceCtrl', function($scope, $uibMod
 	console.log(StepsPredefinedSrv);
 	$scope.predefinedAPIs = StepsPredefinedSrv.predefinedAPIs;
 	$scope.selectedEditStep = angular.copy(step);
-	if ($scope.selectedEditStep.id.indexOf("step-custom") === 0) {
+	if ($scope.selectedEditStep.id.indexOf("step-custom") === 0 || $scope.selectedEditStep.id.indexOf("custom-predefined") === 0) {
 		if (!$scope.selectedEditStep.rb)
 			$scope.selectedEditStep.rb = "Then /^You want an action here$/ do |_| \n\nend\n";
 		$scope.rbCodeReadOnly = false;

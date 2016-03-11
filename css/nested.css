@@ -153,7 +153,7 @@
 
 .scriptWriter .sidebar-nav ul {
 	padding-left: 0px  !important;
-    padding-right: 15px !important;
+    padding-right: 0px !important;
 }
 
 .scriptWriter .sidebar-nav ul ul {
@@ -273,5 +273,8 @@
 	__height: 500px !important;
 }
 
-
+/***/
+.scriptWriter .custom-step-tools {
+	padding: 10px;
+}
 

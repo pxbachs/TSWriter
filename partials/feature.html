@@ -31,7 +31,28 @@
 		    </uib-tab>
 
 		    <uib-tab index="1" heading="CUSTOM">
-			    <button class="btn btn-primary" type="button" ng-click="">New</button>
+		    	<div class="custom-step-tools">
+			    	<button class="btn btn-primary" type="button" ng-click="">New</button>
+			    </div>
+			    <ul dnd-list="custom_steps"  class="steps"
+				dnd-disable-if="true">
+					<li ng-repeat="step in custom_steps"
+					dnd-draggable="step"
+					dnd-effect-allowed="copyMove"
+					dnd-type="step.type"
+					ng-class="{selected: models.selected === step}"
+					ng-mouseover="step.hoverEdit = true" 
+					ng-mouseleave="step.hoverEdit = false"
+					>
+						<div class="item">
+							{{step.syntax}}
+							<div class="functions" ng-show="step.hoverEdit">
+								<input type="button" class="btn btn-primary" value="Edit" ng-click="showEdit(this)"/>
+								<input type="button" class="btn btn-danger" value="Remove" ng-click="remove(custom_steps, $index)"/>
+							</div>
+						</div>
+					</li>
+				</ul>
 		    </uib-tab>
 		</uib-tabset>
 
