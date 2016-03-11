@@ -53,20 +53,19 @@
 					</div>
 					
 					<div ng-show="!rbCodeReadOnly">
-						<div class="col-md-6">
-							<div>
+						<div class="col-md-12">
 								<b>Syntax:</b> <input type="text" ng-model="selectedEditStep.syntax" class="form-control input-sm"/>
 							</div>
 						<br/>
+
+						<div class="col-md-6">
 						<div  >
 							<b>Ruby: </b><textarea  ui-ace="{mode: 'ruby'}" style="height: 300px;"  rows="10" ng-model="selectedEditStep.rb" class="form-control input-sm" ng-readonly="rbCodeReadOnly"/>
 						</div>
 						</div>
-						<div class="col-md-2" ng-show="!rbCodeReadOnly">
+						<div class="col-md-6" ng-show="!rbCodeReadOnly">
 							<b>APIs</b>
-							<pre style="height: 350px; width: 400px;">
-								{{predefinedAPIs}}
-							</pre>
+							<pre class="ace_editor_apis" ui-ace="{mode: 'ruby'}" ng-readonly="true" ng-model="predefinedAPIs">{{predefinedAPIs}}</pre>
 						</div>
 					</div>
 				</div>

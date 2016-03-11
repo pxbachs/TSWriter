@@ -1,3 +1,6 @@
+"([^\"]*)"
+(\d+)
+
 touch(nil, { offset: { x: x.to_i, y: y.to_i } })
 touch("view marked: '#{name}'")
 
@@ -27,6 +30,6 @@ element_exists("textField placeholder: '#{placeholder_or_view_mark}'")
 
 screenshot_and_raise("Index should be positive (was: #{index})")
 
-sleep(STEP_PAUSE
+sleep(STEP_PAUSE)
 wait_for(WAIT_TIMEOUT)
 

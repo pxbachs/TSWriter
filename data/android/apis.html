@@ -1,1 +1,85 @@
-Android APIs
+"([^\"]*)"
+(\d+)
+
+sleep(seconds.to_i)
+wait_for_text(text)
+wait_for_text(text, timeout: 10)
+wait_for_text_to_disappear(text, timeout: 10)
+wait_for_element_exists("android.widget.Button marked:'#{identifier}'");
+wait_for_element_does_not_exist("android_id")
+wait_for_activity(activity_name)
+wait_for_activity(activity_name, timeout: timeout.to_i)
+
+
+tap_when_element_exists("android.widget.CheckBox index:#{index.to_i-1}")
+tap_when_element_exists("com.android.internal.view.menu.ListMenuItemView android.widget.TextView index:#{index.to_i - 1}")
+tap_when_element_exists("com.android.internal.view.menu.ListMenuItemView android.widget.TextView marked:'#{identifier}'")
+
+tap_when_element_exists("android.widget.Button {text CONTAINS[c] '#{text}'}")
+tap_when_element_exists("android.widget.Button index:#{index.to_i-1}")
+tap_when_element_exists("android.widget.ImageButton index:#{index.to_i-1}")
+
+tap_when_element_exists("* id:'#{id}'")
+tap_when_element_exists("* marked:'#{identifier}'")
+tap_when_element_exists("* {text CONTAINS[c] '#{text}'}")
+
+tap_when_element_exists("android.widget.Spinner * marked:'#{spinner_identifier}'")
+tap_when_element_exists("android.widget.PopupWindow$PopupViewContainer * marked:'#{item_identifier}'")
+
+long_press_when_element_exists("* {text CONTAINS[c] '#{text}'}")
+long_press_when_element_exists("* {text CONTAINS[c] '#{text}'}")
+
+perform_action('click_on_screen', x, y)
+touch("android.widget.TabWidget descendant TextView index:#{tab.to_i-1}")
+touch("android.widget.TabWidget descendant TextView {text LIKE[c] '#{tab}'}")
+perform_action('drag', from_x, to_x, from_y, to_y, steps)
+
+enter_text("android.widget.EditText index:#{index.to_i-1}", text)
+enter_text("android.widget.EditText id:'#{id}'", text)
+enter_text("android.widget.EditText {contentDescription LIKE[c] '#{content_description}'}", text)
+
+enter_text("android.widget.SearchView index:0", text)
+enter_text("android.widget.SearchView index:#{number.to_i-1}", text)
+
+clear_text_in("android.widget.EditText marked:'#{identifier}'}")
+clear_text_in("android.widget.EditText index:#{index.to_i-1}")
+clear_text_in("android.widget.EditText id:'#{id}'")
+
+press_back_button
+press_menu_button
+perform_action('send_key_enter')
+perform_action('swipe', 'left')
+perform_action('swipe', 'right')
+scroll_down
+scroll_up
+
+screenshot_embed
+
+select_options_menu_item(identifier)
+
+
+set_date("android.widget.DatePicker index:#{index.to_i-1}", date)
+set_date("android.widget.DatePicker {contentDescription LIKE[c] '#{content_description}'}", date)
+set_time("android.widget.TimePicker index:#{index.to_i-1}", time)
+set_time("android.widget.TimePicker {contentDescription LIKE[c] '#{content_description}'}", time)
+
+
+
+set_gps_coordinates_from_location(location)
+set_gps_coordinates(latitude, longitude)
+
+perform_action('set_map_center', lat, lon)
+perform_action('pan_map_to', lat, lon)
+perform_action('set_map_zoom', zoom)
+result = perform_action('get_map_zoom')
+perform_action('tap_map_marker_by_title', marker_title, 60000)
+perform_action('tap_map_away_from_markers')
+
+
+raise StandardError.new( "Erro message"  ) unless zoom.eql?( condition)
+
+perform_action('press_l10n_element', l10nkey)
+perform_action('press_l10n_element', l10nkey,'button')
+perform_action('press_l10n_element', l10nkey,'menu_item')
+perform_action('press_l10n_element', l10nkey,'toggle_button')
+perform_action('wait_for_l10n_element', l10nkey)

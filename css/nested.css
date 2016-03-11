@@ -262,3 +262,16 @@
 .scriptWriter .nav-right .trashcan .dndPlaceholder {
     display: none;
 }
+
+/**/
+.modal-open .modal-lg {
+	width: 90% !important;
+	height: 90% !important;
+}
+
+.modal-open .modal-lg .ace_editor_apis{
+	__height: 500px !important;
+}
+
+
+
