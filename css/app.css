@@ -209,6 +209,28 @@ footer {
   z-index: 10000;
 }
 
-
+.btn-icon {
+	font-size: 1.5em;
+    margin: 0 0.1em;
+  padding: 0;
+  background: transparent;
+  border-color: transparent;
+  box-shadow: none;
+  cursor: pointer;
+  border-radius: 0;
+  &:active, &:focus {
+    .box-shadow(none);
+    border-color: transparent;
+  }
+  &:active {
+    .scale(0.9);
+  }
+  &:focus {
+    outline: 0 none !important;
+  }
+  .glyphicon {
+    .transition(color 0.1s ease);
+  }
+}
 
 

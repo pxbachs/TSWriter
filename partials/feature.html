@@ -207,8 +207,13 @@
 								>
 									<div class="item">
 										<div class="functions">
-											<input type="button" class="btn btn-primary" value="Edit" ng-click="showEdit(this)"/>
-											<input type="button" class="btn btn-danger" value="Remove" ng-click="remove(group.steps, $index)"/>
+											<button type="button" class="btn btn-icon" value="edit" ng-click="showEdit(this)">
+												<span class="glyphicon glyphicon-pencil"></span>
+											</button>
+											<button type="button" class="btn btn-icon" value="edit" ng-click="remove(group.steps, $index)">
+												<span class="glyphicon glyphicon-remove"></span>
+											</button>
+											
 										</div>
 										<span class="syntax">{{step.syntax}}</span>
 
