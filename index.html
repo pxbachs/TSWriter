@@ -42,27 +42,42 @@
 		
 		<!-- Script Writer Angular App-->
 		<script src="js/script_writer_app.js"></script>
+		
 		<script src="js/script_writer_services.js"></script>
 		<script src="js/script_writer_ctroller.js"></script>
-
+		
 		<!-- Custom CSS -->
-		<link href="css/mycss.css" rel="stylesheet">
+		<link rel="stylesheet" href="css/app.css">
 		<link href="css/feature.css" rel="stylesheet">
 		<link href="css/simple-sidebar.css" rel="stylesheet">
 
 	</head>
 
 	<body ng-app="scriptWriterApp">
-		<div class="navbar navbar-default navbar-fixed-top" role="navigation">
-			<div class="container">
-				<div class="navbar-header">
-					<a class="navbar-brand" href="#">SEN-TESTKIT Script Writer</a>
-				</div>
-				<div class="navbar-collapse collapse">
-					<ul class="nav navbar-nav" navigation></ul>
-				</div>
-			</div>
-		</div>
+		  <!-- Header logo & menu -->
+		  <div class="site-header">
+		    <nav class="navbar navbar-default">
+		      <div class="container-fluid">
+			    <div class="collapse navbar-collapse pull-left" id="myNavbar1">
+		          <ul class="nav navbar-nav navbar-left">
+		            <li><a href="#/dashboard"><span class="glyphicon glyphicon-dashboard glyphicon-md"></span></a></li>
+		          </ul>
+		        </div>
+		        
+		        <div class="collapse navbar-collapse pull-right" id="myNavbar">
+		          <ul class="nav navbar-nav navbar-right">
+		            <!-- <li><a href=""><span class="glyphicon glyphicon-search"></span></a></li> -->
+		            <li><a href="#help"><span class="glyphicon glyphicon-question-sign"></span></a></li>
+		            <li><a href="#info"><span class="glyphicon glyphicon-info-sign"></span></a></li>
+		          </ul>
+		        </div>
+		        <div class="page-title text-center">
+		          <strong><font style="color:white">SEN</font></strong><font style="color:black">TESTKIT</font><span style="color:#f4511e">&nbsp;ScriptWriter</span>          
+		        </div>
+		      </div>
+		    </nav>
+		  </div>
+  
 		<div class="main-content">
 			<div id="wrapper">
 			<div ng-view></div>

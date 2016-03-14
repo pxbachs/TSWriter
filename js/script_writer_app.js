@@ -1,4 +1,5 @@
 var scriptWriterApp = angular.module('scriptWriterApp', ["scriptWriterServices", "ngRoute", 'ui.bootstrap', "dndLists", "uuid", 'ui.ace']);
+
 scriptWriterApp.config(function($routeProvider) {
         $routeProvider
             .when('/dashboard', {
@@ -9,19 +10,19 @@ scriptWriterApp.config(function($routeProvider) {
                 templateUrl: 'partials/feature.html',
                 controller: 'FeatureController'
             })
-            .when('/types', {
-                templateUrl: 'types/types-frame.html',
-                controller: 'TypesDemoController'
+            .when('/info', {
+                templateUrl: 'partials/info.html',
+                controller: 'InfoController'
             })
-            .when('/advanced', {
-                templateUrl: 'advanced/advanced-frame.html',
-                controller: 'AdvancedDemoController'
+            .when('/help', {
+                templateUrl: 'partials/help.html',
+                controller: 'HelpController'
             })
             .when('/multi', {
                 templateUrl: 'multi/multi-frame.html',
                 controller: 'MultiDemoController'
             })
-            .otherwise({redirectTo: '/feature/ios'});
+            .otherwise({redirectTo: '/dashboard'});
     })
 
     .directive('navigation', function($rootScope, $location) {

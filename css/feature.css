@@ -154,28 +154,32 @@
 .scriptWriter .sidebar-nav ul {
 	padding-left: 0px  !important;
     padding-right: 0px !important;
+    border-radius: 0;
 }
 
 .scriptWriter .sidebar-nav ul ul {
 	padding-left: 1px  !important;
     padding-right: 1px !important;
+    border-radius: 0 !important;
 }
 
 .scriptWriter .sidebar-nav .list-group-item {
-	background-color: #00695c !important;
+	background-color: #00b4a0 !important;
 	padding: 10px !important;
-	margin: 1px !important;
+	margin: 0px !important;
+	border-radius: 0 !important;
+	border: 0 !important;
+	border-top: 1px solid #CCCCCC !important;
 }
 
 .scriptWriter .sidebar-nav .list-group-item:hover {
 	background-color: #4db6ac !important;
 }
 .scriptWriter .sidebar-nav .list-group-item a {
-	color: white !important;
+	color: black !important;
 }
 .scriptWriter .sidebar-nav .list-group-item a:hover {
 	background-color: transparent !important;
-	color: black !important;
 } 
 
 .scriptWriter .sidebar-nav .item{
@@ -197,9 +201,23 @@
 	max-height: 180px;
 }
 
+.scriptWriter .sidebar-nav .custom-steps .item .functions {
+	overflow: hidden;
+}
+
+.scriptWriter .nav-tabs > li {
+	border: 0 !important;
+}
+
+.scriptWriter .nav-tabs {
+	border: 0 !important;
+}
 .scriptWriter .nav-tabs > li.active > a, .scriptWriter .nav-tabs > li.active > a:hover, .scriptWriter .nav-tabs > li.active > a:focus {
-	background-color: #f44336 !important;
+	background-color: #00b4a0 !important;
+	color: white;
 	font-weight: bold;
+	border: 0 !important;
+	border-radius: 0 !important;
 } 
 
 /***************************** Toolbox *****************************/

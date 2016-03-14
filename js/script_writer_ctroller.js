@@ -1,5 +1,5 @@
-scriptWriterApp.controller('StepsController', ["$scope", "StepsPredefinedSrv", "$routeParams", "uuid4",
-function($scope, StepsPredefinedSrv, $routeParams, uuid4) {
+scriptWriterApp.controller('StepsController', ["$scope", "StepsPredefinedSrv", "$routeParams", "uuid4", "$uibModal", 
+function($scope, StepsPredefinedSrv, $routeParams, uuid4, $uibModal) {
 	//$http.get('data/'+$routeParams.platform+'/steps_defination.json').success(function(data) {
 	//	$scope.steps_def.platform = $routeParams.platform;
 	//	$scope.steps_def = data;
@@ -17,6 +17,55 @@ function($scope, StepsPredefinedSrv, $routeParams, uuid4) {
             event.preventDefault();
         }
     });
+    
+    $scope.showExportCustom = function(){
+    	console.log("showExportCustom");
+    	//$scope.exportContent = angular.toJson($scope.custom_steps, true);
+    	//console.log($scope.exportContent);
+    	var modalInstanceRemove = $uibModal.open({
+			animation : $scope.animationsEnabled,
+			templateUrl : 'ExportCustomStepsModalContent.html',
+			controller : 'ExportCustomStepsModalInstanceCtrl',
+			size : 'lg',
+			resolve : {
+				
+			}
+		});
+
+		modalInstanceRemove.result.then(function(exportContent) {
+			console.log("Call save: testscript_custom_steps.json");
+			var content = new Blob([exportContent], { type: 'text/plain;charset=utf-8' });
+			saveAs(content, "testscript_custom_steps.json");
+		}, function() {
+			console.log('Modal dismissed at: ' + new Date());
+		});
+    };
+    $scope.showImportCustom = function(){
+    	console.log("showImportCustom");
+    	var modalInstanceRemove = $uibModal.open({
+			animation : $scope.animationsEnabled,
+			templateUrl : 'ImportCustomStepsModalContent.html',
+			controller : 'ImportCustomStepsModalInstanceCtrl',
+			size : 'lg',
+			resolve : {}
+		});
+
+		modalInstanceRemove.result.then(function(data) {
+			//console.log("Import Custom Steps: " + data.isClean);
+			//console.log(data.importContent);
+			var importJson = angular.fromJson(data.importContent);
+			if (data.isClean === true) {
+				//console.log("Import with clean option");
+				StepsPredefinedSrv.setCustomSteps(importJson);
+			} else {
+				//push
+				//console.log("Import with no clean");
+				StepsPredefinedSrv.setCustomSteps(importJson, false);
+			}
+		}, function() {
+			console.log('Modal dismissed at: ' + new Date());
+		});
+    };
 }]);
 
 scriptWriterApp.controller('DashboardController', ["$scope",
@@ -168,17 +217,19 @@ function($scope, $http, $uibModal, $routeParams, uuid4, StepsPredefinedSrv) {
 
 	$scope.save = function() {
 		console.log("Call save" + $scope.features);
+		var file_name = $scope.feature_name.replace(/\s+/g, '_').toLowerCase();
+
 		var zip = new JSZip();
 		console.log(zip);
-		zip.file("testscript.feature", $scope.features);
-		zip.file("step_definitions/testscript.rb", $scope.rubyCode);
-		zip.file("testscript.json", $scope.modelAsJson);
+		zip.file(file_name + ".feature", $scope.features);
+		zip.file("step_definitions/"+ file_name +".rb", $scope.rubyCode);
+		zip.file(file_name + ".json", $scope.modelAsJson);
 		
 		var content = zip.generate({
 			type : "blob"
 		});
 		// see FileSaver.js
-		saveAs(content, "testscript.zip");
+		saveAs(content, file_name + ".zip");
 	};
 
 	$scope.showImport = function() {
@@ -309,6 +360,32 @@ scriptWriterApp.controller('ImportModalInstanceCtrl', function($scope, $uibModal
 	
 	$scope.myLoaded = function() {
 		//$scope.importContent = $scope.file.data;
+	};
+});
+
+scriptWriterApp.controller('ImportCustomStepsModalInstanceCtrl', function($scope, $uibModalInstance) {
+	console.log("ImportModalInstanceCtrl ");
+	$scope.isClean = false;
+	$scope.importContent = "";
+	$scope.ok = function() {
+		$uibModalInstance.close({"importContent":$scope.importContent,"isClean": $scope.isClean});
+	};
+
+	$scope.cancel = function() {
+		$uibModalInstance.dismiss('cancel');
+	};
+});
+
+scriptWriterApp.controller('ExportCustomStepsModalInstanceCtrl', function($scope, $uibModalInstance, StepsPredefinedSrv) {
+	console.log("ExportCustomStepsModalInstanceCtrl ");
+	//$scope.exportContent = exportContent;
+	$scope.exportContent = angular.toJson(StepsPredefinedSrv.custom_steps, true);
+	$scope.ok = function() {
+		$uibModalInstance.close($scope.exportContent);
+	};
+
+	$scope.cancel = function() {
+		$uibModalInstance.dismiss('cancel');
 	};
 });
 

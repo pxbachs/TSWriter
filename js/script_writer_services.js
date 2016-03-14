@@ -72,8 +72,16 @@ scriptWriterServices.service('StepsPredefinedSrv', ['$http',"uuid4",function($ht
 		});
     };
     
-    self.setCustomSteps = function(steps) {
-    	self.custom_steps = steps;
+    self.setCustomSteps = function(steps, clean) {
+    	if (clean === undefined) 
+			clean = true;
+		if (clean) {
+			self.custom_steps = steps;
+		} else {
+			//console.log("push custom step " + steps);
+			self.custom_steps.push.apply(self.custom_steps, steps);
+		}
+    	
     	self.notifySubscribers();
     };
     

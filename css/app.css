@@ -1,0 +1,214 @@
+.ace_editor { height: 350px; }
+
+a {
+    text-decoration: none !important;
+    outline: 0 !important;
+}
+
+.link-disabled {
+  cursor: not-allowed;
+  pointer-events: none;
+  opacity: .65;
+  filter: alpha(opacity=65);
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+
+
+.main-text-color {
+  color: #00b4a0 !important;
+}
+
+.site-header, .menu-left {
+  position: fixed;
+}
+
+.site-header {
+  z-index: 10;
+  left: 0px;
+  right: 0;
+}
+
+.site-header,
+.menu-dashboard,
+.menu-project,
+.menu-testing,
+.menu-device {
+  height: 56px;
+  display: block;
+}
+.menu-dashboard {
+  z-index: 9901;  
+  background-color: #008571;
+}
+.menu-dashboard:hover {
+  background-color: #f0f0f0;
+  color: #f4511e;
+}
+
+/* Remove the navbar's default margin-bottom and rounded borders */ 
+.navbar {
+    margin-bottom: 0;
+    border-radius: 0;
+    border: 0;
+    font-size: 24px !important;
+    line-height: 1.42857143 !important;
+    letter-spacing: 4px;
+    background-color: #00b4a0;
+}
+
+.glyphicon-sm {
+  font-size: 16px !important;
+}
+
+.glyphicon-md {
+  font-size: 24px !important;
+}
+
+.glyphicon-lg {
+  font-size: 64px !important;
+}
+
+.navbar-brand {
+  font-size: 24px !important;
+}
+
+.navbar li a,
+.navbar .navbar-brand {
+    color: #fff !important;
+}
+
+.page-title {
+  margin: 10px auto;
+  width: 30%;
+}
+
+.navbar-nav li a:hover,
+.navbar-nav li.active a,
+.menu-left a:hover,
+.actions a:hover {
+    color: #f4511e !important;
+}
+.navbar-nav li a:hover {
+  background-color: #fafafa !important;
+}
+
+.navbar-default .navbar-toggle {
+    border-color: transparent;
+    color: #fff !important;
+}
+
+.main-content {
+    padding: 70px 20px 20px 70px;
+}
+
+/* Set black background color, white text and some padding */
+footer {
+    background-color: #555;
+    color: white;
+    padding: 15px;
+}
+
+.page-header {
+  padding: 5px;
+  margin: 5px;
+  position: relative;
+  margin-left: 0;
+  padding-left: 0;
+}
+.page-header h4 {
+  font-size: 1.8em;
+}
+.page-header .page-header-menu {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+}
+.page-header .page-header-menu a {
+  color: #000000;
+}
+
+.table thead {
+  background-color: #e0e6e6;
+}
+
+.dashboard-content .well {
+  height: 160px;
+  width: 100%;
+  border-radius: 2px;
+  border: 0;
+  background: #e0e6e6;
+  margin-bottom: 0;
+  margin-top: 20px;
+  position: relative;
+}
+.dashboard-content .well:hover {
+  background-color: #e0e0e0;
+}
+.dashboard-content a .well {
+  color: #000000;
+  font-size: 16px !important;
+}
+.dashboard-content .well-row-bottom {
+    position: absolute;
+    bottom: 0;
+    height: 80px;
+}
+.dashboard-content .well-detail-button {
+    position: absolute;
+    bottom: 0px;
+    right: 0;
+    width: 50px;
+    height: 50px;
+    background-color: transparent;
+}
+
+#doughnut {
+  width: 260px !important;
+  height: 260px !important;
+}
+.doughnut-legend {
+  padding-top: 10px;
+}
+.doughnut-legend li {
+  display: block;
+  padding-left: 50px;
+  position: relative;
+  margin-bottom: 4px;
+  border-radius: 5px;
+  padding: 2px 8px 2px 28px;
+  font-size: 14px;
+  cursor: default;
+  -webkit-transition: background-color 200ms ease-in-out;
+  -moz-transition: background-color 200ms ease-in-out;
+  -o-transition: background-color 200ms ease-in-out;
+  transition: background-color 200ms ease-in-out;
+}
+.doughnut-legend li:hover {
+  background-color: #fafafa;
+}
+.doughnut-legend li span {
+  display: block;
+  position: absolute;
+  left: 0;
+  top: 3px;
+  left: 20px;
+  width: 25px;
+  height: 70%;
+  border-radius: 2px;
+}
+.doughnut-label {
+  font-size: 18px;
+}
+
+.actions a {
+  color: #00b4a0;
+}
+
+.modal {
+  z-index: 10000;
+}
+
+
+
+

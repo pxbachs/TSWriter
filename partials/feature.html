@@ -1,6 +1,42 @@
 <div class="scriptWriter" >
 
 	<div id="sidebar-wrapper" ng-controller="StepsController">
+		
+		<script type="text/ng-template" id="ExportCustomStepsModalContent.html">
+				<div class="modal-header">
+				<h4 class="modal-title">Export Content</h4>
+				</div>
+				<div class="modal-body">
+
+				<b>Model Content: </b><textarea ui-ace="{mode: 'ruby'}" rows="15" ng-model="exportContent" class="form-control input-sm"/>
+				</div>
+
+				</div>
+				<div class="modal-footer">
+				<button class="btn btn-primary" type="button" ng-click="ok()">Save</button>
+				<button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+				</div>
+			</script>
+			
+			<script type="text/ng-template" id="ImportCustomStepsModalContent.html">
+				<div class="modal-header">
+				<h4 class="modal-title">Import Content</h4>
+				</div>
+				<div class="modal-body">
+
+				<b>Model Content: </b><textarea ui-ace="{mode: 'ruby'}" rows="15" ng-model="importContent" class="form-control input-sm"/>
+				<br />
+				<input class="file" type="file" ng-model="importContent" file-select="data" file-loaded="myLoaded()" file-error="myError($error)" file-progress="myProgress($total,$loaded)">
+				</div>
+
+				</div>
+				<div class="modal-footer">
+				<label><input type="checkbox" checked="true" ng-model="isClean"/>&nbsp;Clean&nbsp;&nbsp;</label>
+				<button class="btn btn-primary" type="button" ng-click="ok()">OK</button>
+				<button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+				</div>
+			</script>
+			
 		<uib-tabset active="active" class="sidebar-nav">
 		    <uib-tab index="0" heading="STEPS">
 			    		<ul class="">
@@ -31,8 +67,10 @@
 		    </uib-tab>
 
 		    <uib-tab index="1" heading="CUSTOM">
-		    	<div class="custom-step-tools">
-			    	<button class="btn btn-primary" type="button" ng-click="showEdit('new_custom_step')">New</button>
+		    	<div class="btn-group btn-group-justified" role="group" aria-label="Justified button group">
+			    	<div class="btn-group" role="group"><button class="btn btn-primary" type="button" ng-click="showEdit('new_custom_step')">New</button></div>
+			    	<div class="btn-group" role="group"><button class="btn btn-primary" type="button" ng-click="showImportCustom()">Import</button></div>
+			    	<div class="btn-group" role="group"><button class="btn btn-primary" type="button" ng-click="showExportCustom()">Export</button></div>
 			    </div>
 			    <ul dnd-list="custom_steps"  class="custom-steps steps"
 				dnd-disable-if="true">
@@ -210,7 +248,7 @@
 		<!-- TODO toolbox here -->
 		<div class="nav-right row ng-scope">
 			<div>
-				<button class="btn btn-warning" ng-click="save()">
+				<button class="btn btn-primary" ng-click="save()">
 					Save
 				</button>
 				<button class="btn btn-primary" ng-click="showImport()">
