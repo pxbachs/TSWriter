@@ -8,30 +8,45 @@ scriptWriterServices.service('StepsPredefinedSrv', ['$http',"uuid4",function($ht
     var self = this;
     self.notificationSubscribers={};
     self.customGroup = null;
-    
-    self.custom_steps = [{
+		
+	self.customStepTemplates = [{
 			index : 1,
 			type : "step",
 			name : "Given step",
 			id : "custom-predefined-step-" + uuid4.generate(),
-			syntax : "Given You want an action here",
-			rb : "Given /^You want an action here$/ do \n\nend\n"
+			syntax : "Given You define an action here",
+			rb : "Given /^You define an action here$/ do \n\nend\n"
 		}, {
 			index : 1,
 			type : "step",
 			name : "Then Step",
 			id : "custom-predefined-step-" + uuid4.generate(),
-			syntax : "Then You want an action here",
-			rb : "Then /^You want an action here$/ do \n\nend\n"
+			syntax : "Then You define an action here",
+			rb : "Then /^You define an action here$/ do \n\nend\n"
 		}, {
 			index : 1,
 			type : "step",
 			name : "And Step",
 			id : "custom-predefined-step-" + uuid4.generate(),
-			syntax : "And You want an action here",
-			rb : "And /^You want an action here$/ do \n\nend\n"
+			syntax : "And You define an action here",
+			rb : "And /^You define an action here$/ do \n\nend\n"
 		}];
 		
+	 self.custom_steps = angular.copy(self.customStepTemplates); //initial sample steps
+	 
+	self.getCustomStepTemplate = function(type) {
+		var tp_step = angular.copy(self.customStepTemplate);
+		
+		switch (type) {
+			case "given": tp_step = self.customStepTemplates[0]; break;
+			case "then": tp_step = self.customStepTemplates[1]; break;
+			case "and": tp_step = self.customStepTemplates[2]; break;
+		}
+		tp_step = angular.copy(tp_step);
+		tp_step.id = "custom-predefined-step-" + uuid4.generate();
+		
+		return tp_step;
+	};
     self.awaitUpdate=function(key,callback){
         self.notificationSubscribers[key]=callback;
     };
@@ -53,12 +68,19 @@ scriptWriterServices.service('StepsPredefinedSrv', ['$http',"uuid4",function($ht
 		});
 		
 		$http.get('data/'+ platform + '/apis.html').success(function(data){
-			console.log(data);
 			self.predefinedAPIs = data;
 		});
     };
     
+    self.setCustomSteps = function(steps) {
+    	self.custom_steps = steps;
+    	self.notifySubscribers();
+    };
+    
     self.addCustomStep = function(step){
+    	self.custom_steps.push(step);
+    	self.notifySubscribers();
+    	return;
     	if (step.type === "step"){
 	    	angular.forEach(self.steps_def,
 	            function(value,key){

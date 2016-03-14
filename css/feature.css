@@ -157,14 +157,14 @@
 }
 
 .scriptWriter .sidebar-nav ul ul {
-	padding-left: 0px  !important;
-    padding-right: 0px !important;
+	padding-left: 1px  !important;
+    padding-right: 1px !important;
 }
 
 .scriptWriter .sidebar-nav .list-group-item {
 	background-color: #00695c !important;
 	padding: 10px !important;
-	margin: 0px !important;
+	margin: 1px !important;
 }
 
 .scriptWriter .sidebar-nav .list-group-item:hover {
@@ -191,6 +191,16 @@
 .scriptWriter .sidebar-nav .item:hover {
 	background-color: #fff176;
 }
+
+.scriptWriter .sidebar-nav .custom-steps .item:hover {
+	background-color: #fff176;
+	max-height: 180px;
+}
+
+.scriptWriter .nav-tabs > li.active > a, .scriptWriter .nav-tabs > li.active > a:hover, .scriptWriter .nav-tabs > li.active > a:focus {
+	background-color: #f44336 !important;
+	font-weight: bold;
+} 
 
 /***************************** Toolbox *****************************/
 .scriptWriter .nav-right {

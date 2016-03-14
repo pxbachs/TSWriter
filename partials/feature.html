@@ -32,9 +32,9 @@
 
 		    <uib-tab index="1" heading="CUSTOM">
 		    	<div class="custom-step-tools">
-			    	<button class="btn btn-primary" type="button" ng-click="">New</button>
+			    	<button class="btn btn-primary" type="button" ng-click="showEdit('new_custom_step')">New</button>
 			    </div>
-			    <ul dnd-list="custom_steps"  class="steps"
+			    <ul dnd-list="custom_steps"  class="custom-steps steps"
 				dnd-disable-if="true">
 					<li ng-repeat="step in custom_steps"
 					dnd-draggable="step"

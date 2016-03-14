@@ -104,8 +104,14 @@ function($scope, $http, $uibModal, $routeParams, uuid4, StepsPredefinedSrv) {
 	$scope.selectedEditStep = null;
 
 	$scope.showEdit = function(evt) {
-		console.log(evt.step);
-		$scope.selectedEditStep = evt.step;
+		if (evt === 'new_custom_step') {
+			$scope.selectedEditStep = null;
+		} else {
+			console.log(evt.step);
+			$scope.selectedEditStep = evt.step;
+		}
+		
+		
 		var modalInstance = $uibModal.open({
 			animation : $scope.animationsEnabled,
 			templateUrl : 'EditStepModalContent.html',
@@ -118,16 +124,24 @@ function($scope, $http, $uibModal, $routeParams, uuid4, StepsPredefinedSrv) {
 
 		modalInstance.result.then(function(selectedItem) {
 			console.log(selectedItem);
-			$scope.selectedEditStep.syntax = selectedItem.syntax;
-			$scope.selectedEditStep.rb = selectedItem.rb;
+			if ($scope.selectedEditStep) {
+				//edit existed step
+				$scope.selectedEditStep.syntax = selectedItem.syntax;
+				$scope.selectedEditStep.rb = selectedItem.rb;
+				//change all steps in feature relate to this step: not need!
+			} else {
+				//add new custom step
+				StepsPredefinedSrv.addCustomStep(selectedItem);
+			}
+			
 		}, function() {
 			console.log('Modal dismissed at: ' + new Date());
 		});
 
 	};
 
-$scope.selectedScenario = null;
-$scope.selectedStepIdx = 0;
+	$scope.selectedScenario = null;
+	$scope.selectedStepIdx = 0;
 
 	$scope.remove = function(scenario, idx) {
 		$scope.selectedScenario = scenario;
@@ -177,8 +191,11 @@ $scope.selectedStepIdx = 0;
 		});
 
 		modalInstanceRemove.result.then(function(importContent) {
-			console.log(importContent);
-			$scope.steps_def = angular.fromJson(importContent);
+			//console.log(importContent);
+			var importJson = angular.fromJson(importContent);
+			$scope.steps_def = importJson.steps_def;
+			console.log(importJson.custom_steps);
+			StepsPredefinedSrv.setCustomSteps(importJson.custom_steps);
 		}, function() {
 			console.log('Modal dismissed at: ' + new Date());
 		});
@@ -239,14 +256,21 @@ scriptWriterApp.controller('EditStepModalInstanceCtrl', function($scope, $uibMod
 	//$scope.selectedEditStep.syntax = step.syntax;
 	console.log(StepsPredefinedSrv);
 	$scope.predefinedAPIs = StepsPredefinedSrv.predefinedAPIs;
-	$scope.selectedEditStep = angular.copy(step);
-	if ($scope.selectedEditStep.id.indexOf("step-custom") === 0 || $scope.selectedEditStep.id.indexOf("custom-predefined") === 0) {
-		if (!$scope.selectedEditStep.rb)
-			$scope.selectedEditStep.rb = "Then /^You want an action here$/ do |_| \n\nend\n";
-		$scope.rbCodeReadOnly = false;
+	if (step) {
+		$scope.selectedEditStep = angular.copy(step);
+		if ($scope.selectedEditStep.id.indexOf("step-custom") === 0 || $scope.selectedEditStep.id.indexOf("custom-predefined") === 0) {
+			if (!$scope.selectedEditStep.rb)
+				$scope.selectedEditStep.rb = "Then /^You want an action here$/ do |_| \n\nend\n";
+			$scope.rbCodeReadOnly = false;
+		} else {
+			$scope.rbCodeReadOnly = true;
+		}
 	} else {
-		$scope.rbCodeReadOnly = true;
+		//new step
+		$scope.selectedEditStep = StepsPredefinedSrv.getCustomStepTemplate("given");
+		$scope.rbCodeReadOnly = false;
 	}
+	
 
 	$scope.ok = function() {
 		//$scope.selectedEditStep.syntax = "new syntax " + new Date();
@@ -284,8 +308,7 @@ scriptWriterApp.controller('ImportModalInstanceCtrl', function($scope, $uibModal
 	};
 	
 	$scope.myLoaded = function() {
-		console.log($scope.file.data);
-		$scope.importContent = $scope.file.data;
+		//$scope.importContent = $scope.file.data;
 	};
 });
 

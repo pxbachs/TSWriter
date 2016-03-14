@@ -76,7 +76,6 @@ scriptWriterApp.config(function($routeProvider) {
 
             el.bind('change', function (e) {
                 var fileName = e.target.files[0];
-				console.log(fileName);
                 if (fileType === '' || fileType === 'text' || fileName.type === 'application/json') {
                     fileReader.readAsText(fileName);
                 } else if (fileType === 'data') {
